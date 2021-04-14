@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:29:17 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/03/23 13:09:54 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/04/13 18:32:51 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	parse_mapfile(t_maze *blueprint, char *mapfile)
 		parse_color(blueprint, mapfile, 'f');
 	else if (mapfile[blueprint->filepos] == 'C')
 		parse_color(blueprint, mapfile, 'c');
-	else if (mapfile[blueprint->filepos] == '1')
+	else if (mapfile[blueprint->filepos] == ' '
+	|| mapfile[blueprint->filepos == '1'])
 		parse_map(blueprint, mapfile);
 }
 
