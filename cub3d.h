@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/16 15:01:51 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/04/30 20:28:47 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,11 @@ typedef struct s_player
 	int	pos_x;
 	int	pos_y;
 	int	walkdirection;
-	int	move_speed;
-}		t_player;
+	int turndirection;
+	double rotation;
+	double	move_speed;
+	double rotation_speed;
+}				t_player;
 
 typedef	struct	s_port
 {
@@ -74,5 +77,6 @@ void	parse_color(t_maze *blueprint, char *mapfile, char type);
 void	parse_map(t_maze *blueprint, char *mapfile);
 int		x_button_hook(t_mlx *mlx);
 int		key_press_hook(int keycode, t_port *port);
+int		key_release_hook(int keycode, t_port *port);
 int		render_frame(t_port *port);
 

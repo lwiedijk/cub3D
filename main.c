@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:14:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/17 09:59:04 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/04/30 16:49:05 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	set_player(t_port *port)
 		{
 			if (port->blueprint->map[y][x] == 'p')//player
 			{
-				port->player->pos_x = x;
-				port->player->pos_y = y;
+				port->player->pos_x = (x * 20);
+				port->player->pos_y = (y * 20);
 			}
 			x++;
 		}
@@ -43,6 +43,7 @@ void	render_loop(t_maze *blueprint, t_mlx *mlx, t_port *port)
 	mlx->win = mlx_new_window(mlx->mlx, blueprint->screenres_x, blueprint->screenres_y, "cub3D");
 	mlx_hook(mlx->win, 17, 1L<<17, &x_button_hook, mlx);
 	mlx_hook(mlx->win, 2, 1L<<0, &key_press_hook, port);
+	mlx_hook(mlx->win, 3, 0, &key_release_hook, port);
 	mlx_loop_hook(mlx->mlx, render_frame, port);
 	mlx_loop(mlx->mlx);
 }

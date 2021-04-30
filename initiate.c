@@ -6,12 +6,13 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/16 15:31:22 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/04/30 20:07:29 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stddef.h>
+#include <math.h>
 
 void	init_maze(t_maze *blueprint)
 {
@@ -51,5 +52,8 @@ void	init_player(t_player *player)
 	player->pos_x = 0;
 	player->pos_y = 0;
 	player->walkdirection = 0;
-	player->move_speed = 0;
+	player->turndirection = 0;
+	player->rotation = M_PI / 2;
+	player->move_speed = 2.0;
+	player->rotation_speed = 3 * (M_PI / 180);
 }
