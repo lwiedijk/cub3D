@@ -6,13 +6,14 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/17 10:21:15 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/04/30 20:24:20 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "../mlx/mlx.h"
 #include <stdio.h>
+#include <math.h>
 
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
@@ -50,9 +51,36 @@ void	put_square(t_port *port, int x, int y, int color)
 	}
 }
 
+int	draw_line(t_mlx *mlx, int begin_x, int begin_y, int end_x, int end_y, int color)
+{
+	double delta_x;
+	double delta_y;
+	int pixel_count;
+	double pixel_x;
+	double pixel_y;
+	
+	delta_x = end_x - begin_x;
+	delta_y = end_y - begin_y;
+	pixel_count = sqrt((delta_x * delta_x) + (delta_y * delta_y)); // pytagoras
+	delta_x /= pixel_count;
+	delta_y /= pixel_count;
+	pixel_x = begin_x;
+	pixel_y = begin_y;
+	while (pixel_count)
+	{
+  	  my_mlx_pixel_put(mlx, pixel_x, pixel_y, color);
+  	  pixel_x += delta_x;
+  	  pixel_y += delta_y;
+  	  --pixel_count;
+	}
+}
+
+
+
 void	put_player(t_port *port, int x, int y, int color)
 {
 	int xi;
+	int yi;
 	int pos_y;
 	int pos_x;
 
@@ -69,16 +97,32 @@ void	put_player(t_port *port, int x, int y, int color)
 		y++;
 	}
 	y = y - 6;
-	while (y < pos_y - 4)
+	if (y < pos_y - 4)
 	{
-		xi = x;
-		while (xi < pos_x + 5) 
-		{
-			my_mlx_pixel_put(port->mlx, xi, y, color);
-			xi++;
-		}
-		y++;
+		draw_line(port->mlx, (x + 5), y, (x + cos(port->player->rotation) * 40), 
+				(y + sin(port->player->rotation) * 40), 0xFFFFFF);
 	}
+}
+
+void	animate(t_port *port)
+{
+	double step;
+
+	if (port->player->turndirection)
+		port->player->rotation += (port->player->turndirection * port->player->rotation_speed);
+	if (port->player->walkdirection)
+	{
+		step = (port->player->walkdirection * port->player->move_speed);
+		port->player->pos_y += sin(port->player->rotation) * step;
+		port->player->pos_x += cos(port->player->rotation) * step;
+	}
+}
+	
+
+void	next_frame(t_mlx *mlx)
+{
+	mlx->img_2 = mlx->img_1;
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img_2, 0, 0);
 }
 
 int	render_frame(t_port *port)
@@ -96,7 +140,10 @@ int	render_frame(t_port *port)
 	int step_size = 20;
 	jump = 0;
 	step = 0;
-	port->mlx->img_1 = mlx_new_image(port->mlx->mlx, 1900, 800);
+	animate(port);
+	if (port->mlx->img_1)
+		next_frame(port->mlx);
+	port->mlx->img_1 = mlx_new_image(port->mlx->mlx, port->blueprint->screenres_x, port->blueprint->screenres_y);
 	port->mlx->addr = mlx_get_data_addr(port->mlx->img_1, &port->mlx->bits_per_pixel,
 	&port->mlx->line_length, &port->mlx->endian);
 	//put_square(port, 0, 0, port->blueprint->ceiling_color);
@@ -125,7 +172,9 @@ int	render_frame(t_port *port)
 		jump += jump_size;
 		y++;
 	}
-	put_player(port, (port->player->pos_x * step_size), (port->player->pos_y * step_size), 0xFF0000);//player
+	put_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
 	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win, port->mlx->img_1, 0, 0);
+	if (port->mlx->img_2)
+		mlx_destroy_image(port->mlx->mlx, port->mlx->img_2);
 	return (0);
 }
