@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:14:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/30 16:49:05 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/05 11:52:26 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	set_player(t_port *port)
 			{
 				port->player->pos_x = (x * 20);
 				port->player->pos_y = (y * 20);
+				port->blueprint->map[y][x] = 0;
 			}
 			x++;
 		}
@@ -50,10 +51,11 @@ void	render_loop(t_maze *blueprint, t_mlx *mlx, t_port *port)
 
 int	main(int ac, char **av)
 {
-	t_port	port;
-	t_maze	blueprint;
-	t_mlx	mlx;
+	t_port		port;
+	t_maze		blueprint;
+	t_mlx		mlx;
 	t_player	player;
+	t_rays		rays;
 
 	init_player(&player);
 	init_maze(&blueprint);
@@ -63,6 +65,8 @@ int	main(int ac, char **av)
 	port.player = &player;
 	parse(av[1], &blueprint);
 	set_player(&port);
+	init_rays(&rays, &blueprint);
+	port.rays = &rays;
 	render_loop(&blueprint, &mlx, &port);
 
 }

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/30 20:28:47 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/05 11:48:35 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,25 @@ typedef struct s_player
 	double rotation_speed;
 }				t_player;
 
+typedef struct	s_rays
+{
+	double 		fov_angle;
+	int			ray_num;
+	int			strip_width;
+}				t_rays;
+
 typedef	struct	s_port
 {
 	t_mlx		*mlx;
 	t_maze		*blueprint;
 	t_player	*player;
+	t_rays		*rays;
 }				t_port;
-
 
 void	init_maze(t_maze *blueprint);
 void	init_mlx(t_mlx *mlx);
 void	init_player(t_player *player);
+void	init_rays(t_rays *rays, t_maze *blueprint);
 void	parse(char *av, t_maze *blueprint);
 void	parse_mapfile(t_maze *blueprint, char *mapfile);
 void	parse_screenres(t_maze *blueprint, char *mapfile);

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/30 20:07:29 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/05 11:50:02 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,12 @@ void	init_player(t_player *player)
 	player->rotation = M_PI / 2;
 	player->move_speed = 2.0;
 	player->rotation_speed = 3 * (M_PI / 180);
+}
+
+void	init_rays(t_rays *rays, t_maze *blueprint)
+{
+	rays->fov_angle = 60 * (M_PI / 180);
+	rays->strip_width = 1;
+	rays->ray_num = blueprint->screenres_x / rays->strip_width;
+	
 }
