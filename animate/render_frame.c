@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/30 20:24:20 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/05 11:02:15 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,40 @@ void	put_player(t_port *port, int x, int y, int color)
 	}
 }
 
+int	wall_hit(int x, int y, t_port *port)
+{
+	int wall_pos_x;
+	int wall_pos_y;
+
+	if (x < 0 || x > port->blueprint->screenres_x)
+		return (1);
+	if (y < 0 || x > port->blueprint->screenres_y)
+		return (1);
+	wall_pos_x = x / 20;
+	wall_pos_y = y / 20;
+	if (port->blueprint->map[wall_pos_y][wall_pos_x] > 0)
+		return (1);
+	return (0);
+}
+
 void	animate(t_port *port)
 {
 	double step;
+	int newpos_x;
+	int newpos_y;
 
 	if (port->player->turndirection)
 		port->player->rotation += (port->player->turndirection * port->player->rotation_speed);
 	if (port->player->walkdirection)
 	{
 		step = (port->player->walkdirection * port->player->move_speed);
-		port->player->pos_y += sin(port->player->rotation) * step;
-		port->player->pos_x += cos(port->player->rotation) * step;
+		newpos_y = port->player->pos_y + sin(port->player->rotation) * step;
+		newpos_x = port->player->pos_x + cos(port->player->rotation) * step;
+		if (!wall_hit(newpos_x, newpos_y, port))
+		{
+			port->player->pos_y = newpos_y;
+			port->player->pos_x = newpos_x;
+		}
 	}
 }
 	
