@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/05 11:02:15 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/05 17:28:22 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	put_square(t_port *port, int x, int y, int color)
 	}
 }
 
-int	draw_line(t_mlx *mlx, int begin_x, int begin_y, int end_x, int end_y, int color)
+void	draw_line(t_mlx *mlx, int begin_x, int begin_y, int end_x, int end_y, int color)
 {
 	double delta_x;
 	double delta_y;
@@ -140,7 +140,47 @@ void	animate(t_port *port)
 		}
 	}
 }
-	
+
+void	new_ray(t_port *port, int ray_angle, int playerx, int playery)
+{
+	int new_ray;
+	int end_rayy;
+	int end_rayx;
+
+	end_rayy = port->player->pos_y + sin(ray_angle) * 30;
+	end_rayx = port->player->pos_x + cos(ray_angle) * 30;
+	draw_line(port->mlx, playerx, playery, end_rayx, end_rayy, 0xFFFFFF); 
+	//return (new_ray);
+}
+
+void	cast_all_rays(t_port *port, int playerx, int playery)
+{
+	int rays[port->rays->ray_num];
+	int ray;
+	double ray_angle;
+	int colum_id;
+	int i;
+
+	i = 0;
+	colum_id = 0;
+	ray_angle = port->player->rotation - (port->rays->fov_angle / 2);
+//	new_ray(port, ray_angle, playerx, playery);
+	//while (i < 2)//port->rays->ray_num)
+	//{
+	//	new_ray(port, ray_angle, playerx, playery);
+		//rays[i] = ray;
+	//	i++;
+	//	ray_angle = port->rays->fov_angle / port->rays->ray_num;
+		//colum_id++;
+//	}
+	//while (i > 0)
+	//{
+	//	draw_line(port->mlx, port->player->pos_x, port_player->pos_y, 
+
+		
+
+
+}
 
 void	next_frame(t_mlx *mlx)
 {
@@ -164,6 +204,7 @@ int	render_frame(t_port *port)
 	jump = 0;
 	step = 0;
 	animate(port);
+	cast_all_rays(port, port->player->pos_x, port->player->pos_y);
 	if (port->mlx->img_1)
 		next_frame(port->mlx);
 	port->mlx->img_1 = mlx_new_image(port->mlx->mlx, port->blueprint->screenres_x, port->blueprint->screenres_y);
