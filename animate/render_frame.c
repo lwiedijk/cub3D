@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/05 17:28:22 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/07 15:41:38 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	put_player(t_port *port, int x, int y, int color)
 	{
 		draw_line(port->mlx, (x + 5), y, (x + cos(port->player->rotation) * 40), 
 				(y + sin(port->player->rotation) * 40), 0xFFFFFF);
+		//draw_line(port->mlx, 500, 220, 516, 245, 0xFFFFFF); 
 	}
 }
 
@@ -144,12 +145,13 @@ void	animate(t_port *port)
 void	new_ray(t_port *port, int ray_angle, int playerx, int playery)
 {
 	int new_ray;
-	int end_rayy;
-	int end_rayx;
+	double end_rayy;
+	double end_rayx;
 
 	end_rayy = port->player->pos_y + sin(ray_angle) * 30;
 	end_rayx = port->player->pos_x + cos(ray_angle) * 30;
-	draw_line(port->mlx, playerx, playery, end_rayx, end_rayy, 0xFFFFFF); 
+	draw_line(port->mlx, playerx, playery, end_rayx, end_rayy, 0xFF0000); 
+	//draw_line(port->mlx, 
 	//return (new_ray);
 }
 
@@ -164,15 +166,17 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 	i = 0;
 	colum_id = 0;
 	ray_angle = port->player->rotation - (port->rays->fov_angle / 2);
-//	new_ray(port, ray_angle, playerx, playery);
-	//while (i < 2)//port->rays->ray_num)
-	//{
-	//	new_ray(port, ray_angle, playerx, playery);
+	new_ray(port, ray_angle, playerx, playery);
+	while (i < port->rays->ray_num)
+	{
+		colum_id = port->rays->ray_num;
+		new_ray(port, ray_angle, playerx, playery);
 		//rays[i] = ray;
 	//	i++;
-	//	ray_angle = port->rays->fov_angle / port->rays->ray_num;
-		//colum_id++;
-//	}
+		ray_angle = port->rays->fov_angle / colum_id;
+		colum_id--;
+		i++;
+	}
 	//while (i > 0)
 	//{
 	//	draw_line(port->mlx, port->player->pos_x, port_player->pos_y, 
@@ -204,7 +208,6 @@ int	render_frame(t_port *port)
 	jump = 0;
 	step = 0;
 	animate(port);
-	cast_all_rays(port, port->player->pos_x, port->player->pos_y);
 	if (port->mlx->img_1)
 		next_frame(port->mlx);
 	port->mlx->img_1 = mlx_new_image(port->mlx->mlx, port->blueprint->screenres_x, port->blueprint->screenres_y);
@@ -237,6 +240,7 @@ int	render_frame(t_port *port)
 		y++;
 	}
 	put_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
+	cast_all_rays(port, port->player->pos_x, port->player->pos_y);
 	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win, port->mlx->img_1, 0, 0);
 	if (port->mlx->img_2)
 		mlx_destroy_image(port->mlx->mlx, port->mlx->img_2);
