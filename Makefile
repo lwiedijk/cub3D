@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/05/12 10:10:31 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/05/12 13:00:30 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	make fclean -C $(LIBFT_DIR)
 
 re:
 	$(MAKE) fclean
