@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/05 11:48:35 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/12 10:55:34 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_player
 typedef struct	s_rays
 {
 	double 		fov_angle;
+	double		ray_angle;
 	int			ray_num;
 	int			strip_width;
 }				t_rays;
@@ -83,8 +84,23 @@ void	parse_screenres(t_maze *blueprint, char *mapfile);
 void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type);
 void	parse_color(t_maze *blueprint, char *mapfile, char type);
 void	parse_map(t_maze *blueprint, char *mapfile);
+
+/* animate/key_button_hook */
 int		x_button_hook(t_mlx *mlx);
 int		key_press_hook(int keycode, t_port *port);
 int		key_release_hook(int keycode, t_port *port);
-int		render_frame(t_port *port);
 
+/* animate/player_movement */
+void	put_player(t_port *port, int x, int y, int color);
+void	walk_player(t_port *port);
+int		wall_hit(int x, int y, t_port *port);
+
+/* animate/render_frame */
+int		render_frame(t_port *port);
+void	draw_line(t_mlx *mlx, double begin_x, double begin_y, double end_x, double end_y, int color);
+void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+int		put_color(int r, int g, int b);
+
+/* animate/ray_casting */
+void	new_ray(t_port *port, double ray_angle, int playerx, int playery);
+void	cast_all_rays(t_port *port, int playerx, int playery);
