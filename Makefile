@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/04/05 16:08:23 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/05/12 10:10:31 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ parse_color.c parse_map.c \
 
 ANIMATE_DIR = animate/
 ANIMATE_SRC_FILES = key_button_hook.c \
-render_frame.c \
+render_frame.c player_movement.c \
+ray_casting.c \
 
 
 LIBFT_DIR = libft/
