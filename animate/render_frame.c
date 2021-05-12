@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/12 10:16:27 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/12 12:33:24 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	put_square(t_port *port, int x, int y, int color)
 	int pos_y;
 	int pos_x;
 
-	pos_y = y + 20;
-	pos_x = x + 20;
+	pos_y = y + port->blueprint->tile_size;
+	pos_x = x + port->blueprint->tile_size;
 	while (y < pos_y)
 	{
 		xi = x;
@@ -92,8 +92,8 @@ int	render_frame(t_port *port)
 
 	x = 0;
 	y = 0;
-	int jump_size = 20;
-	int step_size = 20;
+	int jump_size = port->blueprint->tile_size;
+	int step_size = port->blueprint->jump_size;
 	jump = 0;
 	step = 0;
 	walk_player(port);
@@ -125,7 +125,7 @@ int	render_frame(t_port *port)
 		jump += jump_size;
 		y++;
 	}
-	put_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
+	draw_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
 	cast_all_rays(port, port->player->pos_x, port->player->pos_y);
 	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win, port->mlx->img_1, 0, 0);
 	if (port->mlx->img_2)

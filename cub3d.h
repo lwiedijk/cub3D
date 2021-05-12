@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/12 10:55:34 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/12 12:34:17 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct	s_maze
 	int			map_y;
 	int			*map_x;
 	int			**map;
+	int			tile_size;
+	int			jump_size;
 }				t_maze;
 
 typedef struct s_player
@@ -61,9 +63,15 @@ typedef struct s_player
 typedef struct	s_rays
 {
 	double 		fov_angle;
-	double		ray_angle;
+//	double		ray_angle;
 	int			ray_num;
 	int			strip_width;
+	long		x_intercept;
+	long		y_intercept;
+	int			horz_xstep;
+	int			horz_ystep;
+	int			vert_xstep;
+	int			vert_ystep;
 }				t_rays;
 
 typedef	struct	s_port
@@ -91,7 +99,8 @@ int		key_press_hook(int keycode, t_port *port);
 int		key_release_hook(int keycode, t_port *port);
 
 /* animate/player_movement */
-void	put_player(t_port *port, int x, int y, int color);
+void	set_player(t_port *port);
+void	draw_player(t_port *port, int x, int y, int color);
 void	walk_player(t_port *port);
 int		wall_hit(int x, int y, t_port *port);
 

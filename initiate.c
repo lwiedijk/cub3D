@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/05 11:50:02 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/12 12:49:43 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	init_maze(t_maze *blueprint)
 	blueprint->map_y = 0;
 	blueprint->map_x = 0;
 	blueprint->map = 0;
+	blueprint->tile_size = 40;
+	blueprint->jump_size = 40;
 }
 
 void	init_mlx(t_mlx *mlx)

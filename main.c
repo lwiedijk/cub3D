@@ -6,37 +6,13 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:14:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/05 11:52:26 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/12 12:34:36 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx/mlx.h"
 #include <stdio.h>
-
-void	set_player(t_port *port)
-{
-	int		x;
-	int 	y;
-
-	x = 0;
-	y = 0;
-	while(y < port->blueprint->map_y)
-	{
-		x = 0;
-		while (x < port->blueprint->map_x[y])
-		{
-			if (port->blueprint->map[y][x] == 'p')//player
-			{
-				port->player->pos_x = (x * 20);
-				port->player->pos_y = (y * 20);
-				port->blueprint->map[y][x] = 0;
-			}
-			x++;
-		}
-		y++;
-	}
-}
 
 void	render_loop(t_maze *blueprint, t_mlx *mlx, t_port *port)
 {

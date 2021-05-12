@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/12 10:05:11 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/12 12:49:33 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,31 @@
 #include "../mlx/mlx.h"
 #include <math.h>
 
-void	put_player(t_port *port, int x, int y, int color)
+void	set_player(t_port *port)
+{
+	int		x;
+	int 	y;
+
+	x = 0;
+	y = 0;
+	while(y < port->blueprint->map_y)
+	{
+		x = 0;
+		while (x < port->blueprint->map_x[y])
+		{
+			if (port->blueprint->map[y][x] == 'p')//player
+			{
+				port->player->pos_x = (x * port->blueprint->tile_size);
+				port->player->pos_y = (y * port->blueprint->tile_size);
+				port->blueprint->map[y][x] = 0;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	draw_player(t_port *port, int x, int y, int color)
 {
 	int xi;
 	int yi;
@@ -68,12 +92,12 @@ int	wall_hit(int x, int y, t_port *port)
 	int wall_pos_x;
 	int wall_pos_y;
 
-	if (x < 0 || x > port->blueprint->screenres_x)
-		return (1);
-	if (y < 0 || x > port->blueprint->screenres_y)
-		return (1);
-	wall_pos_x = x / 20;
-	wall_pos_y = y / 20;
+	//if (x < 0 || x > port->blueprint->screenres_x)
+	//	return (1);
+	//if (y < 0 || x > port->blueprint->screenres_y)
+	//	return (1);
+	wall_pos_x = x / port->blueprint->tile_size;
+	wall_pos_y = y / port->blueprint->tile_size;
 	if (port->blueprint->map[wall_pos_y][wall_pos_x] > 0)
 		return (1);
 	return (0);
