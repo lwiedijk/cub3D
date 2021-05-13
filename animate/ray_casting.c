@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/12 17:00:18 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/13 14:44:37 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,10 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 		vert_hit_x = 1700;
 		vert_hit_y = 700;
 	}
-
+	if (horz_distance < vert_distance)
+		draw_line(port->mlx, playerx, playery, hit_x, hit_y, 0x805080);
+	else
+		draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x805080);
 
 
 
