@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/12 12:49:43 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/14 16:06:36 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,17 @@ void	init_player(t_player *player)
 void	init_rays(t_rays *rays, t_maze *blueprint)
 {
 	rays->fov_angle = 60 * (M_PI / 180);
-	rays->strip_width = 1;
+	rays->strip_width = 70;
 	rays->ray_num = blueprint->screenres_x / rays->strip_width;
+	rays->hx_intercept = 0;
+	rays->hy_intercept = 0;
+	rays->vx_intercept = 0;
+	rays->vy_intercept = 0;
+	rays->horz_xstep = 0;
+	rays->horz_ystep = 0;
+	rays->vert_xstep = 0;
+	rays->vert_ystep = 0;
+	//rays->distance = 0;
+	rays->columnid = 0;
 	
 }

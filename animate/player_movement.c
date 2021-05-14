@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/13 14:34:48 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/14 11:22:35 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	walk_player(t_port *port)
 	double step;
 	int newpos_x;
 	int newpos_y;
+	int wall_content;
 
 	if (port->player->turndirection)
 		port->player->rotation += (port->player->turndirection * port->player->rotation_speed);
@@ -79,7 +80,7 @@ void	walk_player(t_port *port)
 		step = (port->player->walkdirection * port->player->move_speed);
 		newpos_y = port->player->pos_y + sin(port->player->rotation) * step;
 		newpos_x = port->player->pos_x + cos(port->player->rotation) * step;
-		if (!wall_hit(newpos_x, newpos_y, port))
+		if (!wall_hit(newpos_x, newpos_y, port, &wall_content))
 		{
 			port->player->pos_y = newpos_y;
 			port->player->pos_x = newpos_x;
@@ -87,14 +88,14 @@ void	walk_player(t_port *port)
 	}
 }
 
-int	wall_hit(int x, int y, t_port *port)
+int	wall_hit(int x, int y, t_port *port, int *wall_content)
 {
 	int wall_pos_x;
 	int wall_pos_y;
 
-	if (x < 1 || x > 1400)//(port->blueprint->screenres_x - 1))
+	if (x < 1 || x > port->blueprint->screenres_x)//(port->blueprint->screenres_x - 1))
 		return (1);
-	if (y < 1 || y > 700)//(port->blueprint->screenres_y - 1))
+	if (y < 1 || y > port->blueprint->screenres_y)//(port->blueprint->screenres_y - 1))
 		return (1);
 	wall_pos_x = x / port->blueprint->tile_size;
 	wall_pos_y = y / port->blueprint->tile_size;
@@ -102,7 +103,10 @@ int	wall_hit(int x, int y, t_port *port)
 		return (1);
 	//if (wall_pos_x > (port->blueprint->map_x[wall_pos_y]))
 	if (port->blueprint->map[wall_pos_y][wall_pos_x] > 0)
+	{
+		*wall_content = port->blueprint->map[wall_pos_y][wall_pos_x];
 		return (1);
+	}
 	return (0);
 }
 

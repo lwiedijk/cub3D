@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/12 12:34:17 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/14 16:13:50 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,27 @@ typedef struct s_player
 typedef struct	s_rays
 {
 	double 		fov_angle;
-//	double		ray_angle;
+	double		ray_angle;
+//	float		wall_hit_x;
+//	float		wall_hit_y;
+//	float		distance;
+	int			ray_up;
+	int			ray_down;
+	int			ray_right;
+	int			ray_left;
+//	int			verical_hit;
+//	int			wall_hit_content;
 	int			ray_num;
 	int			strip_width;
-	long		x_intercept;
-	long		y_intercept;
-	int			horz_xstep;
+	long		hx_intercept;
+	long		hy_intercept;
+	long		vx_intercept;
+	long		vy_intercept;
+	double		horz_xstep;
 	int			horz_ystep;
 	int			vert_xstep;
-	int			vert_ystep;
+	double		vert_ystep;
+	int			columnid;
 }				t_rays;
 
 typedef	struct	s_port
@@ -102,14 +114,15 @@ int		key_release_hook(int keycode, t_port *port);
 void	set_player(t_port *port);
 void	draw_player(t_port *port, int x, int y, int color);
 void	walk_player(t_port *port);
-int		wall_hit(int x, int y, t_port *port);
+int		wall_hit(int x, int y, t_port *port, int *wall_content);
 
 /* animate/render_frame */
 int		render_frame(t_port *port);
+void	put_square(t_port *port, int x, int y, int color);
 void	draw_line(t_mlx *mlx, double begin_x, double begin_y, double end_x, double end_y, int color);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 int		put_color(int r, int g, int b);
 
 /* animate/ray_casting */
-void	new_ray(t_port *port, double ray_angle, int playerx, int playery);
+void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery);
 void	cast_all_rays(t_port *port, int playerx, int playery);

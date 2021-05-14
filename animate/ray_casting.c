@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/14 09:27:43 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/14 16:29:18 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,46 @@ void	normalize_ray_angle(double *ray_angle)
 		*ray_angle = (2 * M_PI) + *ray_angle;
 }
 
+void	put_column(t_port *port, int x, int y, int wall_striphight, int color)
+{
+	int yi;
+	float pos_y;
+	float pos_x;
+
+	pos_y = y + wall_striphight;
+	pos_x = x + port->rays->strip_width; 
+	while (x < pos_x)
+	{
+		yi = y;
+		while (yi < pos_y) 
+		{
+			my_mlx_pixel_put(port->mlx, x, yi, color);
+			yi++;
+		}
+		x++;
+	}
+}
+
+void	render_walls(t_port *port, t_rays *rays, double ray_distance)
+{
+	float	distance_to_plane;
+	float	wall_striphight;
+	int		x;
+	float	y;
+
+	rays->columnid += 1;
+	if (rays->columnid > rays->ray_num)
+		return ;
+	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
+	wall_striphight = (port->blueprint->tile_size / ray_distance) * distance_to_plane;
+	x = rays->columnid * rays->strip_width;
+	y = (port->blueprint->screenres_y / 2) - (wall_striphight / 2);
+	if (rays->columnid < rays->ray_num)
+		put_column(port, x, y, wall_striphight, 0x1605080);
+	put_square(port, 50, 300, 0x00FF00);
+
+}
+
 void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery)
 {
 	int new_ray;
@@ -48,11 +88,13 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	double vert_distance;
 	int	var;
 
+	//put_square(port, 50, 300, 0x00FF00);
 	hor_hit_x = 0;
 	hor_hit_y = 0;
 	vert_hit_x = 0;
 	vert_hit_y = 0;
 	var = 0;
+	rays->ray_angle = ray_angle;
 
 	//end_rayy = port->player->pos_y + sin(ray_angle) * 30;
 	//end_rayx = port->player->pos_x + cos(ray_angle) * 30;
@@ -159,12 +201,17 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	else
 		vert_distance = INT_MAX;
 	if (horz_distance < vert_distance)
+	{
+		render_walls(port, port->rays, horz_distance);
 		draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
+		put_square(port, 50, 300, 0x00FF00);
+	}
 	else
+	{
+		render_walls(port, port->rays, vert_distance);
 		draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
-
-
-
+		put_square(port, 150, 300, 0x00FF00);
+	}
 }
 
 void	cast_all_rays(t_port *port, int playerx, int playery)
@@ -177,7 +224,7 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 	i = 0;
 	colum_id = 0;
 	ray_angle = port->player->rotation - (port->rays->fov_angle / 2);
-	while (i < port->rays->ray_num)
+	while (i < 9)//port->rays->ray_num)
 	//while (i < 1)
 	{
 		normalize_ray_angle(&ray_angle);
