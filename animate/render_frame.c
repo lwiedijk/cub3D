@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/12 12:33:24 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/14 16:16:57 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,45 @@ void	put_square(t_port *port, int x, int y, int color)
 	}
 }
 
+void	draw_2d_map(t_port *port)
+{
+	int		x;
+	int 	y;
+	int step;
+	int jump;
+	int jump_size;
+	int step_size;
+
+	y = 0;
+	jump = 0;
+	jump_size = port->blueprint->tile_size;
+	step_size = port->blueprint->jump_size;
+
+	while(y < port->blueprint->map_y)
+	{
+		x = 0;
+		step = 0;
+		while (x < port->blueprint->map_x[y])
+		{
+			if (port->blueprint->map[y][x] > 0 && port->blueprint->map[y][x] < 2) //walls
+			{
+				put_square(port, step, jump, 0x00FF00);
+				step += step_size;
+			}
+			if (port->blueprint->map[y][x] == 2)//sprite
+			{
+				put_square(port, step, jump, 0x0000FF);
+				step += step_size;
+			}
+			if (port->blueprint->map[y][x] == 0)
+				step += step_size;
+			x++;
+		}
+		jump += jump_size;
+		y++;
+	}
+}
+
 void	draw_line(t_mlx *mlx, double begin_x, double begin_y, double end_x, double end_y, int color)
 {
 	double delta_x;
@@ -83,50 +122,15 @@ void	next_frame(t_mlx *mlx)
 
 int	render_frame(t_port *port)
 {
-	int		x;
-	int 	y;
-	int		line_start;
-	int 	line_end;
-	int step;
-	int jump;
-
-	x = 0;
-	y = 0;
-	int jump_size = port->blueprint->tile_size;
-	int step_size = port->blueprint->jump_size;
-	jump = 0;
-	step = 0;
 	walk_player(port);
 	if (port->mlx->img_1)
 		next_frame(port->mlx);
 	port->mlx->img_1 = mlx_new_image(port->mlx->mlx, port->blueprint->screenres_x, port->blueprint->screenres_y);
 	port->mlx->addr = mlx_get_data_addr(port->mlx->img_1, &port->mlx->bits_per_pixel,
 	&port->mlx->line_length, &port->mlx->endian);
-	while(y < port->blueprint->map_y)
-	{
-		x = 0;
-		step = 0;
-		while (x < port->blueprint->map_x[y])
-		{
-			if (port->blueprint->map[y][x] > 0 && port->blueprint->map[y][x] < 2) //walls
-			{
-				put_square(port, step, jump, 0x00FF00);
-				step += step_size;
-			}
-			if (port->blueprint->map[y][x] == 2)//sprite
-			{
-				put_square(port, step, jump, 0x0000FF);
-				step += step_size;
-			}
-			if (port->blueprint->map[y][x] == 0)
-				step += step_size;
-			x++;
-		}
-		jump += jump_size;
-		y++;
-	}
-	draw_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
+//	draw_2d_map(port);
 	cast_all_rays(port, port->player->pos_x, port->player->pos_y);
+	draw_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
 	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win, port->mlx->img_1, 0, 0);
 	if (port->mlx->img_2)
 		mlx_destroy_image(port->mlx->mlx, port->mlx->img_2);
