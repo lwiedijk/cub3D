@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/14 16:29:18 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/18 12:58:47 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	normalize_ray_angle(double *ray_angle)
 		*ray_angle = (2 * M_PI) + *ray_angle;
 }
 
-void	put_column(t_port *port, int x, int y, int wall_striphight, int color)
+void	put_column(t_port *port, int x, float y, float wall_striphight, int color)
 {
 	int yi;
 	float pos_y;
@@ -49,23 +49,24 @@ void	put_column(t_port *port, int x, int y, int wall_striphight, int color)
 	}
 }
 
-void	render_walls(t_port *port, t_rays *rays, double ray_distance)
+void	render_walls(t_port *port, t_rays *rays, double ray_distance, int colum_id)
 {
 	float	distance_to_plane;
 	float	wall_striphight;
 	int		x;
 	float	y;
 
-	rays->columnid += 1;
-	if (rays->columnid > rays->ray_num)
-		return ;
+	//put_column(port, 0, 137.366455, 525.26709, 0x1605080);
+	//put_square(port, 50, 300, 0x00FF00);
+	//if (colum_id > rays->ray_num)
+	//	return ;
 	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
 	wall_striphight = (port->blueprint->tile_size / ray_distance) * distance_to_plane;
-	x = rays->columnid * rays->strip_width;
+	x = colum_id * rays->strip_width;
 	y = (port->blueprint->screenres_y / 2) - (wall_striphight / 2);
-	if (rays->columnid < rays->ray_num)
-		put_column(port, x, y, wall_striphight, 0x1605080);
-	put_square(port, 50, 300, 0x00FF00);
+	//if (rays->columnid < rays->ray_num)
+	put_column(port, x, y, wall_striphight, 0x1605080);
+	//put_square(port, 50, 300, 0x00FF00);
 
 }
 
@@ -202,21 +203,24 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 		vert_distance = INT_MAX;
 	if (horz_distance < vert_distance)
 	{
-		render_walls(port, port->rays, horz_distance);
+		//render_walls(port, port->rays, horz_distance);
+		rays->distance = horz_distance;
 		draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
-		put_square(port, 50, 300, 0x00FF00);
+		//put_square(port, 50, 300, 0x00FF00);
 	}
 	else
 	{
-		render_walls(port, port->rays, vert_distance);
+		//render_walls(port, port->rays, vert_distance);
+		rays->distance = vert_distance;
 		draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
-		put_square(port, 150, 300, 0x00FF00);
+		//put_square(port, 150, 300, 0x00FF00);
 	}
 }
 
 void	cast_all_rays(t_port *port, int playerx, int playery)
 {
-	int rays[port->rays->ray_num];
+	//t_rays *rays[port->rays->ray_num];
+	double raydistance_array[port->rays->ray_num];
 	double ray_angle;
 	int colum_id;
 	int i;
@@ -224,12 +228,21 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 	i = 0;
 	colum_id = 0;
 	ray_angle = port->player->rotation - (port->rays->fov_angle / 2);
-	while (i < 9)//port->rays->ray_num)
-	//while (i < 1)
+	//while (port->rays->columnid < port->rays->ray_num)
+	while (i < port->rays->ray_num)
 	{
 		normalize_ray_angle(&ray_angle);
 		new_ray(port, port->rays, ray_angle, playerx, playery);
+		//rays[colum_id] = port->rays;
+		raydistance_array[colum_id] = port->rays->distance;
 		ray_angle += port->rays->fov_angle / port->rays->ray_num;
+		colum_id++;
 		i++;
+	}
+	colum_id = 0;
+	while (colum_id < i)
+	{
+		render_walls(port, port->rays, raydistance_array[colum_id], colum_id);
+		colum_id++;
 	}
 }
