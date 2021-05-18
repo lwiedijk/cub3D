@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/14 16:13:50 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/18 12:45:46 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct	s_rays
 	double		ray_angle;
 //	float		wall_hit_x;
 //	float		wall_hit_y;
-//	float		distance;
+	double		distance;
 	int			ray_up;
 	int			ray_down;
 	int			ray_right;
