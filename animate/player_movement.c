@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/14 11:22:35 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/19 09:46:53 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	draw_player(t_port *port, int x, int y, int color)
 		}
 		y++;
 	}
-	y = y - 6;
-	if (y < pos_y - 4)
+	y = y - 10;
+	if (y < pos_y)
 	{
-		draw_line(port->mlx, (x + 5), y, (x + cos(port->player->rotation) * 40), 
+		draw_line(port->mlx, x, y, (x + cos(port->player->rotation) * 40), 
 			(y + sin(port->player->rotation) * 40), 0xFFFFFF);
 		//draw_line(port->mlx, 500, 220, 516, 245, 0xFFFFFF); 
 	}
@@ -88,7 +88,7 @@ void	walk_player(t_port *port)
 	}
 }
 
-int	wall_hit(int x, int y, t_port *port, int *wall_content)
+int	wall_hit(double x, double y, t_port *port, int *wall_content)
 {
 	int wall_pos_x;
 	int wall_pos_y;
@@ -101,7 +101,8 @@ int	wall_hit(int x, int y, t_port *port, int *wall_content)
 	wall_pos_y = y / port->blueprint->tile_size;
 	if (wall_pos_y > (port->blueprint->map_y - 1))
 		return (1);
-	//if (wall_pos_x > (port->blueprint->map_x[wall_pos_y]))
+	if (wall_pos_x > (port->blueprint->map_x[wall_pos_y]))
+		return (1);
 	if (port->blueprint->map[wall_pos_y][wall_pos_x] > 0)
 	{
 		*wall_content = port->blueprint->map[wall_pos_y][wall_pos_x];
