@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/18 12:45:46 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/19 09:31:34 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int		key_release_hook(int keycode, t_port *port);
 void	set_player(t_port *port);
 void	draw_player(t_port *port, int x, int y, int color);
 void	walk_player(t_port *port);
-int		wall_hit(int x, int y, t_port *port, int *wall_content);
+int		wall_hit(double x, double y, t_port *port, int *wall_content);
 
 /* animate/render_frame */
 int		render_frame(t_port *port);

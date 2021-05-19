@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/18 12:58:47 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/19 12:54:02 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ void	put_column(t_port *port, int x, float y, float wall_striphight, int color)
 	float pos_y;
 	float pos_x;
 
+	if (wall_striphight > port->blueprint->screenres_y)
+	{
+		wall_striphight = port->blueprint->screenres_y;
+		y = 0;
+	}
 	pos_y = y + wall_striphight;
 	pos_x = x + port->rays->strip_width; 
 	while (x < pos_x)
@@ -58,14 +63,14 @@ void	render_walls(t_port *port, t_rays *rays, double ray_distance, int colum_id)
 
 	//put_column(port, 0, 137.366455, 525.26709, 0x1605080);
 	//put_square(port, 50, 300, 0x00FF00);
-	//if (colum_id > rays->ray_num)
-	//	return ;
+	if (colum_id > rays->ray_num)
+		return ;
 	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
 	wall_striphight = (port->blueprint->tile_size / ray_distance) * distance_to_plane;
 	x = colum_id * rays->strip_width;
 	y = (port->blueprint->screenres_y / 2) - (wall_striphight / 2);
 	//if (rays->columnid < rays->ray_num)
-	put_column(port, x, y, wall_striphight, 0x1605080);
+	put_column(port, x, y, wall_striphight, 0x16025080);
 	//put_square(port, 50, 300, 0x00FF00);
 
 }
@@ -161,7 +166,9 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	rays->vert_xstep = port->blueprint->tile_size;
 	/*if rays are pointing left*/
 	if (rays->ray_left)
+	{
 		rays->vert_xstep *= -1;
+	}
 	rays->vert_ystep = port->blueprint->tile_size * tan(ray_angle);
 	/*if ray is facing up*/
 	if (rays->ray_up && rays->vert_ystep > 0)
