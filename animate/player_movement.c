@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/19 09:46:53 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/20 12:17:19 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	walk_player(t_port *port)
 	}
 }
 
-int	wall_hit(double x, double y, t_port *port, int *wall_content)
+int	wall_hit(float x, float y, t_port *port, int *wall_content)
 {
 	int wall_pos_x;
 	int wall_pos_y;
@@ -97,8 +97,8 @@ int	wall_hit(double x, double y, t_port *port, int *wall_content)
 		return (1);
 	if (y < 1 || y > port->blueprint->screenres_y)//(port->blueprint->screenres_y - 1))
 		return (1);
-	wall_pos_x = x / port->blueprint->tile_size;
-	wall_pos_y = y / port->blueprint->tile_size;
+	wall_pos_x = floor(x / port->blueprint->tile_size);
+	wall_pos_y = floor(y / port->blueprint->tile_size);
 	if (wall_pos_y > (port->blueprint->map_y - 1))
 		return (1);
 	if (wall_pos_x > (port->blueprint->map_x[wall_pos_y]))

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/19 12:54:02 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/20 12:51:32 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-double	distance_between_points(double x1, double y1, double x2, double y2)
+float	distance_between_points(float x1, float y1, float x2, float y2)
 {
 	return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }
@@ -80,19 +80,19 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	int new_ray;
 	double end_rayy;
 	double end_rayx;
-	double next_touchx;
-	double next_touchy;
-	double next_vert_touchy;
-	double next_vert_touchx;
+	float next_touchx;
+	float next_touchy;
+	float next_vert_touchy;
+	float next_vert_touchx;
 	//double hit_x;
 	//double hit_y;
-	double hor_hit_x;
-	double hor_hit_y;
-	double vert_hit_x;
-	double vert_hit_y;
-	double horz_distance;
-	double vert_distance;
-	int	var;
+	float hor_hit_x;
+	float hor_hit_y;
+	float vert_hit_x;
+	float vert_hit_y;
+	float horz_distance;
+	float vert_distance;
+	float	var;
 
 	//put_square(port, 50, 300, 0x00FF00);
 	hor_hit_x = 0;
@@ -111,7 +111,7 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	int	hor_wall_content = 0;
 	int vert_wall_content = 0;
 
-	normalize_ray_angle(&ray_angle);
+	//normalize_ray_angle(&ray_angle);
 	rays->ray_down = ray_angle > 0 && ray_angle < M_PI;
 	rays->ray_up = !rays->ray_down;
 	rays->ray_right = ray_angle < (0.5 * M_PI) || ray_angle > (1.5 * M_PI);
@@ -141,7 +141,14 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 		var = 1;
 	while (1)
 	{
-		if (wall_hit(next_touchx, (next_touchy - var), port, &hor_wall_content))
+		//if (rays->hx_intercept == playerx && rays->hy_intercept == playery)
+		//{
+		//	hor_hit_x = playerx;
+		//	hor_hit_y = playery;
+		//	found_hor_wallhit = 1;
+		//	break;
+		//}
+		if (wall_hit((next_touchx), (next_touchy - var), port, &hor_wall_content))
 		{
 			hor_hit_x = next_touchx;
 			hor_hit_y = next_touchy;
@@ -185,7 +192,14 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 		var = 1;
 	while (1)
 	{
-		if (wall_hit((next_vert_touchx - var), next_vert_touchy, port, &vert_wall_content))
+		//if (rays->vx_intercept == playerx && rays->vy_intercept == playery)
+		//{
+		//	vert_hit_x = playerx;
+		//	vert_hit_y = playery;
+		//	fount_vert_wallhit = 1;
+		//	break;
+		//}
+		if (wall_hit((next_vert_touchx - var), (next_vert_touchy - 0.0001), port, &vert_wall_content))
 		{
 			vert_hit_x = next_vert_touchx;
 			vert_hit_y = next_vert_touchy;
@@ -208,7 +222,7 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 		vert_distance = distance_between_points(playerx, playery, vert_hit_x, vert_hit_y);
 	else
 		vert_distance = INT_MAX;
-	if (horz_distance < vert_distance)
+	if (horz_distance <= vert_distance)
 	{
 		//render_walls(port, port->rays, horz_distance);
 		rays->distance = horz_distance;
@@ -246,10 +260,10 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 		colum_id++;
 		i++;
 	}
-	colum_id = 0;
-	while (colum_id < i)
-	{
-		render_walls(port, port->rays, raydistance_array[colum_id], colum_id);
-		colum_id++;
-	}
+//	colum_id = 0;
+//	while (colum_id < i)
+//	{
+//		render_walls(port, port->rays, raydistance_array[colum_id], colum_id);
+//		colum_id++;
+//	}
 }
