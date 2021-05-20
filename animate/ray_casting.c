@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/20 14:25:28 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/20 18:13:23 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,14 +225,14 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	if (horz_distance <= vert_distance)
 	{
 		//render_walls(port, port->rays, horz_distance);
-		rays->distance = horz_distance;
+		rays->distance = horz_distance * cos(ray_angle - port->player->rotation);
 //		draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
 		//put_square(port, 50, 300, 0x00FF00);
 	}
 	else
 	{
 		//render_walls(port, port->rays, vert_distance);
-		rays->distance = vert_distance;
+		rays->distance = vert_distance * cos(ray_angle - port->player->rotation);
 //		draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
 		//put_square(port, 150, 300, 0x00FF00);
 	}
@@ -240,7 +240,6 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 
 void	cast_all_rays(t_port *port, int playerx, int playery)
 {
-	//t_rays *rays[port->rays->ray_num];
 	double raydistance_array[port->rays->ray_num];
 	double ray_angle;
 	int colum_id;
@@ -249,12 +248,10 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 	i = 0;
 	colum_id = 0;
 	ray_angle = port->player->rotation - (port->rays->fov_angle / 2);
-	//while (port->rays->columnid < port->rays->ray_num)
 	while (i < port->rays->ray_num)
 	{
 		normalize_ray_angle(&ray_angle);
 		new_ray(port, port->rays, ray_angle, playerx, playery);
-		//rays[colum_id] = port->rays;
 		raydistance_array[colum_id] = port->rays->distance;
 		ray_angle += port->rays->fov_angle / port->rays->ray_num;
 		colum_id++;
