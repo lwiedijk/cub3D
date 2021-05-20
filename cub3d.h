@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/19 09:31:34 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/20 12:24:45 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ typedef struct s_player
 
 typedef struct	s_rays
 {
-	double 		fov_angle;
-	double		ray_angle;
+	float 		fov_angle;
+	float		ray_angle;
 //	float		wall_hit_x;
 //	float		wall_hit_y;
-	double		distance;
+	float		distance;
 	int			ray_up;
 	int			ray_down;
 	int			ray_right;
@@ -75,14 +75,14 @@ typedef struct	s_rays
 //	int			wall_hit_content;
 	int			ray_num;
 	int			strip_width;
-	long		hx_intercept;
-	long		hy_intercept;
-	long		vx_intercept;
-	long		vy_intercept;
-	double		horz_xstep;
-	int			horz_ystep;
-	int			vert_xstep;
-	double		vert_ystep;
+	float		hx_intercept;
+	float		hy_intercept;
+	float		vx_intercept;
+	float		vy_intercept;
+	float		horz_xstep;
+	float		horz_ystep;
+	float		vert_xstep;
+	float		vert_ystep;
 	int			columnid;
 }				t_rays;
 
@@ -114,7 +114,7 @@ int		key_release_hook(int keycode, t_port *port);
 void	set_player(t_port *port);
 void	draw_player(t_port *port, int x, int y, int color);
 void	walk_player(t_port *port);
-int		wall_hit(double x, double y, t_port *port, int *wall_content);
+int		wall_hit(float x, float y, t_port *port, int *wall_content);
 
 /* animate/render_frame */
 int		render_frame(t_port *port);
