@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/20 12:51:32 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/20 14:25:28 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,14 +226,14 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	{
 		//render_walls(port, port->rays, horz_distance);
 		rays->distance = horz_distance;
-		draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
+//		draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
 		//put_square(port, 50, 300, 0x00FF00);
 	}
 	else
 	{
 		//render_walls(port, port->rays, vert_distance);
 		rays->distance = vert_distance;
-		draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
+//		draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
 		//put_square(port, 150, 300, 0x00FF00);
 	}
 }
@@ -260,10 +260,10 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 		colum_id++;
 		i++;
 	}
-//	colum_id = 0;
-//	while (colum_id < i)
-//	{
-//		render_walls(port, port->rays, raydistance_array[colum_id], colum_id);
-//		colum_id++;
-//	}
+	colum_id = 0;
+	while (colum_id < i)
+	{
+		render_walls(port, port->rays, raydistance_array[colum_id], colum_id);
+		colum_id++;
+	}
 }
