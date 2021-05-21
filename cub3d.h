@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/20 12:24:45 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/21 11:33:57 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		render_frame(t_port *port);
 void	put_square(t_port *port, int x, int y, int color);
 void	draw_line(t_mlx *mlx, double begin_x, double begin_y, double end_x, double end_y, int color);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
-int		put_color(int r, int g, int b);
+int		put_color(int t, int r, int g, int b);
 
 /* animate/ray_casting */
 void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery);
