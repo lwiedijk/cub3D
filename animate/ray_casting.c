@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/20 18:13:23 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/21 12:27:59 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,25 @@ void	put_column(t_port *port, int x, float y, float wall_striphight, int color)
 	}
 }
 
-void	render_walls(t_port *port, t_rays *rays, double ray_distance, int colum_id)
+void	render_walls(t_port *port, t_rays *rays, double ray_distance, int colum_id, int dept)
 {
 	float	distance_to_plane;
 	float	wall_striphight;
 	int		x;
 	float	y;
+	int		color;
+	//uint32_t color_t; 
 
-	//put_column(port, 0, 137.366455, 525.26709, 0x1605080);
-	//put_square(port, 50, 300, 0x00FF00);
+	if (dept > 16777215)
+		dept = 16777215;
+	color = put_color(0, 50, 50, 50);
 	if (colum_id > rays->ray_num)
 		return ;
 	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
 	wall_striphight = (port->blueprint->tile_size / ray_distance) * distance_to_plane;
 	x = colum_id * rays->strip_width;
 	y = (port->blueprint->screenres_y / 2) - (wall_striphight / 2);
-	//if (rays->columnid < rays->ray_num)
-	put_column(port, x, y, wall_striphight, 0x16025080);
-	//put_square(port, 50, 300, 0x00FF00);
-
+	put_column(port, x, y, wall_striphight, dept);
 }
 
 void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery)
@@ -244,6 +244,7 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 	double ray_angle;
 	int colum_id;
 	int i;
+	int dept;
 
 	i = 0;
 	colum_id = 0;
@@ -260,7 +261,8 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 	colum_id = 0;
 	while (colum_id < i)
 	{
-		render_walls(port, port->rays, raydistance_array[colum_id], colum_id);
+		dept = 10000 / raydistance_array[colum_id];
+		render_walls(port, port->rays, raydistance_array[colum_id], colum_id, dept);
 		colum_id++;
 	}
 }

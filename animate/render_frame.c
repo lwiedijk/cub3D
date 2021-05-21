@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/20 14:42:50 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/21 11:30:19 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	put_color(int r, int g, int b)
+int	put_color(int t, int r, int g, int b)
 {
 	int color;
 
-	color = ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
+	color = ((t & 0xff) << 24) + ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 	return (color);
 }
 
