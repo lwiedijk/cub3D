@@ -6,13 +6,25 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/20 17:22:43 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/22 15:54:21 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "../mlx/mlx.h"
 #include <math.h>
+
+void	set_player_rotation(t_port *port, t_maze *p)
+{
+	if (p->player_or == 'N')
+		port->player->rotation = M_PI * -0.5; //set
+	if (p->player_or == 'E')
+		port->player->rotation = M_PI / 0.5; //set
+	if (p->player_or == 'S')
+		port->player->rotation = M_PI / 2; //set
+			if (p->player_or == 'W')
+		port->player->rotation = M_PI; //set
+}
 
 void	set_player(t_port *port)
 {
@@ -28,6 +40,7 @@ void	set_player(t_port *port)
 		{
 			if (port->blueprint->map[y][x] == 'p')
 			{
+				set_player_rotation(port, port->blueprint);
 				port->player->pos_x = (x * port->blueprint->tile_size);
 				port->player->pos_y = (y * port->blueprint->tile_size);
 				port->blueprint->map[y][x] = 0;

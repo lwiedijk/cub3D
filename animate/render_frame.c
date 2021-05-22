@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/21 11:30:19 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/22 16:11:06 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int	render_frame(t_port *port)
 	port->mlx->addr = mlx_get_data_addr(port->mlx->img_1, &port->mlx->bits_per_pixel,
 	&port->mlx->line_length, &port->mlx->endian);
 	//draw_2d_map(port);
-	put_wall_ceiling(port, port->blueprint);
+	//put_wall_ceiling(port, port->blueprint);
 	cast_all_rays(port, port->player->pos_x, port->player->pos_y);
 	//draw_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
 	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win, port->mlx->img_1, 0, 0);

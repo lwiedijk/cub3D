@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 12:30:18 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/13 14:30:40 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/22 15:44:03 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	write_map(t_maze *blueprint, char *mapfile)
 			else if (mapfile[i] == 'N' || mapfile[i]
 			== 'E' || mapfile[i] == 'W' || mapfile[i] == 'S')
 			{
+				blueprint->player_or = mapfile[i];
 				blueprint->map[y][x] = 'p';
 				x++;
 			}

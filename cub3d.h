@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/21 11:33:57 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/22 16:20:18 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_maze
 	int			**map;
 	int			tile_size;
 	int			jump_size;
+	char		player_or;
 }				t_maze;
 
 typedef struct s_player
@@ -84,7 +85,18 @@ typedef struct	s_rays
 	float		vert_xstep;
 	float		vert_ystep;
 	int			columnid;
+	char		wall_or;
 }				t_rays;
+
+typedef	struct	s_wall
+{
+	double		raydistance;
+	char		wall_or;
+	int			wall_or_n;
+	int			wall_or_e;
+	int			wall_or_s;
+	int			wall_or_w;	
+}				t_wall;
 
 typedef	struct	s_port
 {
