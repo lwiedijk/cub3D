@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/19 14:52:56 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/22 15:32:47 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	init_maze(t_maze *blueprint)
 	blueprint->map = 0;
 	blueprint->tile_size = 40;
 	blueprint->jump_size = 40;
+	blueprint->player_or = 0;
 }
 
 void	init_mlx(t_mlx *mlx)
@@ -55,7 +56,7 @@ void	init_player(t_player *player)
 	player->pos_y = 0;
 	player->walkdirection = 0;
 	player->turndirection = 0;
-	player->rotation = M_PI / 0.7;
+	player->rotation = 0;
 	player->move_speed = 2.0;
 	player->rotation_speed = 3 * (M_PI / 180);
 }

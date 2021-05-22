@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/21 12:27:59 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/22 16:42:21 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	put_column(t_port *port, int x, float y, float wall_striphight, int color)
 	}
 }
 
-void	render_walls(t_port *port, t_rays *rays, double ray_distance, int colum_id, int dept)
+void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 {
 	float	distance_to_plane;
 	float	wall_striphight;
@@ -63,16 +63,23 @@ void	render_walls(t_port *port, t_rays *rays, double ray_distance, int colum_id,
 	int		color;
 	//uint32_t color_t; 
 
-	if (dept > 16777215)
-		dept = 16777215;
-	color = put_color(0, 50, 50, 50);
+	//if (dept > 16777215)
+	//	dept = 16777215;
+	if (wall_array[colum_id].wall_or == 'N')
+		color = put_color(0, 50, 50, 50);
+	if (wall_array[colum_id].wall_or == 'E')
+		color = put_color(0, 200, 50, 50);
+	if (wall_array[colum_id].wall_or == 'S')
+		color = put_color(0, 50, 200, 0);
+	if (wall_array[colum_id].wall_or == 'W')
+		color = put_color(0, 0, 50, 200);
 	if (colum_id > rays->ray_num)
 		return ;
 	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
-	wall_striphight = (port->blueprint->tile_size / ray_distance) * distance_to_plane;
+	wall_striphight = (port->blueprint->tile_size / wall_array[colum_id].raydistance) * distance_to_plane;
 	x = colum_id * rays->strip_width;
 	y = (port->blueprint->screenres_y / 2) - (wall_striphight / 2);
-	put_column(port, x, y, wall_striphight, dept);
+	put_column(port, x, y, wall_striphight, color);
 }
 
 void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery)
@@ -215,32 +222,44 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	}
 	//draw_line(port->mlx, playerx, playery, hit_x, hit_y, 0x805080);
 	if (found_hor_wallhit)
+	{
 		horz_distance = distance_between_points(playerx, playery, hor_hit_x, hor_hit_y);
+	}		
 	else
 		horz_distance = INT_MAX;
 	if (fount_vert_wallhit)
+	{
 		vert_distance = distance_between_points(playerx, playery, vert_hit_x, vert_hit_y);
+	}
 	else
 		vert_distance = INT_MAX;
 	if (horz_distance <= vert_distance)
 	{
 		//render_walls(port, port->rays, horz_distance);
 		rays->distance = horz_distance * cos(ray_angle - port->player->rotation);
-//		draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
+		if (rays->ray_up)
+			rays->wall_or = 'N';
+		else
+			rays->wall_or = 'S';
+		//draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
 		//put_square(port, 50, 300, 0x00FF00);
 	}
 	else
 	{
 		//render_walls(port, port->rays, vert_distance);
 		rays->distance = vert_distance * cos(ray_angle - port->player->rotation);
-//		draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
+		if (rays->ray_right)
+			rays->wall_or = 'E';
+		else
+			rays->wall_or = 'W';
+		//draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
 		//put_square(port, 150, 300, 0x00FF00);
 	}
 }
 
 void	cast_all_rays(t_port *port, int playerx, int playery)
 {
-	double raydistance_array[port->rays->ray_num];
+	t_wall wall_array[port->rays->ray_num];
 	double ray_angle;
 	int colum_id;
 	int i;
@@ -253,7 +272,8 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 	{
 		normalize_ray_angle(&ray_angle);
 		new_ray(port, port->rays, ray_angle, playerx, playery);
-		raydistance_array[colum_id] = port->rays->distance;
+		wall_array[colum_id].raydistance = port->rays->distance;
+		wall_array[colum_id].wall_or = port->rays->wall_or;
 		ray_angle += port->rays->fov_angle / port->rays->ray_num;
 		colum_id++;
 		i++;
@@ -261,8 +281,8 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 	colum_id = 0;
 	while (colum_id < i)
 	{
-		dept = 10000 / raydistance_array[colum_id];
-		render_walls(port, port->rays, raydistance_array[colum_id], colum_id, dept);
+		//dept = 10000 / raydistance_array[colum_id];
+		render_walls(port, port->rays, wall_array, colum_id);
 		colum_id++;
 	}
 }
