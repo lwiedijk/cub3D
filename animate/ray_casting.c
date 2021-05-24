@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/22 16:42:21 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/24 17:00:41 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ void	normalize_ray_angle(double *ray_angle)
 		*ray_angle = (2 * M_PI) + *ray_angle;
 }
 
+int		put_texture(t_port *port, char wall_or, int y, int x)
+{
+	int	color;
+
+	color = *(int*)(port->tex->addr_n + (y * port->tex->ls_n) + (x * (port->tex->bpp_n / 8)));
+	return (color);
+}
+
 void	put_column(t_port *port, int x, float y, float wall_striphight, int color)
 {
 	int yi;
@@ -48,6 +56,7 @@ void	put_column(t_port *port, int x, float y, float wall_striphight, int color)
 		while (yi < pos_y) 
 		{
 			my_mlx_pixel_put(port->mlx, x, yi, color);
+			//color = *(int*)(port->tex->addr_n + (yi * port->tex->ls_n) + (x * (port->tex->bpp_n / 8)));
 			yi++;
 		}
 		x++;
@@ -65,20 +74,20 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 
 	//if (dept > 16777215)
 	//	dept = 16777215;
-	if (wall_array[colum_id].wall_or == 'N')
-		color = put_color(0, 50, 50, 50);
-	if (wall_array[colum_id].wall_or == 'E')
-		color = put_color(0, 200, 50, 50);
-	if (wall_array[colum_id].wall_or == 'S')
-		color = put_color(0, 50, 200, 0);
-	if (wall_array[colum_id].wall_or == 'W')
-		color = put_color(0, 0, 50, 200);
 	if (colum_id > rays->ray_num)
 		return ;
 	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
 	wall_striphight = (port->blueprint->tile_size / wall_array[colum_id].raydistance) * distance_to_plane;
 	x = colum_id * rays->strip_width;
 	y = (port->blueprint->screenres_y / 2) - (wall_striphight / 2);
+	if (wall_array[colum_id].wall_or == 'N')
+		color = put_color(0, 50, 50, 50);//put_texture(port, wall_array[colum_id].wall_or, y, x); 
+	if (wall_array[colum_id].wall_or == 'E')
+		color = put_color(0, 200, 50, 50);
+	if (wall_array[colum_id].wall_or == 'S')
+		color = put_color(0, 50, 200, 0);
+	if (wall_array[colum_id].wall_or == 'W')
+		color = put_color(0, 0, 50, 200);
 	put_column(port, x, y, wall_striphight, color);
 }
 
@@ -241,7 +250,7 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 			rays->wall_or = 'N';
 		else
 			rays->wall_or = 'S';
-		//draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
+		draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
 		//put_square(port, 50, 300, 0x00FF00);
 	}
 	else
@@ -252,7 +261,7 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 			rays->wall_or = 'E';
 		else
 			rays->wall_or = 'W';
-		//draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
+		draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
 		//put_square(port, 150, 300, 0x00FF00);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/22 15:54:21 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/24 11:40:57 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	set_player(t_port *port)
 			if (port->blueprint->map[y][x] == 'p')
 			{
 				set_player_rotation(port, port->blueprint);
-				port->player->pos_x = (x * port->blueprint->tile_size);
-				port->player->pos_y = (y * port->blueprint->tile_size);
+				port->player->pos_x = ((x * port->blueprint->tile_size) + (port->blueprint->tile_size / 2));
+				port->player->pos_y = ((y * port->blueprint->tile_size) + (port->blueprint->tile_size / 2));
 				port->blueprint->map[y][x] = 0;
 			}
 			x++;
@@ -58,24 +58,21 @@ void	draw_player(t_port *port, int x, int y, int color)
 	int	pos_y;
 	int	pos_x;
 
-	pos_y = y + 10;
-	pos_x = x + 10;
-	while (y < pos_y)
+	pos_y = (y - 5);
+	xi = (x + 5);
+	yi = (y + 5);
+	while (pos_y < yi)
 	{
-		xi = x;
-		while (xi < pos_x)
+		pos_x = (x - 5);
+		while (pos_x < xi)
 		{
-			my_mlx_pixel_put(port->mlx, xi, y, color);
-			xi++;
+			my_mlx_pixel_put(port->mlx, pos_x, pos_y, color);
+			pos_x++;
 		}
-		y++;
+		pos_y++;
 	}
-	y = y - 10;
-	if (y < pos_y)
-	{
-		draw_line(port->mlx, x, y, (x + cos(port->player->rotation) * 40),
-			(y + sin(port->player->rotation) * 40), 0xFFFFFF);
-	}
+	draw_line(port->mlx, x, y, (x + cos(port->player->rotation) * port->blueprint->tile_size),
+		(y + sin(port->player->rotation) * port->blueprint->tile_size), 0xFFFFFF);
 }
 
 void	walk_player(t_port *port)
