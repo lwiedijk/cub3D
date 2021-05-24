@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/22 16:20:18 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/24 15:09:56 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,45 @@ typedef struct	s_mlx
 	int			next_frame;
 	int			on_off;
 }				t_mlx;
+
+typedef	struct	s_tex
+{
+	void		*tex_s;
+	char		*addr_s;
+	int			bpp_s;
+	int			ls_s;
+	int			end_s;
+	int			y_s;
+	int			x_s;
+	void		*tex_w;
+	char		*addr_w;
+	int			bpp_w;
+	int			ls_w;
+	int			end_w;
+	int			y_w;
+	int			x_w;
+	void		*tex_n;
+	char		*addr_n;
+	int			bpp_n;
+	int			ls_n;
+	int			end_n;
+	int			y_n;
+	int			x_n;
+	void		*tex_e;
+	char		*addr_e;
+	int			bpp_e;
+	int			ls_e;
+	int			end_e;
+	int			y_e;
+	int			x_e;
+	void		*tex_spr;
+	char		*addr_spr;
+	int			bpp_spr;
+	int			ls_spr;
+	int			end_spr;
+	int			y_spr;
+	int			x_spr;
+}				t_tex;
 
 typedef struct	s_maze
 {
@@ -50,15 +89,15 @@ typedef struct	s_maze
 	char		player_or;
 }				t_maze;
 
-typedef struct s_player
+typedef struct	s_player
 {
-	int	pos_x;
-	int	pos_y;
-	int	walkdirection;
-	int turndirection;
-	double rotation;
-	double	move_speed;
-	double rotation_speed;
+	int			pos_x;
+	int			pos_y;
+	int			walkdirection;
+	int			turndirection;
+	double		rotation;
+	double		move_speed;
+	double		rotation_speed;
 }				t_player;
 
 typedef struct	s_rays
@@ -104,12 +143,16 @@ typedef	struct	s_port
 	t_maze		*blueprint;
 	t_player	*player;
 	t_rays		*rays;
+	t_tex		*tex;
 }				t_port;
 
 void	init_maze(t_maze *blueprint);
 void	init_mlx(t_mlx *mlx);
 void	init_player(t_player *player);
 void	init_rays(t_rays *rays, t_maze *blueprint);
+void	init_tex(t_tex *tex);
+void	init_tex_2(t_tex *tex);
+void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
 void	parse(char *av, t_maze *blueprint);
 void	parse_mapfile(t_maze *blueprint, char *mapfile);
 void	parse_screenres(t_maze *blueprint, char *mapfile);
