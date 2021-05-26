@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/22 15:32:47 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/24 14:45:12 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,50 @@ void	init_mlx(t_mlx *mlx)
 	mlx->line_length = 0;
 	mlx->endian = 0;
 	mlx->next_frame = 0;
+}
+
+void	init_tex_2(t_tex *tex)
+{
+	tex->tex_e = 0;
+	tex->addr_e = 0;
+	tex->bpp_e = 0;
+	tex->ls_e = 0;
+	tex->end_e = 0;
+	tex->x_e = 0;
+	tex->y_e = 0;
+	tex->tex_spr = 0;
+	tex->addr_spr = 0;
+	tex->bpp_spr = 0;
+	tex->ls_spr = 0;
+	tex->end_spr = 0;
+	tex->x_spr = 0;
+	tex->y_spr = 0;
+}
+
+void	init_tex(t_tex *tex)
+{
+	tex->tex_n = 0;
+	tex->addr_n = 0;
+	tex->bpp_n = 0;
+	tex->ls_n = 0;
+	tex->end_n = 0;
+	tex->x_n = 0;
+	tex->y_n = 0;
+	tex->tex_s = 0;
+	tex->addr_s = 0;
+	tex->bpp_s = 0;
+	tex->ls_s = 0;
+	tex->end_s = 0;
+	tex->x_s = 0;
+	tex->y_s = 0;
+	tex->tex_w = 0;
+	tex->addr_w = 0;
+	tex->bpp_w = 0;
+	tex->ls_w = 0;
+	tex->end_w = 0;
+	tex->x_w = 0;
+	tex->y_w = 0;
+	init_tex_2(tex);
 }
 
 void	init_player(t_player *player)

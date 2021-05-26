@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/26 15:26:24 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/26 17:29:58 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,19 @@ void	normalize_ray_angle(double *ray_angle)
 **		Returns a color value out of a texture coordinate.
 */
 
-int		put_texture(t_tex *tex, int x, int y)
+int		put_north_texture(t_tex *tex, int x, int y)
 {
 	int	color;
 
 	color = *(int*)(tex->addr_n + (y * tex->ls_n) + (x * (tex->bpp_n / 8)));
+	return (color);
+}
+
+int		put_east_texture(t_tex *tex, int x, int y)
+{
+	int	color;
+
+	color = *(int*)(tex->addr_e + (y * tex->ls_e) + (x * (tex->bpp_e / 8)));
 	return (color);
 }
 
@@ -112,18 +120,28 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 		{
 			tex_y = (int)port->tex->position & (port->tex->y_n - 1);
 			port->tex->position += port->tex->step;
-			tex_color = put_texture(port->tex, tex_x, tex_y);
+			tex_color = put_north_texture(port->tex, tex_x, tex_y);
 			my_mlx_pixel_put(port->mlx, x, draw_start, tex_color);
 			draw_start++;
 		}
 	}
 	if (wall_array[colum_id].wall_or == 'E')
-		color = put_color(0, 200, 50, 50);
+	{
+		calculate_textures(port, port->tex, wall_array[colum_id].wall_or);
+		while (draw_start < draw_end)
+		{
+			tex_y = (int)port->tex->position & (port->tex->y_e - 1);
+			port->tex->position += port->tex->step;
+			tex_color = put_east_texture(port->tex, tex_x, tex_y);
+			my_mlx_pixel_put(port->mlx, x, draw_start, tex_color);
+			draw_start++;
+		}
+	}
 	if (wall_array[colum_id].wall_or == 'S')
 		color = put_color(0, 50, 200, 0);
 	if (wall_array[colum_id].wall_or == 'W')
 		color = put_color(0, 0, 50, 200);
-	//put_column(port, x, draw_start, wall_striphight, color);
+//	put_column(port, x, draw_start, wall_striphight, color);
 }
 
 void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery)
