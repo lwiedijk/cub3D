@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/24 17:00:41 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/26 15:26:24 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,15 @@ void	normalize_ray_angle(double *ray_angle)
 		*ray_angle = (2 * M_PI) + *ray_angle;
 }
 
-int		put_texture(t_port *port, char wall_or, int y, int x)
+/*
+**		Returns a color value out of a texture coordinate.
+*/
+
+int		put_texture(t_tex *tex, int x, int y)
 {
 	int	color;
 
-	color = *(int*)(port->tex->addr_n + (y * port->tex->ls_n) + (x * (port->tex->bpp_n / 8)));
+	color = *(int*)(tex->addr_n + (y * tex->ls_n) + (x * (tex->bpp_n / 8)));
 	return (color);
 }
 
@@ -48,7 +52,7 @@ void	put_column(t_port *port, int x, float y, float wall_striphight, int color)
 		wall_striphight = port->blueprint->screenres_y;
 		y = 0;
 	}
-	pos_y = y + wall_striphight;
+	pos_y = y + wall_striphight; //pos_y = line_end , y = line_start
 	pos_x = x + port->rays->strip_width; 
 	while (x < pos_x)
 	{
@@ -70,6 +74,11 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 	int		x;
 	float	y;
 	int		color;
+	int		tex_color;
+	float	draw_start;
+	float	draw_end;
+	int		tex_x;
+	int		tex_y;
 	//uint32_t color_t; 
 
 	//if (dept > 16777215)
@@ -79,16 +88,42 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
 	wall_striphight = (port->blueprint->tile_size / wall_array[colum_id].raydistance) * distance_to_plane;
 	x = colum_id * rays->strip_width;
-	y = (port->blueprint->screenres_y / 2) - (wall_striphight / 2);
+	//y = (port->blueprint->screenres_y / 2) - (wall_striphight / 2); //line_start
+	draw_start = (port->blueprint->screenres_y / 2) - (wall_striphight / 2); //line_start
+	draw_end = draw_start + wall_striphight;
+
+	rays->wall_striphight = wall_striphight;
+	rays->draw_start = draw_start;
+	rays->draw_end = draw_end;
+	
+	if (rays->vertical_hit)
+		tex_x = (int)wall_array[colum_id].wall_hit_y % port->tex->x_n;
+	else
+		tex_x = (int)wall_array[colum_id].wall_hit_x % port->tex->x_n;
+	if (wall_striphight > port->blueprint->screenres_y)
+	{
+		draw_end = port->blueprint->screenres_y;
+		draw_start = 0;
+	}
 	if (wall_array[colum_id].wall_or == 'N')
-		color = put_color(0, 50, 50, 50);//put_texture(port, wall_array[colum_id].wall_or, y, x); 
+	{
+		calculate_textures(port, port->tex, wall_array[colum_id].wall_or);
+		while (draw_start < draw_end)
+		{
+			tex_y = (int)port->tex->position & (port->tex->y_n - 1);
+			port->tex->position += port->tex->step;
+			tex_color = put_texture(port->tex, tex_x, tex_y);
+			my_mlx_pixel_put(port->mlx, x, draw_start, tex_color);
+			draw_start++;
+		}
+	}
 	if (wall_array[colum_id].wall_or == 'E')
 		color = put_color(0, 200, 50, 50);
 	if (wall_array[colum_id].wall_or == 'S')
 		color = put_color(0, 50, 200, 0);
 	if (wall_array[colum_id].wall_or == 'W')
 		color = put_color(0, 0, 50, 200);
-	put_column(port, x, y, wall_striphight, color);
+	//put_column(port, x, draw_start, wall_striphight, color);
 }
 
 void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery)
@@ -246,6 +281,9 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	{
 		//render_walls(port, port->rays, horz_distance);
 		rays->distance = horz_distance * cos(ray_angle - port->player->rotation);
+		rays->wall_hit_x = hor_hit_x;
+		rays->wall_hit_y = hor_hit_y;
+		rays->vertical_hit = 0;
 		if (rays->ray_up)
 			rays->wall_or = 'N';
 		else
@@ -257,6 +295,9 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	{
 		//render_walls(port, port->rays, vert_distance);
 		rays->distance = vert_distance * cos(ray_angle - port->player->rotation);
+		rays->wall_hit_x = vert_hit_x;
+		rays->wall_hit_y = vert_hit_y;
+		rays->vertical_hit = 1;
 		if (rays->ray_right)
 			rays->wall_or = 'E';
 		else
@@ -283,6 +324,8 @@ void	cast_all_rays(t_port *port, int playerx, int playery)
 		new_ray(port, port->rays, ray_angle, playerx, playery);
 		wall_array[colum_id].raydistance = port->rays->distance;
 		wall_array[colum_id].wall_or = port->rays->wall_or;
+		wall_array[colum_id].wall_hit_x = port->rays->wall_hit_x;
+		wall_array[colum_id].wall_hit_y = port->rays->wall_hit_y;
 		ray_angle += port->rays->fov_angle / port->rays->ray_num;
 		colum_id++;
 		i++;
