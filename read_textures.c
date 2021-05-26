@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/24 15:14:13 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/24 16:38:22 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/26 11:43:10 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,14 @@ void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex)
 	tex->addr_n = mlx_get_data_addr(tex->tex_n, &tex->bpp_n, &tex->ls_n, &tex->end_n);
 }
 
+void	calculate_textures(t_port *port, t_tex *tex, char map)
+{
+	if (map == 'N')
+	{
+		tex->step = 1.0 * tex->y_n / port->rays->wall_striphight;
+		tex->position = (port->rays->draw_start - port->blueprint->screenres_y / 2 + port->rays->wall_striphight / 2) * tex->step;
+		
+	}
+
+}
 
