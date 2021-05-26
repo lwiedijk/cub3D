@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/24 15:09:56 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/05/26 15:22:40 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ typedef	struct	s_tex
 	int			end_spr;
 	int			y_spr;
 	int			x_spr;
+	double		step;
+	double		position;
+	double		wall_x;
 }				t_tex;
 
 typedef struct	s_maze
@@ -104,14 +107,14 @@ typedef struct	s_rays
 {
 	float 		fov_angle;
 	float		ray_angle;
-//	float		wall_hit_x;
-//	float		wall_hit_y;
+	float		wall_hit_x;
+	float		wall_hit_y;
 	float		distance;
 	int			ray_up;
 	int			ray_down;
 	int			ray_right;
 	int			ray_left;
-//	int			verical_hit;
+	int			vertical_hit;
 //	int			wall_hit_content;
 	int			ray_num;
 	int			strip_width;
@@ -125,16 +128,17 @@ typedef struct	s_rays
 	float		vert_ystep;
 	int			columnid;
 	char		wall_or;
+	float		wall_striphight;
+	float		draw_start;
+	float		draw_end;
 }				t_rays;
 
 typedef	struct	s_wall
 {
 	double		raydistance;
 	char		wall_or;
-	int			wall_or_n;
-	int			wall_or_e;
-	int			wall_or_s;
-	int			wall_or_w;	
+	float		wall_hit_x;
+	float		wall_hit_y;
 }				t_wall;
 
 typedef	struct	s_port
@@ -181,3 +185,7 @@ int		put_color(int t, int r, int g, int b);
 /* animate/ray_casting */
 void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery);
 void	cast_all_rays(t_port *port, int playerx, int playery);
+
+/* read_textures */
+void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
+void	calculate_textures(t_port *port, t_tex *tex, char map);
