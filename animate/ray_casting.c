@@ -30,7 +30,7 @@ void	normalize_ray_angle(double *ray_angle)
 }
 
 /*
-**		Returns a color value out of a texture coordinate.
+**		Returns a color value from a coordinate out of a texture image.
 */
 
 int		put_north_texture(t_tex *tex, int x, int y)
