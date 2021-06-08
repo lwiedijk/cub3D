@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/24 14:45:12 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/08 14:31:04 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ void	init_tex_2(t_tex *tex)
 	tex->end_spr = 0;
 	tex->x_spr = 0;
 	tex->y_spr = 0;
+	tex->step = 0;
+	tex->position = 0;
+	tex->wall_x = 0;
 }
 
 void	init_tex(t_tex *tex)
@@ -101,8 +104,8 @@ void	init_player(t_player *player)
 	player->walkdirection = 0;
 	player->turndirection = 0;
 	player->rotation = 0;
-	player->move_speed = 2.0;
-	player->rotation_speed = 3 * (M_PI / 180);
+	player->move_speed = 5.0;
+	player->rotation_speed = 4 * (M_PI / 180);
 }
 
 void	init_rays(t_rays *rays, t_maze *blueprint)

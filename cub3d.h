@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 11:03:11 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/08 13:25:50 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef	struct	s_wall
 	char		wall_or;
 	float		wall_hit_x;
 	float		wall_hit_y;
+	int			vertical_hit;
 }				t_wall;
 
 typedef	struct	s_port
