@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 13:02:01 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/08 13:28:42 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 	draw_end = draw_start + wall_striphight;
 
 	
-	if (rays->vertical_hit)
+	if (wall_array[colum_id].vertical_hit)
 		tex_x = (int)wall_array[colum_id].wall_hit_y % port->tex->x_n;
 	else
 		tex_x = (int)wall_array[colum_id].wall_hit_x % port->tex->x_n;
@@ -344,6 +344,7 @@ void	cast_all_rays(t_port *port, float playerx, float playery)
 		wall_array[colum_id].wall_or = port->rays->wall_or;
 		wall_array[colum_id].wall_hit_x = port->rays->wall_hit_x;
 		wall_array[colum_id].wall_hit_y = port->rays->wall_hit_y;
+		wall_array[colum_id].vertical_hit = port->rays->vertical_hit;
 		ray_angle += port->rays->fov_angle / port->rays->ray_num;
 		colum_id++;
 		i++;
