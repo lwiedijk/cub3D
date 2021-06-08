@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/26 17:29:58 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/08 09:08:03 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	normalize_ray_angle(double *ray_angle)
 }
 
 /*
-**		Returns a color value from a coordinate out of a texture image.
+**		Returns a color value from a coordinate of the texture image.
 */
 
 int		put_north_texture(t_tex *tex, int x, int y)
