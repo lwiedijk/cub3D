@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/26 15:22:40 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/08 11:03:11 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ typedef struct	s_maze
 
 typedef struct	s_player
 {
-	int			pos_x;
-	int			pos_y;
+	double		pos_x;
+	double		pos_y;
 	int			walkdirection;
 	int			turndirection;
 	double		rotation;
@@ -183,8 +183,8 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 int		put_color(int t, int r, int g, int b);
 
 /* animate/ray_casting */
-void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery);
-void	cast_all_rays(t_port *port, int playerx, int playery);
+void	new_ray(t_port *port, t_rays *rays, double ray_angle, float playerx, float playery);
+void	cast_all_rays(t_port *port, float playerx, float playery);
 
 /* read_textures */
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);

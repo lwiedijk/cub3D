@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 09:08:03 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/08 11:02:50 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 //	put_column(port, x, draw_start, wall_striphight, color);
 }
 
-void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int playery)
+void	new_ray(t_port *port, t_rays *rays, double ray_angle, float playerx, float playery)
 {
 	int new_ray;
 	double end_rayy;
@@ -325,7 +325,7 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, int playerx, int play
 	}
 }
 
-void	cast_all_rays(t_port *port, int playerx, int playery)
+void	cast_all_rays(t_port *port, float playerx, float playery)
 {
 	t_wall wall_array[port->rays->ray_num];
 	double ray_angle;
