@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/24 11:40:57 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/08 09:44:36 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	draw_player(t_port *port, int x, int y, int color)
 
 void	walk_player(t_port *port)
 {
-	double	step;
-	int		newpos_x;
-	int		newpos_y;
+	double		step;
+	double		newpos_x;
+	double		newpos_y;
 	int		wall_content;
 
 	if (port->player->turndirection)
