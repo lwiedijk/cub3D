@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 11:02:50 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/08 13:02:01 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,6 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 	draw_start = (port->blueprint->screenres_y / 2) - (wall_striphight / 2); //line_start
 	draw_end = draw_start + wall_striphight;
 
-	rays->wall_striphight = wall_striphight;
-	rays->draw_start = draw_start;
-	rays->draw_end = draw_end;
 	
 	if (rays->vertical_hit)
 		tex_x = (int)wall_array[colum_id].wall_hit_y % port->tex->x_n;
@@ -113,6 +110,9 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 		draw_end = port->blueprint->screenres_y;
 		draw_start = 0;
 	}
+	rays->wall_striphight = wall_striphight;
+	rays->draw_start = draw_start;
+	rays->draw_end = draw_end;
 	if (wall_array[colum_id].wall_or == 'N')
 	{
 		calculate_textures(port, port->tex, wall_array[colum_id].wall_or);
