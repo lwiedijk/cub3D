@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/11 12:25:46 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/11 16:03:39 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,17 @@ void	walk_player(t_port *port)
 		step = (port->player->walkdirection * port->player->move_speed);
 		newpos_y = port->player->pos_y + sin(port->player->rotation) * step;
 		newpos_x = port->player->pos_x + cos(port->player->rotation) * step;
+		if (!wall_hit(newpos_x, newpos_y, port, &wall_content))
+		{
+			port->player->pos_y = newpos_y;
+			port->player->pos_x = newpos_x;
+		}
+	}
+	if (port->player->strafe)
+	{
+		step = (port->player->strafe * port->player->move_speed);
+		newpos_y = port->player->pos_y + (sin(port->player->rotation - M_PI_2)) * step;
+		newpos_x = port->player->pos_x + (cos(port->player->rotation - M_PI_2)) * step;
 		if (!wall_hit(newpos_x, newpos_y, port, &wall_content))
 		{
 			port->player->pos_y = newpos_y;
