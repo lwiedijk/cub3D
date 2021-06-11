@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 14:00:59 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/30 19:51:30 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/11 13:59:50 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	key_press_hook(int keycode, t_port *port)
 	}
 	if (keycode == 0)//a
 	{
-		port->player->pos_x -= 5;
+		port->player->strafe = 1;
 	}
 	if (keycode == 2)//d
 	{
-		port->player->pos_x += 5;
+		port->player->strafe = -1;
 	}
 	if (keycode == 124)
 	{
@@ -81,12 +81,12 @@ int	key_release_hook(int keycode, t_port *port)
 	if (keycode == 0)//a
 	{
 		//port->player->pos_x -= 5;
-		port->player->walkdirection = 0;
+		port->player->strafe = 0;
 	}
 	if (keycode == 2)//d
 	{
 		//port->player->pos_x += 5;
-		port->player->walkdirection = 0;
+		port->player->strafe = 0;
 	}
 	if (keycode == 124)
 	{
