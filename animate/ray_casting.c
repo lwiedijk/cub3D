@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 14:26:01 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/11 12:25:01 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 		return ;
 	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
 	wall_striphight = (port->blueprint->tile_size / wall_array[colum_id].raydistance) * distance_to_plane;
+	rays->wall_striphight = wall_striphight;
 	x = colum_id * rays->strip_width;
 	draw_start = (port->blueprint->screenres_y / 2) - (wall_striphight / 2); 
 	draw_end = draw_start + wall_striphight;
@@ -92,7 +93,6 @@ void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
 		draw_end = port->blueprint->screenres_y;
 		draw_start = 0;
 	}
-	rays->wall_striphight = wall_striphight;
 	rays->draw_start = draw_start;
 	rays->draw_end = draw_end;
 	if (wall_array[colum_id].wall_or == 'N')
@@ -195,6 +195,8 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, float playerx, float 
 	next_touchy = rays->hy_intercept;
 	if (rays->ray_up)
 		var = 1;
+	//while (next_touchx >= 0 && next_touchx / port->blueprint->tile_size <= port->blueprint->screenres_x
+	//	&& next_touchy >= 0 && next_touchy / port->blueprint->tile_size <= port->blueprint->screenres_y)
 	while (1)
 	{
 		if (wall_hit((next_touchx), (next_touchy - var), port, &hor_wall_content))
@@ -229,7 +231,9 @@ void	new_ray(t_port *port, t_rays *rays, double ray_angle, float playerx, float 
 	var = 0;
 	if (rays->ray_left)
 		var = 1;
-	while (1)
+	//while (next_vert_touchx >= 0 && next_vert_touchx / port->blueprint->tile_size <= port->blueprint->screenres_x
+	//	&& next_vert_touchy >= 0 && next_vert_touchy / port->blueprint->tile_size <= port->blueprint->screenres_y)
+while (1)
 	{
 		if (wall_hit((next_vert_touchx - var), (next_vert_touchy - 0.0001), port, &vert_wall_content))
 		{
@@ -312,3 +316,5 @@ void	cast_all_rays(t_port *port, float playerx, float playery)
 		colum_id++;
 	}
 }
+
+
