@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 09:44:36 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/11 12:25:46 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ int	wall_hit(float x, float y, t_port *port, int *wall_content)
 	int	wall_pos_x;
 	int	wall_pos_y;
 
-	if (x < 0 || x > port->blueprint->screenres_x)
+	if (x <= 0 || x / port->blueprint->tile_size >= port->blueprint->screenres_x)
 		return (1);
-	if (y < 0 || y > port->blueprint->screenres_y)
+	if (y <= 0 || y / port->blueprint->tile_size >= port->blueprint->screenres_y)
 		return (1);
 	wall_pos_x = floor(x / port->blueprint->tile_size);
 	wall_pos_y = floor(y / port->blueprint->tile_size);
