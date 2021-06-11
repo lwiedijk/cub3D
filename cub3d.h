@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 13:25:50 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/11 13:49:38 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct	s_player
 	double		pos_y;
 	int			walkdirection;
 	int			turndirection;
+	int			strafe;
 	double		rotation;
 	double		move_speed;
 	double		rotation_speed;
