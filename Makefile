@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/05/24 14:50:03 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/06/12 10:26:37 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,13 @@ MLX			=	libmlx.dylib
 
 CFLAGS = -g 
 
-OBJ_FILES = $(SRC_FILES:.c=.o) \
+OBJS_DIR = objs/
+_OBJ_FILES = $(SRC_FILES:.c=.o) \
 $(INIT_SRC_FILES:.c=.o) \
 $(addprefix $(PARSE_DIR), $(PARSE_SRC_FILES:.c=.o)) \
 $(addprefix $(ANIMATE_DIR), $(ANIMATE_SRC_FILES:.c=.o)) \
+
+OBJ_FILES = $(addprefix $(OBJS_DIR), $(_OBJ_FILES))
 
 all: $(NAME)
 
@@ -47,13 +50,13 @@ $(NAME): $(OBJ_FILES)
 	cp $(LIBFT_DIR)$(LIBFT) ./
 	make -C $(MLX_DIR)
 	cp $(MLX_DIR)$(MLX) ./
-	$(CC) $(CFLAGS) $(OBJ_FILES)$(LIBFT) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
-%.o: %.c $(HEADER_FILES)
+$(OBJS_DIR)%.o: %.c $(HEADER_FILES)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ_FILES) $(LIBFT) $(MLX)
+	rm -f $(LIBFT) $(MLX) $(_OBJ_FILES) $(OBJ_FILES)
 	make clean -C $(LIBFT_DIR)
 	make clean -C $(MLX_DIR)
 
