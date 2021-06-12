@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 14:32:25 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/12 12:44:28 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	put_square(t_port *port, int x, int y, int color)
 	int pos_y;
 	int pos_x;
 
-	pos_y = y + port->blueprint->tile_size;
-	pos_x = x + port->blueprint->tile_size;
+	pos_y = y + TILE_SIZE;
+	pos_x = x + TILE_SIZE;
 	while (y < pos_y)
 	{
 		xi = x;
@@ -91,7 +91,7 @@ void	draw_2d_map(t_port *port)
 
 	y = 0;
 	jump = 0;
-	jump_size = port->blueprint->tile_size;
+	jump_size = TILE_SIZE;
 	step_size = port->blueprint->jump_size;
 
 	while(y < port->blueprint->map_y)
@@ -119,13 +119,13 @@ void	draw_2d_map(t_port *port)
 	}
 }
 
-void	draw_line(t_mlx *mlx, double begin_x, double begin_y, double end_x, double end_y, int color)
+void	draw_line(t_mlx *mlx, float begin_x, float begin_y, float end_x, float end_y, int color)
 {
-	double delta_x;
-	double delta_y;
+	float delta_x;
+	float delta_y;
 	int pixel_count;
-	double pixel_x;
-	double pixel_y;
+	float pixel_x;
+	float pixel_y;
 	
 	delta_x = end_x - begin_x;
 	delta_y = end_y - begin_y;
@@ -136,10 +136,10 @@ void	draw_line(t_mlx *mlx, double begin_x, double begin_y, double end_x, double 
 	pixel_y = begin_y;
 	while (pixel_count)
 	{
-  	  my_mlx_pixel_put(mlx, pixel_x, pixel_y, color);
-  	  pixel_x += delta_x;
-  	  pixel_y += delta_y;
-  	  --pixel_count;
+		my_mlx_pixel_put(mlx, pixel_x, pixel_y, color);
+		pixel_x += delta_x;
+		pixel_y += delta_y;
+		--pixel_count;
 	}
 }
 
@@ -159,7 +159,7 @@ int	render_frame(t_port *port)
 	&port->mlx->line_length, &port->mlx->endian);
 	//draw_2d_map(port);
 	put_wall_ceiling(port, port->blueprint);
-	cast_all_rays(port, port->player->pos_x, port->player->pos_y);
+	cast_all_rays(port);
 	//draw_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
 	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win, port->mlx->img_1, 0, 0);
 	if (port->mlx->img_2)

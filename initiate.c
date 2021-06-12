@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/11 13:59:02 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/12 13:26:07 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_maze(t_maze *blueprint)
 	blueprint->map_y = 0;
 	blueprint->map_x = 0;
 	blueprint->map = 0;
-	blueprint->tile_size = 64;
+	//blueprint->tile_size = 64;
 	blueprint->jump_size = 64;
 	blueprint->player_or = 0;
 }
@@ -124,5 +124,11 @@ void	init_rays(t_rays *rays, t_maze *blueprint)
 	rays->vert_ystep = 0;
 	//rays->distance = 0;
 	rays->columnid = 0;
+	rays->hor_hit_x = 0;
+	rays->hor_hit_y = 0;
+	rays->vert_hit_x = 0;
+	rays->vert_hit_y = 0;
+	rays->found_hor_wallhit = 0;
+	rays->fount_vert_wallhit = 0;
 	
 }
