@@ -6,11 +6,12 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/12 14:38:45 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/15 11:52:56 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include "../libft/libft.h"
 #include "../mlx/mlx.h"
 #include <math.h>
 #include <stdio.h>
@@ -238,88 +239,98 @@ void	check_vertical_wallhit(t_port *port, t_rays *rays, t_maze *maze)
 	}
 }
 
-void	new_ray(t_port *port, t_rays *rays, t_player *player, int colum_id)
+void	ray_direction(t_rays *rays)
 {
-	float	horz_distance;
-	float	vert_distance;
-
 	rays->ray_down = rays->ray_angle > 0 && rays->ray_angle < M_PI;
 	rays->ray_up = !rays->ray_down;
-	rays->ray_right = rays->ray_angle < (0.5 * M_PI) || rays->ray_angle > (1.5 * M_PI);
+	rays->ray_right = rays->ray_angle < (0.5 * M_PI)
+		|| rays->ray_angle > (1.5 * M_PI);
 	rays->ray_left = !rays->ray_right;
+}
+
+void	set_horizontal_ray(t_wall *wall_array, t_rays *rays,
+		t_player *player, int colum_id)
+{
+	wall_array[colum_id].raydistance = rays->horz_distance
+		* cos(rays->ray_angle - player->rotation);
+	wall_array[colum_id].wall_hit_x = rays->hor_hit_x;
+	wall_array[colum_id].wall_hit_y = rays->hor_hit_y;
+	wall_array[colum_id].vertical_hit = 0;
+	if (rays->ray_up)
+		wall_array[colum_id].wall_or = 'N';
+	else
+		wall_array[colum_id].wall_or = 'S';
+}
+
+void	set_vertical_ray(t_wall *wall_array, t_rays *rays,
+		t_player *player, int colum_id)
+{
+	wall_array[colum_id].raydistance = rays->vert_distance
+		* cos(rays->ray_angle - player->rotation);
+	wall_array[colum_id].wall_hit_x = rays->vert_hit_x;
+	wall_array[colum_id].wall_hit_y = rays->vert_hit_y;
+	wall_array[colum_id].vertical_hit = 1;
+	if (rays->ray_right)
+		wall_array[colum_id].wall_or = 'E';
+	else
+		wall_array[colum_id].wall_or = 'W';
+}
+
+void	check_distance_to_wall(t_rays *rays, t_player *player,
+		t_wall *wall_array, int colum_id)
+{
+	if (rays->found_hor_wallhit)
+		rays->horz_distance = distance_between_points(player->pos_x,
+				player->pos_y, rays->hor_hit_x, rays->hor_hit_y);
+	else
+		rays->horz_distance = INT_MAX;
+	if (rays->fount_vert_wallhit)
+		rays->vert_distance = distance_between_points(player->pos_x,
+				player->pos_y, rays->vert_hit_x, rays->vert_hit_y);
+	else
+		rays->vert_distance = INT_MAX;
+	if (rays->horz_distance <= rays->vert_distance)
+		set_horizontal_ray(wall_array, rays, player, colum_id);
+	else
+		set_vertical_ray(wall_array, rays, player, colum_id);
+}
+
+void	new_ray(t_port *port, t_rays *rays, t_player *player, int colum_id)
+{
+	normalize_ray_angle(&rays->ray_angle);
+	init_rays(rays, port->blueprint);
+	ray_direction(rays);
 	horizontal_intercept(rays, player);
 	check_horizontal_wallhit(port, rays, port->blueprint);
 	vertical_intercept(rays, player);
 	check_vertical_wallhit(port, rays, port->blueprint);
-	
-	/* WALL DISTANCE */
-	if (rays->found_hor_wallhit)
-		horz_distance = distance_between_points(player->pos_x, player->pos_y, rays->hor_hit_x, rays->hor_hit_y);		
-	else
-		horz_distance = INT_MAX;
-	if (rays->fount_vert_wallhit)
-		vert_distance = distance_between_points(player->pos_x, player->pos_y, rays->vert_hit_x, rays->vert_hit_y);
-	else
-		vert_distance = INT_MAX;
-	if (horz_distance <= vert_distance)
-	{
-		//rays->distance = horz_distance * cos(rays->ray_angle - port->player->rotation);
-		port->wall_array[colum_id].raydistance = horz_distance * cos(rays->ray_angle - port->player->rotation);
-		rays->wall_hit_x = rays->hor_hit_x;
-		rays->wall_hit_y = rays->hor_hit_y;
-		rays->vertical_hit = 0;
-		if (rays->ray_up)
-			rays->wall_or = 'N';
-		else
-			rays->wall_or = 'S';
-		//draw_line(port->mlx, playerx, playery, hor_hit_x, hor_hit_y, 0x1605080);
-	}
-	else
-	{
-		//rays->distance = vert_distance * cos(rays->ray_angle - port->player->rotation);
-		port->wall_array[colum_id].raydistance = vert_distance * cos(rays->ray_angle - port->player->rotation);
-		rays->wall_hit_x = rays->vert_hit_x;
-		rays->wall_hit_y = rays->vert_hit_y;
-		rays->vertical_hit = 1;
-		if (rays->ray_right)
-			rays->wall_or = 'E';
-		else
-			rays->wall_or = 'W';
-		//draw_line(port->mlx, playerx, playery, vert_hit_x, vert_hit_y, 0x8020080);
-	}
+	check_distance_to_wall(rays, player, port->wall_array, colum_id);
 }
 
-void	cast_all_rays(t_port *port)
+void	cast_all_rays(t_port *port, t_rays *rays)
 {
-	//float	ray_angle;
 	int		colum_id;
 	int		i;
-	int		dept;
 	t_wall	*wall_array;
 
-	wall_array = (t_wall *)malloc(sizeof(t_wall) * port->rays->ray_num);
+	wall_array = (t_wall *)malloc(sizeof(t_wall) * rays->ray_num);
+	if (!wall_array)
+		ft_error(2);
+	port->wall_array = wall_array;
 	i = 0;
 	colum_id = 0;
-	port->rays->ray_angle = port->player->rotation - (port->rays->fov_angle / 2);
-	while (i < port->rays->ray_num)
+	rays->ray_angle = port->player->rotation - (rays->fov_angle / 2);
+	while (i < rays->ray_num)
 	{
-		normalize_ray_angle(&port->rays->ray_angle);
-		port->wall_array = wall_array; //hoger?
-		init_rays(port->rays, port->blueprint);
-		new_ray(port, port->rays, port->player, colum_id);
-		//wall_array[colum_id].raydistance = port->rays->distance;
-		wall_array[colum_id].wall_or = port->rays->wall_or;
-		wall_array[colum_id].wall_hit_x = port->rays->wall_hit_x;
-		wall_array[colum_id].wall_hit_y = port->rays->wall_hit_y;
-		wall_array[colum_id].vertical_hit = port->rays->vertical_hit;
-		port->rays->ray_angle += port->rays->fov_angle / port->rays->ray_num;
+		new_ray(port, rays, port->player, colum_id);
+		rays->ray_angle += rays->fov_angle / rays->ray_num;
 		colum_id++;
 		i++;
 	}
 	colum_id = 0;
 	while (colum_id < i)
 	{
-		render_walls(port, port->rays, wall_array, colum_id);
+		render_walls(port, rays, wall_array, colum_id);
 		colum_id++;
 	}
 	free(wall_array);
