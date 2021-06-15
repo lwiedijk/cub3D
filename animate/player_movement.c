@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/12 13:29:02 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/15 16:00:10 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,44 @@
 #include "../mlx/mlx.h"
 #include <math.h>
 
+/* bonus functions */
+
+void	draw_player(t_port *port, int x, int y, int color)
+{
+	int	xi;
+	int	yi;
+	int	pos_y;
+	int	pos_x;
+
+	pos_y = (y - 5);
+	xi = (x + 5);
+	yi = (y + 5);
+	while (pos_y < yi)
+	{
+		pos_x = (x - 5);
+		while (pos_x < xi)
+		{
+			my_mlx_pixel_put(port->mlx, pos_x, pos_y, color);
+			pos_x++;
+		}
+		pos_y++;
+	}
+	draw_line(port->mlx, x, y, (x + cos(port->player->rotation) * TILE_SIZE),
+		(y + sin(port->player->rotation) * TILE_SIZE), 0xFFFFFF);
+}
+
+/* mandatory functions */
+
 void	set_player_rotation(t_port *port, t_maze *p)
 {
 	if (p->player_or == 'N')
-		port->player->rotation = M_PI * -0.5; //set
+		port->player->rotation = M_PI * -0.5;
 	if (p->player_or == 'E')
-		port->player->rotation = M_PI / 0.5; //set
+		port->player->rotation = M_PI / 0.5;
 	if (p->player_or == 'S')
-		port->player->rotation = M_PI / 2; //set
-			if (p->player_or == 'W')
-		port->player->rotation = M_PI; //set
+		port->player->rotation = M_PI / 2;
+	if (p->player_or == 'W')
+		port->player->rotation = M_PI;
 }
 
 void	set_player(t_port *port)
@@ -51,28 +79,22 @@ void	set_player(t_port *port)
 	}
 }
 
-void	draw_player(t_port *port, int x, int y, int color)
+void	strafe_player(t_port *port)
 {
-	int	xi;
-	int	yi;
-	int	pos_y;
-	int	pos_x;
+	float		step;
+	float		newpos_x;
+	float		newpos_y;
 
-	pos_y = (y - 5);
-	xi = (x + 5);
-	yi = (y + 5);
-	while (pos_y < yi)
+	step = (port->player->strafe * port->player->move_speed);
+	newpos_y = port->player->pos_y
+		+ (sin(port->player->rotation - M_PI_2)) * step;
+	newpos_x = port->player->pos_x
+		+ (cos(port->player->rotation - M_PI_2)) * step;
+	if (!wall_hit(newpos_x, newpos_y, port))
 	{
-		pos_x = (x - 5);
-		while (pos_x < xi)
-		{
-			my_mlx_pixel_put(port->mlx, pos_x, pos_y, color);
-			pos_x++;
-		}
-		pos_y++;
+		port->player->pos_y = newpos_y;
+		port->player->pos_x = newpos_x;
 	}
-	draw_line(port->mlx, x, y, (x + cos(port->player->rotation) * TILE_SIZE),
-		(y + sin(port->player->rotation) * TILE_SIZE), 0xFFFFFF);
 }
 
 void	walk_player(t_port *port)
@@ -96,16 +118,7 @@ void	walk_player(t_port *port)
 		}
 	}
 	if (port->player->strafe)
-	{
-		step = (port->player->strafe * port->player->move_speed);
-		newpos_y = port->player->pos_y + (sin(port->player->rotation - M_PI_2)) * step;
-		newpos_x = port->player->pos_x + (cos(port->player->rotation - M_PI_2)) * step;
-		if (!wall_hit(newpos_x, newpos_y, port))
-		{
-			port->player->pos_y = newpos_y;
-			port->player->pos_x = newpos_x;
-		}
-	}
+		strafe_player(port);
 }
 
 int	wall_hit(float x, float y, t_port *port)
