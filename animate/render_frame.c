@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/12 12:44:28 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/15 16:13:50 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,56 +15,13 @@
 #include <stdio.h>
 #include <math.h>
 
-void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
-{
-	char	*dst;
-	
-	dst = mlx->addr + (y * mlx->line_length + x * (mlx->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-int	put_color(int t, int r, int g, int b)
-{
-	int color;
-
-	color = ((t & 0xff) << 24) + ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
-	return (color);
-}
-
-void	put_wall_ceiling(t_port *port, t_maze *blueprint)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < (blueprint->screenres_y / 2))
-	{
-		x = 0;
-		while (x < blueprint->screenres_x)
-		{
-			my_mlx_pixel_put(port->mlx, x, y, blueprint->ceiling_color);
-			x++;
-		}
-		y++;
-	}
-	y = (blueprint->screenres_y / 2);
-	while (y < blueprint->screenres_y)
-	{
-		x = 0;
-		while (x < blueprint->screenres_x)
-		{
-			my_mlx_pixel_put(port->mlx, x, y, blueprint->floor_color);
-			x++;
-		}
-		y++;
-	}
-}
+/* bonus functions */
 
 void	put_square(t_port *port, int x, int y, int color)
 {
-	int xi;
-	int pos_y;
-	int pos_x;
+	int	xi;
+	int	pos_y;
+	int	pos_x;
 
 	pos_y = y + TILE_SIZE;
 	pos_x = x + TILE_SIZE;
@@ -143,6 +100,54 @@ void	draw_line(t_mlx *mlx, float begin_x, float begin_y, float end_x, float end_
 	}
 }
 
+/* mandatory functions */
+
+void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = mlx->addr + (y * mlx->line_length + x * (mlx->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
+
+int	put_color(int t, int r, int g, int b)
+{
+	int	color;
+
+	color = ((t & 0xff) << 24) + ((r & 0xff) << 16)
+		+ ((g & 0xff) << 8) + (b & 0xff);
+	return (color);
+}
+
+void	put_wall_ceiling(t_port *port, t_maze *blueprint)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < (blueprint->screenres_y / 2))
+	{
+		x = 0;
+		while (x < blueprint->screenres_x)
+		{
+			my_mlx_pixel_put(port->mlx, x, y, blueprint->ceiling_color);
+			x++;
+		}
+		y++;
+	}
+	y = (blueprint->screenres_y / 2);
+	while (y < blueprint->screenres_y)
+	{
+		x = 0;
+		while (x < blueprint->screenres_x)
+		{
+			my_mlx_pixel_put(port->mlx, x, y, blueprint->floor_color);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	next_frame(t_mlx *mlx)
 {
 	mlx->img_2 = mlx->img_1;
@@ -154,14 +159,17 @@ int	render_frame(t_port *port)
 	walk_player(port);
 	if (port->mlx->img_1)
 		next_frame(port->mlx);
-	port->mlx->img_1 = mlx_new_image(port->mlx->mlx, port->blueprint->screenres_x, port->blueprint->screenres_y);
-	port->mlx->addr = mlx_get_data_addr(port->mlx->img_1, &port->mlx->bits_per_pixel,
-	&port->mlx->line_length, &port->mlx->endian);
+	port->mlx->img_1 = mlx_new_image(port->mlx->mlx,
+			port->blueprint->screenres_x, port->blueprint->screenres_y);
+	port->mlx->addr = mlx_get_data_addr(port->mlx->img_1,
+			&port->mlx->bits_per_pixel, &port->mlx->line_length,
+			&port->mlx->endian);
 	//draw_2d_map(port);
 	put_wall_ceiling(port, port->blueprint);
-	cast_all_rays(port);
-	//draw_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);//player
-	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win, port->mlx->img_1, 0, 0);
+	cast_all_rays(port, port->rays);
+	//draw_player(port, (port->player->pos_x), (port->player->pos_y), 0xFF0000);
+	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win,
+		port->mlx->img_1, 0, 0);
 	if (port->mlx->img_2)
 		mlx_destroy_image(port->mlx->mlx, port->mlx->img_2);
 	return (0);
