@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/15 11:52:56 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/15 14:09:06 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,116 +35,108 @@ void	normalize_ray_angle(float *ray_angle)
 **		Returns a color value from a coordinate of the texture image.
 */
 
-int		put_north_texture(t_tex *tex, int x, int y)
+void	put_north_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 {
-	int	color;
+	int	tex_color;
 
-	color = *(int*)(tex->addr_n + (y * tex->ls_n) + (x * (tex->bpp_n / 8)));
-	return (color);
+	calculate_textures(port, port->tex, port->wall_array[colum_id].wall_or);
+	while (rays->draw_start < rays->draw_end)
+	{
+		tex->tex_y = (int)port->tex->position & (port->tex->y_n - 1);
+		port->tex->position += port->tex->step;
+		tex_color = *(int *)(tex->addr_n + (tex->tex_y * tex->ls_n)
+				+ (tex->tex_x * (tex->bpp_n / 8)));
+		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
+		rays->draw_start++;
+	}
 }
 
-int		put_east_texture(t_tex *tex, int x, int y)
+void	put_east_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 {
-	int	color;
+	int	tex_color;
 
-	color = *(int*)(tex->addr_e + (y * tex->ls_e) + (x * (tex->bpp_e / 8)));
-	return (color);
+	calculate_textures(port, port->tex, port->wall_array[colum_id].wall_or);
+	while (rays->draw_start < rays->draw_end)
+	{
+		tex->tex_y = (int)port->tex->position & (port->tex->y_e - 1);
+		port->tex->position += port->tex->step;
+		tex_color = *(int *)(tex->addr_e + (tex->tex_y * tex->ls_e)
+				+ (tex->tex_x * (tex->bpp_e / 8)));
+		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
+		rays->draw_start++;
+	}
 }
 
-int		put_south_texture(t_tex *tex, int x, int y)
+void	put_south_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 {
-	int	color;
+	int	tex_color;
 
-	color = *(int*)(tex->addr_s + (y * tex->ls_s) + (x * (tex->bpp_s / 8)));
-	return (color);
+	calculate_textures(port, port->tex, port->wall_array[colum_id].wall_or);
+	while (rays->draw_start < rays->draw_end)
+	{
+		tex->tex_y = (int)port->tex->position & (port->tex->y_s - 1);
+		port->tex->position += port->tex->step;
+		tex_color = *(int *)(tex->addr_s + (tex->tex_y * tex->ls_s)
+				+ (tex->tex_x * (tex->bpp_s / 8)));
+		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
+		rays->draw_start++;
+	}
 }
 
-int		put_west_texture(t_tex *tex, int x, int y)
+void	put_west_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 {
-	int	color;
+	int	tex_color;
 
-	color = *(int*)(tex->addr_w + (y * tex->ls_w) + (x * (tex->bpp_w / 8)));
-	return (color);
+	calculate_textures(port, port->tex, port->wall_array[colum_id].wall_or);
+	while (rays->draw_start < rays->draw_end)
+	{
+		tex->tex_y = (int)port->tex->position & (port->tex->y_w - 1);
+		port->tex->position += port->tex->step;
+		tex_color = *(int *)(tex->addr_w + (tex->tex_y * tex->ls_w)
+				+ (tex->tex_x * (tex->bpp_w / 8)));
+		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
+		rays->draw_start++;
+	}
 }
 
-void	render_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id)
+void	put_all_textures(t_port *port, t_wall *wall_array, int colum_id)
+{
+	if (wall_array[colum_id].vertical_hit)
+		port->tex->tex_x = (int)wall_array[colum_id].wall_hit_y
+			% port->tex->x_n;
+	else
+		port->tex->tex_x = (int)wall_array[colum_id].wall_hit_x
+			% port->tex->x_n;
+	if (wall_array[colum_id].wall_or == 'N')
+		put_north_texture(port, port->tex, port->rays, colum_id);
+	if (wall_array[colum_id].wall_or == 'E')
+		put_east_texture(port, port->tex, port->rays, colum_id);
+	if (wall_array[colum_id].wall_or == 'S')
+		put_south_texture(port, port->tex, port->rays, colum_id);
+	if (wall_array[colum_id].wall_or == 'W')
+		put_west_texture(port, port->tex, port->rays, colum_id);
+}
+
+void	render_walls(t_port *port, t_rays *rays,
+		t_wall *wall_array, int colum_id)
 {
 	float	distance_to_plane;
-	float	wall_striphight;
-	int		x;
-	int		tex_color;
-	float	draw_start;
-	float	draw_end;
-	int		tex_x;
-	int		tex_y;
 
 	if (colum_id > rays->ray_num)
 		return ;
-	distance_to_plane = (port->blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
-	wall_striphight = (TILE_SIZE / wall_array[colum_id].raydistance) * distance_to_plane;
-	rays->wall_striphight = wall_striphight;
-	x = colum_id * rays->strip_width;
-	draw_start = (port->blueprint->screenres_y / 2) - (wall_striphight / 2); 
-	draw_end = draw_start + wall_striphight;
-	if (wall_array[colum_id].vertical_hit)
-		tex_x = (int)wall_array[colum_id].wall_hit_y % port->tex->x_n;
-	else
-		tex_x = (int)wall_array[colum_id].wall_hit_x % port->tex->x_n;
-	if (wall_striphight > port->blueprint->screenres_y)
+	distance_to_plane = (port->blueprint->screenres_x / 2)
+		/ tan(rays->fov_angle / 2);
+	rays->wall_striphight = (TILE_SIZE / wall_array[colum_id].raydistance)
+		* distance_to_plane;
+	rays->draw_start = (port->blueprint->screenres_y / 2)
+		- (rays->wall_striphight / 2);
+	rays->draw_end = rays->draw_start + rays->wall_striphight;
+	if (rays->wall_striphight > port->blueprint->screenres_y)
 	{
-		draw_end = port->blueprint->screenres_y;
-		draw_start = 0;
+		rays->draw_end = port->blueprint->screenres_y;
+		rays->draw_start = 0;
 	}
-	rays->draw_start = draw_start;
-	rays->draw_end = draw_end;
-	if (wall_array[colum_id].wall_or == 'N')
-	{
-		calculate_textures(port, port->tex, wall_array[colum_id].wall_or);
-		while (draw_start < draw_end)
-		{
-			tex_y = (int)port->tex->position & (port->tex->y_n - 1);
-			port->tex->position += port->tex->step;
-			tex_color = put_north_texture(port->tex, tex_x, tex_y);
-			my_mlx_pixel_put(port->mlx, x, draw_start, tex_color);
-			draw_start++;
-		}
-	}
-	if (wall_array[colum_id].wall_or == 'E')
-	{
-		calculate_textures(port, port->tex, wall_array[colum_id].wall_or);
-		while (draw_start < draw_end)
-		{
-			tex_y = (int)port->tex->position & (port->tex->y_e - 1);
-			port->tex->position += port->tex->step;
-			tex_color = put_east_texture(port->tex, tex_x, tex_y);
-			my_mlx_pixel_put(port->mlx, x, draw_start, tex_color);
-			draw_start++;
-		}
-	}
-	if (wall_array[colum_id].wall_or == 'S')
-	{
-		calculate_textures(port, port->tex, wall_array[colum_id].wall_or);
-		while (draw_start < draw_end)
-		{
-			tex_y = (int)port->tex->position & (port->tex->y_s - 1);
-			port->tex->position += port->tex->step;
-			tex_color = put_south_texture(port->tex, tex_x, tex_y);
-			my_mlx_pixel_put(port->mlx, x, draw_start, tex_color);
-			draw_start++;
-		}
-	}
-	if (wall_array[colum_id].wall_or == 'W')
-	{
-		calculate_textures(port, port->tex, wall_array[colum_id].wall_or);
-		while (draw_start < draw_end)
-		{
-			tex_y = (int)port->tex->position & (port->tex->y_w - 1);
-			port->tex->position += port->tex->step;
-			tex_color = put_west_texture(port->tex, tex_x, tex_y);
-			my_mlx_pixel_put(port->mlx, x, draw_start, tex_color);
-			draw_start++;
-		}
-	}
+	put_all_textures(port, wall_array, colum_id);
 }
 
 void	horizontal_intercept(t_rays *rays, t_player *player)
