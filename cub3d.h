@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/15 17:48:59 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/16 11:37:10 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,20 +195,23 @@ int		key_release_hook(int keycode, t_port *port);
 
 /* animate/player_movement */
 void	set_player(t_port *port);
-void	draw_player(t_port *port, int x, int y, int color);
 void	walk_player(t_port *port);
 int		wall_hit(float x, float y, t_port *port);
 
 /* animate/render_frame */
 int		render_frame(t_port *port);
-void	put_square(t_port *port, float x, float y, int color);
-void	draw_line(t_mlx *mlx, float begin_x, float begin_y, float end_x, float end_y, int color);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 int		put_color(int t, int r, int g, int b);
 
 /* animate/ray_casting */
 void	new_ray(t_port *port, t_rays *rays, t_player *player, int colum_id);
 void	cast_all_rays(t_port *port, t_rays *rays);
+
+/* animate/minimap */
+void	draw_player(t_port *port, int x, int y, int color);
+void	draw_2d_map(t_port *port);
+void	put_square(t_port *port, float x, float y, int color);
+void	draw_line(t_mlx *mlx, float begin_x, float begin_y, float end_x, float end_y, int color);
 
 /* read_textures */
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);

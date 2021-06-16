@@ -6,41 +6,13 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/15 16:57:27 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/16 11:31:41 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "../mlx/mlx.h"
 #include <math.h>
-
-/* bonus functions */
-
-void	draw_player(t_port *port, int x, int y, int color)
-{
-	int	xi;
-	int	yi;
-	int	pos_y;
-	int	pos_x;
-
-	//pos_y = (y - 5);
-	//xi = (x + 5);
-	//yi = (y + 5);
-	//while (pos_y < yi)
-	//{
-	//	pos_x = (x - 5);
-	//	while (pos_x < xi)
-	//	{
-	//		my_mlx_pixel_put(port->mlx, pos_x, pos_y, color);
-	//		pos_x++;
-	//	}
-	//	pos_y++;
-	//}
-	draw_line(port->mlx, x, y, (x + cos(port->player->rotation) * (SCALE * TILE_SIZE)),
-		(y + sin(port->player->rotation) * (SCALE * TILE_SIZE)), 0xFFFFFF);
-}
-
-/* mandatory functions */
 
 void	set_player_rotation(t_port *port, t_maze *p)
 {
