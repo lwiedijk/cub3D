@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/16 11:37:10 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/16 13:54:45 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,20 +111,13 @@ typedef struct	s_player
 typedef struct	s_rays
 {
 	float		fov_angle;
+	int			strip_width;
 	float		ray_angle;
-	//float		wall_hit_x;
-	//float		wall_hit_y;
-	float		distance;
-	float		horz_distance;
-	float		vert_distance;
+	int			ray_num;
 	int			ray_up;
 	int			ray_down;
 	int			ray_right;
 	int			ray_left;
-	//int			vertical_hit;
-//	int			wall_hit_content;
-	int			ray_num;
-	int			strip_width;
 	float		hx_intercept;
 	float		hy_intercept;
 	float		vx_intercept;
@@ -133,17 +126,17 @@ typedef struct	s_rays
 	float		horz_ystep;
 	float		vert_xstep;
 	float		vert_ystep;
-	//int			columnid;
-	char		wall_or;
-	float		wall_striphight;
-	float		draw_start;
-	float		draw_end;
 	float		hor_hit_x;
 	float		hor_hit_y;
 	float		vert_hit_x;
 	float		vert_hit_y;
 	int			found_hor_wallhit;
 	int			fount_vert_wallhit;
+	float		horz_distance;
+	float		vert_distance;
+	float		wall_striphight;
+	float		draw_start;
+	float		draw_end;
 }				t_rays;
 
 typedef	struct	s_wall
@@ -154,15 +147,6 @@ typedef	struct	s_wall
 	float		wall_hit_y;
 	int			vertical_hit;
 }				t_wall;
-
-typedef struct s_draw_wall
-{
-	float	distance_to_plane;
-	//float	wall_striphight;
-	float	draw_start;
-	float	draw_end;
-}			t_draw_wall;
-
 
 typedef	struct	s_port
 {
@@ -206,6 +190,12 @@ int		put_color(int t, int r, int g, int b);
 /* animate/ray_casting */
 void	new_ray(t_port *port, t_rays *rays, t_player *player, int colum_id);
 void	cast_all_rays(t_port *port, t_rays *rays);
+
+/* frame_build/dda.c */
+void	horizontal_intercept(t_rays *rays, t_player *player);
+void	check_horizontal_wallhit(t_port *port, t_rays *rays, t_maze *maze);
+void	vertical_intercept(t_rays *rays, t_player *player);
+void	check_vertical_wallhit(t_port *port, t_rays *rays, t_maze *maze);
 
 /* animate/minimap */
 void	draw_player(t_port *port, int x, int y, int color);
