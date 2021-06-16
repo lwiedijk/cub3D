@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/06/12 11:50:08 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/06/16 11:58:12 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ PARSE_SRC_FILES = parse.c \
 parse_screenres.c parse_textures.c \
 parse_color.c parse_map.c \
 
-ANIMATE_DIR = animate/
-ANIMATE_SRC_FILES = key_button_hook.c \
+FRAME_BUILD_DIR = frame_build/
+FRAME_BUILD_SRC_FILES = key_button_hook.c \
 render_frame.c player_movement.c \
-ray_casting.c \
+ray_casting.c minimap.c \
 
 
 LIBFT_DIR = libft/
@@ -39,7 +39,7 @@ OBJS_DIR = objs/
 _OBJ_FILES = $(SRC_FILES:.c=.o) \
 $(INIT_SRC_FILES:.c=.o) \
 $(addprefix $(PARSE_DIR), $(PARSE_SRC_FILES:.c=.o)) \
-$(addprefix $(ANIMATE_DIR), $(ANIMATE_SRC_FILES:.c=.o)) \
+$(addprefix $(FRAME_BUILD_DIR), $(FRAME_BUILD_SRC_FILES:.c=.o)) \
 
 OBJ_FILES = $(addprefix $(OBJS_DIR), $(_OBJ_FILES))
 
@@ -48,8 +48,10 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES)
 	make -C $(LIBFT_DIR)
 	cp $(LIBFT_DIR)$(LIBFT) ./
-	make -C $(MLX_DIR)
-	cp $(MLX_DIR)$(MLX) ./
+	@echo "\n...Making MLX...please hold...\n"
+	@make -C $(MLX_DIR)
+	@echo "\n Succes! making MLX done \n"
+	@cp $(MLX_DIR)$(MLX) ./
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 $(OBJS_DIR)%.o: %.c $(HEADER_FILES)
