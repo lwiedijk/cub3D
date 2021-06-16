@@ -6,12 +6,14 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/08 13:25:50 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/15 17:48:59 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 # define KOPINK "\033[38;5;200m"
 # define RES "\033[0m"
+# define TILE_SIZE 64
+# define SCALE 0.1
 
 typedef struct	s_mlx
 {
@@ -64,9 +66,11 @@ typedef	struct	s_tex
 	int			end_spr;
 	int			y_spr;
 	int			x_spr;
-	double		step;
-	double		position;
-	double		wall_x;
+	float		step;
+	float		position;
+	float		wall_x;
+	int			tex_x;
+	int			tex_y;
 }				t_tex;
 
 typedef struct	s_maze
@@ -94,27 +98,30 @@ typedef struct	s_maze
 
 typedef struct	s_player
 {
-	double		pos_x;
-	double		pos_y;
+	float		pos_x;
+	float		pos_y;
 	int			walkdirection;
 	int			turndirection;
-	double		rotation;
-	double		move_speed;
-	double		rotation_speed;
+	int			strafe;
+	float		rotation;
+	float		move_speed;
+	float		rotation_speed;
 }				t_player;
 
 typedef struct	s_rays
 {
-	float 		fov_angle;
+	float		fov_angle;
 	float		ray_angle;
-	float		wall_hit_x;
-	float		wall_hit_y;
+	//float		wall_hit_x;
+	//float		wall_hit_y;
 	float		distance;
+	float		horz_distance;
+	float		vert_distance;
 	int			ray_up;
 	int			ray_down;
 	int			ray_right;
 	int			ray_left;
-	int			vertical_hit;
+	//int			vertical_hit;
 //	int			wall_hit_content;
 	int			ray_num;
 	int			strip_width;
@@ -126,21 +133,36 @@ typedef struct	s_rays
 	float		horz_ystep;
 	float		vert_xstep;
 	float		vert_ystep;
-	int			columnid;
+	//int			columnid;
 	char		wall_or;
 	float		wall_striphight;
 	float		draw_start;
 	float		draw_end;
+	float		hor_hit_x;
+	float		hor_hit_y;
+	float		vert_hit_x;
+	float		vert_hit_y;
+	int			found_hor_wallhit;
+	int			fount_vert_wallhit;
 }				t_rays;
 
 typedef	struct	s_wall
 {
-	double		raydistance;
+	float		raydistance;
 	char		wall_or;
 	float		wall_hit_x;
 	float		wall_hit_y;
 	int			vertical_hit;
 }				t_wall;
+
+typedef struct s_draw_wall
+{
+	float	distance_to_plane;
+	//float	wall_striphight;
+	float	draw_start;
+	float	draw_end;
+}			t_draw_wall;
+
 
 typedef	struct	s_port
 {
@@ -148,6 +170,7 @@ typedef	struct	s_port
 	t_maze		*blueprint;
 	t_player	*player;
 	t_rays		*rays;
+	t_wall		*wall_array;
 	t_tex		*tex;
 }				t_port;
 
@@ -174,18 +197,18 @@ int		key_release_hook(int keycode, t_port *port);
 void	set_player(t_port *port);
 void	draw_player(t_port *port, int x, int y, int color);
 void	walk_player(t_port *port);
-int		wall_hit(float x, float y, t_port *port, int *wall_content);
+int		wall_hit(float x, float y, t_port *port);
 
 /* animate/render_frame */
 int		render_frame(t_port *port);
-void	put_square(t_port *port, int x, int y, int color);
-void	draw_line(t_mlx *mlx, double begin_x, double begin_y, double end_x, double end_y, int color);
+void	put_square(t_port *port, float x, float y, int color);
+void	draw_line(t_mlx *mlx, float begin_x, float begin_y, float end_x, float end_y, int color);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 int		put_color(int t, int r, int g, int b);
 
 /* animate/ray_casting */
-void	new_ray(t_port *port, t_rays *rays, double ray_angle, float playerx, float playery);
-void	cast_all_rays(t_port *port, float playerx, float playery);
+void	new_ray(t_port *port, t_rays *rays, t_player *player, int colum_id);
+void	cast_all_rays(t_port *port, t_rays *rays);
 
 /* read_textures */
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
