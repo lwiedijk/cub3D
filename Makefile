@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/06/16 11:58:12 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/06/16 13:52:57 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ FRAME_BUILD_DIR = frame_build/
 FRAME_BUILD_SRC_FILES = key_button_hook.c \
 render_frame.c player_movement.c \
 ray_casting.c minimap.c \
+dda.c
 
 
 LIBFT_DIR = libft/
