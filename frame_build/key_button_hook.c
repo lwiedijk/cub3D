@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 14:00:59 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/15 12:54:40 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/16 11:10:17 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	key_press_hook(int keycode, t_port *port)
 	{
 		printf("%s\n", "esc is pressed, Terminating program...");
 		mlx_destroy_window(port->mlx->mlx, port->mlx->win);
+		//system("leaks cub3D");
 		exit (0);
 	}
 	if (keycode == 13)
