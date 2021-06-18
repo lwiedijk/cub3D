@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/16 13:52:37 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/18 21:16:14 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ void	normalize_ray_angle(float *ray_angle)
 		*ray_angle = (2 * M_PI) + *ray_angle;
 }
 
+void	ray_direction(t_rays *rays)
+{
+	rays->ray_down = rays->ray_angle > 0 && rays->ray_angle < M_PI;
+	rays->ray_up = !rays->ray_down;
+	rays->ray_right = rays->ray_angle < (0.5 * M_PI)
+		|| rays->ray_angle > (1.5 * M_PI);
+	rays->ray_left = !rays->ray_right;
+}
+
 /*
 **		Returns a color value from a coordinate of the texture image.
 */
@@ -38,14 +47,20 @@ void	normalize_ray_angle(float *ray_angle)
 void	put_north_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 {
 	int	tex_color;
-
+	
+	if (port->wall_array[colum_id].vertical_hit)
+		port->tex->tex_ofset_x = (int)port->wall_array[colum_id].wall_hit_y
+			% port->tex->x_n;
+	else
+		port->tex->tex_ofset_x = (int)port->wall_array[colum_id].wall_hit_x
+			% port->tex->x_n;
 	calculate_textures(port, port->tex, port->wall_array[colum_id].wall_or);
 	while (rays->draw_start < rays->draw_end)
 	{
-		tex->tex_y = (int)port->tex->position & (port->tex->y_n - 1);
+		tex->tex_ofset_y = (int)port->tex->position & (port->tex->y_n - 1);
 		port->tex->position += port->tex->step;
-		tex_color = *(int *)(tex->addr_n + (tex->tex_y * tex->ls_n)
-				+ (tex->tex_x * (tex->bpp_n / 8)));
+		tex_color = *(int *)(tex->addr_n + (tex->tex_ofset_y * tex->ls_n)
+				+ (tex->tex_ofset_x * (tex->bpp_n / 8)));
 		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
 		rays->draw_start++;
 	}
@@ -54,14 +69,33 @@ void	put_north_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 void	put_east_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 {
 	int	tex_color;
+	float	wall_x;
+	int	y;
 
+
+	if (port->wall_array[colum_id].vertical_hit)
+	{
+		//wall_x = port->player->pos_x + port->rays->horz_distance * port->wall_array[colum_id].wall_hit_x;
+		//tex->tex_ofset_x = (int)(wall_x * (float)tex->x_e);
+		port->tex->tex_ofset_x = (int)port->wall_array[colum_id].wall_hit_y
+			% port->tex->x_e;
+	}
+	else
+	{
+		//wall_x = port->player->pos_y + port->rays->horz_distance * port->wall_array[colum_id].wall_hit_y;
+		//tex->tex_ofset_x = (int)(wall_x * (float)tex->x_e);
+		port->tex->tex_ofset_x = (int)port->wall_array[colum_id].wall_hit_x
+			% port->tex->x_e;
+	}
+	y = (port->blueprint->screenres_y / 2) - (rays->wall_striphight / 2);
 	calculate_textures(port, port->tex, port->wall_array[colum_id].wall_or);
 	while (rays->draw_start < rays->draw_end)
 	{
-		tex->tex_y = (int)port->tex->position & (port->tex->y_e - 1);
-		port->tex->position += port->tex->step;
-		tex_color = *(int *)(tex->addr_e + (tex->tex_y * tex->ls_e)
-				+ (tex->tex_x * (tex->bpp_e / 8)));
+		tex->tex_ofset_y = (int)(rays->draw_start - y) * ((float)tex->y_e / rays->wall_striphight);
+		//tex->tex_ofset_y = (int)port->tex->position & (port->tex->y_e - 1);
+		//port->tex->position += port->tex->step;
+		tex_color = *(int *)(tex->addr_e + (tex->tex_ofset_y * tex->ls_e)
+				+ (tex->tex_ofset_x * (tex->bpp_e / 8)));
 		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
 		rays->draw_start++;
 	}
@@ -71,13 +105,19 @@ void	put_south_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 {
 	int	tex_color;
 
+	if (port->wall_array[colum_id].vertical_hit)
+		port->tex->tex_ofset_x = (int)port->wall_array[colum_id].wall_hit_y
+			% port->tex->x_s;
+	else
+		port->tex->tex_ofset_x = (int)port->wall_array[colum_id].wall_hit_x
+			% port->tex->x_s;
 	calculate_textures(port, port->tex, port->wall_array[colum_id].wall_or);
 	while (rays->draw_start < rays->draw_end)
 	{
-		tex->tex_y = (int)port->tex->position & (port->tex->y_s - 1);
+		tex->tex_ofset_y = (int)port->tex->position & (port->tex->y_s - 1);
 		port->tex->position += port->tex->step;
-		tex_color = *(int *)(tex->addr_s + (tex->tex_y * tex->ls_s)
-				+ (tex->tex_x * (tex->bpp_s / 8)));
+		tex_color = *(int *)(tex->addr_s + (tex->tex_ofset_y * tex->ls_s)
+				+ (tex->tex_ofset_x * (tex->bpp_s / 8)));
 		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
 		rays->draw_start++;
 	}
@@ -87,13 +127,19 @@ void	put_west_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 {
 	int	tex_color;
 
+	if (port->wall_array[colum_id].vertical_hit)
+		port->tex->tex_ofset_x = (int)port->wall_array[colum_id].wall_hit_y
+			% port->tex->x_w;
+	else
+		port->tex->tex_ofset_x = (int)port->wall_array[colum_id].wall_hit_x
+			% port->tex->x_w;	
 	calculate_textures(port, port->tex, port->wall_array[colum_id].wall_or);
 	while (rays->draw_start < rays->draw_end)
 	{
-		tex->tex_y = (int)port->tex->position & (port->tex->y_w - 1);
+		tex->tex_ofset_y = (int)port->tex->position & (port->tex->y_w - 1);
 		port->tex->position += port->tex->step;
-		tex_color = *(int *)(tex->addr_w + (tex->tex_y * tex->ls_w)
-				+ (tex->tex_x * (tex->bpp_w / 8)));
+		tex_color = *(int *)(tex->addr_w + (tex->tex_ofset_y * tex->ls_w)
+				+ (tex->tex_ofset_x * (tex->bpp_w / 8)));
 		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
 		rays->draw_start++;
 	}
@@ -101,12 +147,12 @@ void	put_west_texture(t_port *port, t_tex *tex, t_rays *rays, int colum_id)
 
 void	put_all_textures(t_port *port, t_wall *wall_array, int colum_id)
 {
-	if (wall_array[colum_id].vertical_hit)
-		port->tex->tex_x = (int)wall_array[colum_id].wall_hit_y
-			% port->tex->x_n;
-	else
-		port->tex->tex_x = (int)wall_array[colum_id].wall_hit_x
-			% port->tex->x_n;
+	//if (wall_array[colum_id].vertical_hit)
+	//	port->tex->tex_ofset_x = (int)wall_array[colum_id].wall_hit_y
+	//		% port->tex->x_e;
+	//else
+	//	port->tex->tex_ofset_x = (int)wall_array[colum_id].wall_hit_x
+	//		% port->tex->x_e;
 	if (wall_array[colum_id].wall_or == 'N')
 		put_north_texture(port, port->tex, port->rays, colum_id);
 	if (wall_array[colum_id].wall_or == 'E')
@@ -141,17 +187,6 @@ void	render_walls(t_port *port, t_rays *rays,
 		rays->draw_start = 0;
 	}
 	put_all_textures(port, wall_array, colum_id);
-}
-
-
-
-void	ray_direction(t_rays *rays)
-{
-	rays->ray_down = rays->ray_angle > 0 && rays->ray_angle < M_PI;
-	rays->ray_up = !rays->ray_down;
-	rays->ray_right = rays->ray_angle < (0.5 * M_PI)
-		|| rays->ray_angle > (1.5 * M_PI);
-	rays->ray_left = !rays->ray_right;
 }
 
 void	set_horizontal_ray(t_wall *wall_array, t_rays *rays,
