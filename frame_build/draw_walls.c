@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/19 16:22:35 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/19 18:11:51 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/23 16:03:42 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ void	put_cur_texture(t_port *port, t_tex_array tex_array,
 	else
 		port->tex->tex_ofset_x = (int)(port->wall_array[colum_id].wall_hit_x
 				* tex_array.tex_width / TILE_SIZE) % tex_array.tex_width;
-	y = (port->blueprint->screenres_y / 2) - (rays->wall_striphight / 2);
 	while (rays->draw_start < rays->draw_end)
 	{
-		port->tex->tex_ofset_y = (int)(rays->draw_start - y) * ((float)tex_array.tex_hight / rays->wall_striphight);
-		tex_color = *(int *)(tex_array.tex_addr + (port->tex->tex_ofset_y * tex_array.tex_ls) + (port->tex->tex_ofset_x * (tex_array.tex_bpp / 8)));
+		y = port->rays->draw_start + (rays->wall_striphight / 2)
+			- (port->blueprint->screenres_y / 2);
+		port->tex->tex_ofset_y = y * ((float)tex_array.tex_hight
+				/ rays->wall_striphight);
+		tex_color = *(int *)(tex_array.tex_addr + (port->tex->tex_ofset_y
+					* tex_array.tex_ls) + (port->tex->tex_ofset_x
+					* (tex_array.tex_bpp / 8)));
 		my_mlx_pixel_put(port->mlx, colum_id, rays->draw_start, tex_color);
 		rays->draw_start++;
 	}
