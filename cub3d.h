@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/25 14:32:45 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/25 15:01:43 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct	s_maze
 	int			*map_x;
 	int			**map;
 	int			tile_size;
-	int			jump_size;
+	int			step_size;
 	char		player_or;
 }				t_maze;
 
@@ -186,7 +186,7 @@ void	check_vertical_wallhit(t_port *port, t_rays *rays, t_maze *maze);
 void	draw_mini_player(t_port *port, float x, float y, int color);
 void	draw_mini_map(t_port *port);
 void	put_square(t_port *port, float x, float y, int color);
-void	draw_line(t_mlx *mlx, float begin_x, float begin_y, float end_x, float end_y, int color);
+void	draw_line(t_mlx *mlx, t_player *player, float end_x, float end_y);
 
 /* read_textures */
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
