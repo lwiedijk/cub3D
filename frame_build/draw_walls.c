@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/19 16:22:35 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/23 16:03:42 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/25 14:29:57 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,6 @@ void	put_all_textures(t_port *port, t_wall *wall_array, int colum_id)
 		put_cur_texture(port, port->tex->tex_array[2], port->rays, colum_id);
 	if (wall_array[colum_id].wall_or == 'W')
 		put_cur_texture(port, port->tex->tex_array[3], port->rays, colum_id);
-	draw_line(port->mlx, (SCALE * port->player->pos_x),
-		(SCALE * port->player->pos_y),
-		(SCALE * wall_array[colum_id].wall_hit_x),
-		(SCALE * wall_array[colum_id].wall_hit_y), 0xFFFF00);
 }
 
 void	draw_walls(t_port *port, t_rays *rays,

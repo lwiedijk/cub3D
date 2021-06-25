@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/16 11:29:35 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/16 11:36:28 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/25 14:32:26 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 #include "../mlx/mlx.h"
 #include <math.h>
 
-void	draw_player(t_port *port, int x, int y, int color)
+void	draw_mini_player(t_port *port, float x, float y, int color)
 {
-	int	xi;
-	int	yi;
-	int	pos_y;
-	int	pos_x;
+	float	xi;
+	float	yi;
+	float	pos_y;
+	float	pos_x;
 
-	//pos_y = (y - 5);
-	//xi = (x + 5);
-	//yi = (y + 5);
-	//while (pos_y < yi)
-	//{
-	//	pos_x = (x - 5);
-	//	while (pos_x < xi)
-	//	{
-	//		my_mlx_pixel_put(port->mlx, pos_x, pos_y, color);
-	//		pos_x++;
-	//	}
-	//	pos_y++;
-	//}
-	draw_line(port->mlx, x, y, (x + cos(port->player->rotation) * (SCALE * TILE_SIZE)),
-		(y + sin(port->player->rotation) * (SCALE * TILE_SIZE)), 0xFFFFFF);
+	pos_y = (y - 3);
+	xi = (x + 3);
+	yi = (y + 3);
+	draw_line(port->mlx, x, y, (x + cos(port->player->rotation) * (0.2 * TILE_SIZE)),
+		(y + sin(port->player->rotation) * (0.2 * TILE_SIZE)), color);
+	while (pos_y < yi)
+	{
+		pos_x = (x - 3);
+		while (pos_x < xi)
+		{
+			my_mlx_pixel_put(port->mlx, pos_x, pos_y, color);
+			pos_x++;
+		}
+		pos_y++;
+	}
 }
 
 void	put_square(t_port *port, float x, float y, int color)
@@ -59,7 +59,7 @@ void	put_square(t_port *port, float x, float y, int color)
 }
 
 
-void	draw_2d_map(t_port *port)
+void	draw_mini_map(t_port *port)
 {
 	int	x;
 	int	y;

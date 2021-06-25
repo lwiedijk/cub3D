@@ -6,14 +6,14 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/16 13:54:45 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/25 14:32:45 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 # define KOPINK "\033[38;5;200m"
 # define RES "\033[0m"
 # define TILE_SIZE 64
-# define SCALE 0.1
+# define SCALE 0.15
 
 typedef struct	s_mlx
 {
@@ -29,48 +29,23 @@ typedef struct	s_mlx
 	int			on_off;
 }				t_mlx;
 
+typedef struct	s_tex_array
+{
+	void		*tex_pnt;
+	char		*tex_addr;
+	int			tex_bpp;
+	int			tex_ls;
+	int			tex_endian;
+	int			tex_hight;
+	int			tex_width;
+
+}				t_tex_array;
+
 typedef	struct	s_tex
 {
-	void		*tex_s;
-	char		*addr_s;
-	int			bpp_s;
-	int			ls_s;
-	int			end_s;
-	int			y_s;
-	int			x_s;
-	void		*tex_w;
-	char		*addr_w;
-	int			bpp_w;
-	int			ls_w;
-	int			end_w;
-	int			y_w;
-	int			x_w;
-	void		*tex_n;
-	char		*addr_n;
-	int			bpp_n;
-	int			ls_n;
-	int			end_n;
-	int			y_n;
-	int			x_n;
-	void		*tex_e;
-	char		*addr_e;
-	int			bpp_e;
-	int			ls_e;
-	int			end_e;
-	int			y_e;
-	int			x_e;
-	void		*tex_spr;
-	char		*addr_spr;
-	int			bpp_spr;
-	int			ls_spr;
-	int			end_spr;
-	int			y_spr;
-	int			x_spr;
-	float		step;
-	float		position;
-	float		wall_x;
-	int			tex_x;
-	int			tex_y;
+	t_tex_array	*tex_array;
+	int			tex_ofset_x;
+	int			tex_ofset_y;
 }				t_tex;
 
 typedef struct	s_maze
@@ -164,7 +139,7 @@ void	init_player(t_player *player);
 void	init_rays(t_rays *rays, t_maze *blueprint);
 void	init_tex(t_tex *tex);
 void	init_tex_2(t_tex *tex);
-void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
+//void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
 void	parse(char *av, t_maze *blueprint);
 void	parse_mapfile(t_maze *blueprint, char *mapfile);
 void	parse_screenres(t_maze *blueprint, char *mapfile);
@@ -191,6 +166,16 @@ int		put_color(int t, int r, int g, int b);
 void	new_ray(t_port *port, t_rays *rays, t_player *player, int colum_id);
 void	cast_all_rays(t_port *port, t_rays *rays);
 
+/* animate/draw_walls */
+void	draw_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id);
+void	put_all_textures(t_port *port, t_wall *wall_array, int colum_id);
+void	put_cur_texture(t_port *port, t_tex_array tex_array, t_rays *rays, int colum_id);
+
+/* animate/ray_casting_utils */
+float	distance_between_points(float x1, float y1, float x2, float y2);
+void	normalize_ray_angle(float *ray_angle);
+void	ray_direction(t_rays *rays);
+
 /* frame_build/dda.c */
 void	horizontal_intercept(t_rays *rays, t_player *player);
 void	check_horizontal_wallhit(t_port *port, t_rays *rays, t_maze *maze);
@@ -198,8 +183,8 @@ void	vertical_intercept(t_rays *rays, t_player *player);
 void	check_vertical_wallhit(t_port *port, t_rays *rays, t_maze *maze);
 
 /* animate/minimap */
-void	draw_player(t_port *port, int x, int y, int color);
-void	draw_2d_map(t_port *port);
+void	draw_mini_player(t_port *port, float x, float y, int color);
+void	draw_mini_map(t_port *port);
 void	put_square(t_port *port, float x, float y, int color);
 void	draw_line(t_mlx *mlx, float begin_x, float begin_y, float end_x, float end_y, int color);
 
