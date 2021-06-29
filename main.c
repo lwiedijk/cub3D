@@ -6,11 +6,12 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:14:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/19 15:21:07 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/29 12:00:00 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "libft/libft.h"
 #include "mlx/mlx.h"
 #include <stdio.h>
 
@@ -46,6 +47,8 @@ int	main(int ac, char **av)
 	port.blueprint = &blueprint;
 	port.player = &player;
 	port.tex = &tex;
+	if (ac != 2)
+		ft_error(5);
 	parse(av[1], &blueprint);
 	set_player(&port);
 	init_rays(&rays, &blueprint);
