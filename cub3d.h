@@ -6,14 +6,25 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/25 15:01:43 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/30 16:13:05 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-# define KOPINK "\033[38;5;200m"
-# define RES "\033[0m"
+#ifndef CUB3D_H
+# define CUB3D_H
+
 # define TILE_SIZE 64
 # define SCALE 0.15
+
+typedef enum	e_error_code
+{
+	OK,
+	INCORRECT_CUB_FILE,
+	MALLOC_FAIL,
+	INVALID_FD,
+	READ_FAIL,
+	WRONG_ARGC,
+}				t_error_code;
 
 typedef struct	s_mlx
 {
@@ -191,3 +202,5 @@ void	draw_line(t_mlx *mlx, t_player *player, float end_x, float end_y);
 /* read_textures */
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
 void	calculate_textures(t_port *port, t_tex *tex, char map);
+
+#endif
