@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 12:30:18 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/05/22 15:44:03 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/30 16:02:26 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	declare_map(t_maze *blueprint)
 	i = 0;
 	blueprint->map = (int **)malloc(sizeof(int *) * blueprint->map_y);
 	if (!blueprint->map)
-		ft_error(2);
+		ft_error(MALLOC_FAIL);
 	while (i < blueprint->map_y)
 	{
 		blueprint->map[i] = (int *)malloc(sizeof(int) * blueprint->map_x[i]);
 		if (!blueprint->map[i])
-			ft_error(2);
+			ft_error(MALLOC_FAIL);
 		i++;
 	}
 	//free(blueprint->map_x);
@@ -80,7 +80,7 @@ void	count_x(t_maze *blueprint, char *mapfile, int y)
 	i = blueprint->filepos;
 	blueprint->map_x = (int *)malloc(sizeof(int) * y);
 	if (!blueprint->map_x)
-		ft_error(2);
+		ft_error(MALLOC_FAIL);
 	while (y_count < y)
 	{
 		blueprint->map_x[y_count] = 0;
@@ -113,7 +113,7 @@ int	checkmap_and_count_y(t_maze *blueprint, char *mapfile)
 		}
 	}
 	if (!count)
-		ft_error(1);
+		ft_error(INCORRECT_CUB_FILE);
 	blueprint->map_y = count;
 	count_x(blueprint, mapfile, count);
 	return (len);

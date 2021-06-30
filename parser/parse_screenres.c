@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:34:09 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/03/20 14:50:01 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/30 16:03:21 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	calc_screenres(t_maze *blueprint, char *mapfile, char axis)
 	}
 	screenres_char = (char *)malloc(sizeof(char) * (len + 1));
 	if (!screenres_char)
-		ft_error(2);
+		ft_error(MALLOC_FAIL);
 	temp = &mapfile[blueprint->filepos];
 	ft_strlcpy(screenres_char, temp, len + 1);
 	blueprint->filepos += len;
@@ -62,14 +62,14 @@ void	parse_screenres(t_maze *blueprint, char *mapfile)
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
 	if (mapfile[blueprint->filepos] < '1' || mapfile[blueprint->filepos] > '9')
-		ft_error(1);
+		ft_error(INCORRECT_CUB_FILE);
 	calc_screenres(blueprint, mapfile, 'x');
 	if (mapfile[blueprint->filepos] != ' ')
-		ft_error(1);
+		ft_error(INCORRECT_CUB_FILE);
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
 	if (mapfile[blueprint->filepos] < '1' || mapfile[blueprint->filepos] > '9')
-		ft_error(1);
+		ft_error(INCORRECT_CUB_FILE);
 	calc_screenres(blueprint, mapfile, 'y');
 	while (mapfile[blueprint->filepos] == ' '
 		&& mapfile[blueprint->filepos] != '\n')
