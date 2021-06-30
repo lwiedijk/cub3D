@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:29:17 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/04/13 18:32:51 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/06/30 16:04:12 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,15 @@ void	parse(char *av, t_maze *blueprint)
 	{
 		parse_mapfile(blueprint, mapfile);
 		if (mapfile[blueprint->filepos] != '\n' && mapfile[blueprint->filepos] != '\0')
-			ft_error(1);
+			ft_error(INCORRECT_CUB_FILE);
 		while (mapfile[blueprint->filepos] == '\n')
 			blueprint->filepos++;
 	}
+	//system("leaks cub3D");
+	//exit(1);
 	free(mapfile);
+	//mapfile = 0;
+	//system("leaks cub3D");
 	//mind to free blueprint->map_x!
 	write(1, "Blueprint is created successfully!\n", 35);
 }
