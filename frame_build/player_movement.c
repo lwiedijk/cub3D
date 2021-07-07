@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/23 14:08:04 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/02 11:14:05 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	set_player_rotation(t_port *port, t_maze *p)
 		port->player->rotation = M_PI / 2;
 	if (p->player_or == 'W')
 		port->player->rotation = M_PI;
+	normalize_ray_angle(&port->player->rotation);
 }
 
 void	set_player(t_port *port)

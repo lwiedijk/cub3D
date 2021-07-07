@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/16 11:29:35 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/25 15:07:22 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/02 13:30:25 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	draw_mini_player(t_port *port, float x, float y, int color)
 	pos_y = (y - 3);
 	xi = (x + 3);
 	yi = (y + 3);
-	draw_line(port->mlx, port->player, (x + cos(port->player->rotation) * (0.15
-				* TILE_SIZE)), (y + sin(port->player->rotation) * (0.15
+	draw_line(port->mlx, port->player, (x + cos(port->player->rotation) * (SCALE
+				* TILE_SIZE)), (y + sin(port->player->rotation) * (SCALE
 				* TILE_SIZE)));
 	while (pos_y < yi)
 	{
