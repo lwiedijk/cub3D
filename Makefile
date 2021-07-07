@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/06/19 17:58:01 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/07/07 12:23:59 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ PARSE_DIR = parser/
 PARSE_SRC_FILES = parse.c \
 parse_screenres.c parse_textures.c \
 parse_color.c parse_map.c \
+check_screenres.c
 
 FRAME_BUILD_DIR = frame_build/
 FRAME_BUILD_SRC_FILES = key_button_hook.c \
@@ -34,7 +35,7 @@ LIBFT =	libft.a
 MLX_DIR		=	mlx/
 MLX			=	libmlx.dylib
 
-CFLAGS = -g 
+CFLAGS = -Wall -Wextra -Werror -g
 
 OBJS_DIR = objs/
 _OBJ_FILES = $(SRC_FILES:.c=.o) \
@@ -56,6 +57,7 @@ $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 $(OBJS_DIR)%.o: %.c $(HEADER_FILES)
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
