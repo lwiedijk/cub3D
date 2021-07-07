@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 12:30:18 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/30 16:02:26 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/07 15:34:54 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../libft/libft.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void	write_map(t_maze *blueprint, char *mapfile)
 {
@@ -28,7 +29,7 @@ void	write_map(t_maze *blueprint, char *mapfile)
 		x = 0;
 		while (x < blueprint->map_x[y])
 		{
-			if (mapfile[i] >= '0' && mapfile[i] <= '2')
+			if (mapfile[i] >= '0' && mapfile[i] <= '1')
 			{
 				blueprint->map[y][x] = (int)mapfile[i] - '0';
 				x++;
@@ -102,7 +103,7 @@ int	checkmap_and_count_y(t_maze *blueprint, char *mapfile)
 	len = blueprint->filepos;
 	count = 0;
 	while (mapfile[len] == ' ' || mapfile[len] == '1' || mapfile[len] == '0'
-		|| mapfile[len] == '2' || mapfile[len] == 'S'
+		|| mapfile[len] == 'S'
 		|| mapfile[len] == 'N' || mapfile[len] == 'W' || mapfile[len] == 'E')
 	{
 		len++;
@@ -113,7 +114,8 @@ int	checkmap_and_count_y(t_maze *blueprint, char *mapfile)
 		}
 	}
 	if (!count)
-		ft_error(INCORRECT_CUB_FILE);
+		ft_error(INVALID_MAP);
+	printf("kom je hier? -> count = %d\n",  count);
 	blueprint->map_y = count;
 	count_x(blueprint, mapfile, count);
 	return (len);
