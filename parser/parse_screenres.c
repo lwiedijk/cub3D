@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:34:09 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/30 16:03:21 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/07 12:14:40 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void	put_screenres(t_maze *blueprint, char *screenres_char, char axis)
 	int	screenres;
 
 	screenres = ft_atoi(screenres_char);
-	if ((screenres > 2560 || screenres < 0) && axis == 'x')
-		screenres = 2560;
-	if ((screenres > 1440 || screenres < 0) && axis == 'y')
-		screenres = 1440;
+	printf("screenres = %d\n", screenres);
 	if (axis == 'x')
 		blueprint->screenres_x = screenres;
 	else if (axis == 'y')
