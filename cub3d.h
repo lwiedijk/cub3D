@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/30 16:13:05 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/07 15:12:21 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef enum	e_error_code
 	INVALID_FD,
 	READ_FAIL,
 	WRONG_ARGC,
+	INVALID_MAP,
 }				t_error_code;
 
 typedef struct	s_mlx
@@ -78,7 +79,7 @@ typedef struct	s_maze
 	int			*map_x;
 	int			**map;
 	int			tile_size;
-	int			step_size;
+	float		step_size;
 	char		player_or;
 }				t_maze;
 
@@ -157,6 +158,7 @@ void	parse_screenres(t_maze *blueprint, char *mapfile);
 void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type);
 void	parse_color(t_maze *blueprint, char *mapfile, char type);
 void	parse_map(t_maze *blueprint, char *mapfile);
+void	check_max_screensize(t_maze *blueprint, t_mlx mlx);
 
 /* animate/key_button_hook */
 int		x_button_hook(t_mlx *mlx);
