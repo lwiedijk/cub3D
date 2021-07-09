@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 12:30:18 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/07 15:34:54 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/09 16:28:05 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,48 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+int	check_opening_in_map(t_maze blueprint, int **map, int y, int x)
+{
+	if ((y - 1) < 0)
+		ft_error(INVALID_MAP);
+	if ((x - 1) < 0)
+		ft_error(INVALID_MAP);
+	else if (map[y][x - 1] == ' ')
+		ft_error(INVALID_MAP);
+	else if (x + 1 >= blueprint.map_x[y])
+		ft_error(INVALID_MAP);
+	else if (map[y][x + 1] == ' ')
+		ft_error(INVALID_MAP);
+	else if (map[y - 1][x] == ' ')
+		ft_error(INVALID_MAP);
+	else if (y + 1 >= blueprint.map_y)
+		ft_error(INVALID_MAP);
+	else if (map[y + 1][x] == ' ')
+		ft_error(INVALID_MAP);
+	return (0);
+}
+
+void	check_map(int **map, t_maze blueprint)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	if (!blueprint.player_or)
+		ft_error(INCORRECT_CUB_FILE);
+	while (y < blueprint.map_y)
+	{
+		x = 0;
+		while(x < blueprint.map_x[y])
+		{
+			if (map[y][x] == 0 || map[y][x] == 112)
+				check_opening_in_map(blueprint, map, y, x);
+			x++;
+		}
+		y++;
+	}
+}
 
 void	write_map(t_maze *blueprint, char *mapfile)
 {
@@ -37,13 +79,15 @@ void	write_map(t_maze *blueprint, char *mapfile)
 			else if (mapfile[i] == 'N' || mapfile[i]
 			== 'E' || mapfile[i] == 'W' || mapfile[i] == 'S')
 			{
+				if (blueprint->player_or)
+					ft_error(INCORRECT_CUB_FILE);
 				blueprint->player_or = mapfile[i];
 				blueprint->map[y][x] = 'p';
 				x++;
 			}
 			else if (mapfile[i] == ' ')
 			{
-				blueprint->map[y][x] = 0;
+				blueprint->map[y][x] = ' ';
 				x++;
 			}
 			i++;
@@ -52,6 +96,7 @@ void	write_map(t_maze *blueprint, char *mapfile)
 			i++;
 		y++;
 	}
+	check_map(blueprint->map, *blueprint);
 }
 
 void	declare_map(t_maze *blueprint)
@@ -69,7 +114,6 @@ void	declare_map(t_maze *blueprint)
 			ft_error(MALLOC_FAIL);
 		i++;
 	}
-	//free(blueprint->map_x);
 }
 
 void	count_x(t_maze *blueprint, char *mapfile, int y)
@@ -95,13 +139,13 @@ void	count_x(t_maze *blueprint, char *mapfile, int y)
 	}
 }
 
-int	checkmap_and_count_y(t_maze *blueprint, char *mapfile)
+int	count_map_yx(t_maze *blueprint, char *mapfile)
 {
 	int	len;
-	int	count;
+	int	count_y;
 
 	len = blueprint->filepos;
-	count = 0;
+	count_y = 0;
 	while (mapfile[len] == ' ' || mapfile[len] == '1' || mapfile[len] == '0'
 		|| mapfile[len] == 'S'
 		|| mapfile[len] == 'N' || mapfile[len] == 'W' || mapfile[len] == 'E')
@@ -109,26 +153,27 @@ int	checkmap_and_count_y(t_maze *blueprint, char *mapfile)
 		len++;
 		if (mapfile[len] == '\n')
 		{
-			count++;
+			count_y++;
 			len++;
 		}
 	}
-	if (!count)
+	if (mapfile[len] != '\n')
 		ft_error(INVALID_MAP);
-	printf("kom je hier? -> count = %d\n",  count);
-	blueprint->map_y = count;
-	count_x(blueprint, mapfile, count);
+	if (!count_y)
+		ft_error(INVALID_MAP);
+	blueprint->map_y = count_y;
+	count_x(blueprint, mapfile, count_y);
 	return (len);
 }
 
 void	parse_map(t_maze *blueprint, char *mapfile)
 {
-	int len;
+	int pos_offset;
 
-	len = checkmap_and_count_y(blueprint, mapfile);
+	pos_offset = count_map_yx(blueprint, mapfile);
 	declare_map(blueprint);
 	write_map(blueprint, mapfile);
-	blueprint->filepos += (len - blueprint->filepos);
+	blueprint->filepos += (pos_offset - blueprint->filepos);
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
 }
