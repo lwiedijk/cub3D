@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 14:00:59 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/16 11:10:17 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/09 16:39:03 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ int	key_press_hook(int keycode, t_port *port)
 	{
 		printf("%s\n", "esc is pressed, Terminating program...");
 		mlx_destroy_window(port->mlx->mlx, port->mlx->win);
+		//free(blueprint->map_x); which is a 2d array with the count for x on each y
+		//free(map[y][x]); which is a 2d array with the actual map
+
+
+		//mlx_destroy_image(port->mlx->mlx, port->mlx->img_1);
+		// or is it img_2? which one is active?
+
+
+
 		//system("leaks cub3D");
 		exit (0);
 	}
