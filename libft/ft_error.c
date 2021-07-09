@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:30:28 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/07 15:14:04 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/09 11:30:16 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	ft_error(int error_code)
 	if (error_code == 6)
 		write(1, "Error, invalid map!\n", 20);
 	write(1, "Exiting program, please reboot...\n", 34);
-	exit(0);
+	exit(1);
 }
