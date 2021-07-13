@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/17 15:37:10 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/07/09 13:43:28 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/07/13 11:33:20 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ ft_strjoin_free.c ft_power.c ft_isalpha.c \
 ft_strlen.c ft_strcpy.c \
 ft_strlcpy.c ft_atoi.c ft_putstr_fd.c \
 ft_read.c ft_error.c ft_strdup.c \
-ft_strchr.c
+ft_strchr.c ft_iswhitespace.c
 
 HEADER_FILES = libft.h
 CFLAGS = -g -Wall -Wextra -Werror
