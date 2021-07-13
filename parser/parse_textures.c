@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:47:23 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/03/20 17:01:45 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/13 11:51:04 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	put_path_to_blueprint(t_maze *blueprint, char *mapfile, char texture_type, char *path, int len)
+char	*copy_path_from_mapfile(t_maze *blueprint, char *mapfile, int len)
 {
+	char *path;
 	char *temp;
 
+	path = (char *)malloc(sizeof(char) * len + 1);
+	if (!path)
+		ft_error(MALLOC_FAIL);
 	temp = &mapfile[blueprint->filepos];
 	ft_strlcpy(path, temp, len + 1);
 	blueprint->filepos += len;
+	return (path);
+}
+
+void	put_path_to_blueprint(t_maze *blueprint, char texture_type, char *path)
+{
 	if (texture_type == 'N')
 		blueprint->north_texture = path;
 	if (texture_type == 'S')
@@ -31,28 +40,23 @@ void	put_path_to_blueprint(t_maze *blueprint, char *mapfile, char texture_type, 
 		blueprint->west_texture = path;
 	if (texture_type == 'E')
 		blueprint->east_texture = path;
-	if (texture_type == 's')
-		blueprint->sprite = path;
 }
 
 
 void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type)
 {
-	int	len;
-	char *path;
+	int		len;
+	char	*path;
 
-	if (texture_type != 's')
-		blueprint->filepos += 2;
-	else
-		blueprint->filepos++;
+	blueprint->filepos += 2;
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
 	len = blueprint->filepos;
-	while (mapfile[len] != ' ' && !(mapfile[len] > 8 && mapfile[len] < 14))
+	while (!ft_iswhitespace(mapfile[len]))
 		len++;
 	len -= blueprint->filepos;
-	path = (char *)malloc(sizeof(char) * len + 1);
-	put_path_to_blueprint(blueprint, mapfile, texture_type, path, len);
+	path = copy_path_from_mapfile(blueprint, mapfile, len);
+	put_path_to_blueprint(blueprint, texture_type, path);
 	while (mapfile[blueprint->filepos] == ' '
 		&& mapfile[blueprint->filepos] != '\n')
 		blueprint->filepos++;
