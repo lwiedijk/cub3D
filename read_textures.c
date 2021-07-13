@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/24 15:14:13 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/30 16:04:41 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/13 11:15:59 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #include "mlx/mlx.h"
 #include "libft/libft.h"
 #include <stdlib.h>
+
+void	free_texture_path(t_maze *blueprint)
+{
+	free(blueprint->north_texture);
+	free(blueprint->east_texture);
+	free(blueprint->south_texture);
+	free(blueprint->west_texture);
+}
 
 void	read_next_textures(t_port *port, t_maze *blueprint, t_tex *tex)
 {
@@ -29,6 +37,7 @@ void	read_next_textures(t_port *port, t_maze *blueprint, t_tex *tex)
 	tex->tex_array[3].tex_addr = mlx_get_data_addr(tex->tex_array[3].tex_pnt,
 			&tex->tex_array[3].tex_bpp, &tex->tex_array[3].tex_ls,
 			&tex->tex_array[3].tex_endian);
+	free_texture_path(blueprint);
 }
 
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex)
