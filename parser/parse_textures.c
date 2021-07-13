@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:47:23 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/13 11:51:04 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/13 11:58:51 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 char	*copy_path_from_mapfile(t_maze *blueprint, char *mapfile, int len)
 {
-	char *path;
-	char *temp;
+	char	*path;
+	char	*temp;
 
 	path = (char *)malloc(sizeof(char) * len + 1);
 	if (!path)
@@ -41,7 +41,6 @@ void	put_path_to_blueprint(t_maze *blueprint, char texture_type, char *path)
 	if (texture_type == 'E')
 		blueprint->east_texture = path;
 }
-
 
 void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type)
 {
