@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/07 15:12:21 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/13 12:59:06 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # define TILE_SIZE 64
 # define SCALE 0.15
+# define W_KEY 13
+# define S_KEY 1
+# define A_KEY 0
+# define D_KEY 2
+# define LEFT_ARROW 123
+# define RIGHT_ARROW 124
 
 typedef enum	e_error_code
 {
