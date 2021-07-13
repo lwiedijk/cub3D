@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:29:17 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/09 11:57:23 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/13 13:35:37 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,23 @@ void	parse_cubfile(t_maze *blueprint, char *mapfile)
 void	parse_cubfile_map(t_maze *blueprint, char *mapfile)
 {
 	while (mapfile[blueprint->filepos] == '\n')
-			blueprint->filepos++;
+		blueprint->filepos++;
 	if (mapfile[blueprint->filepos] == ' '
-	|| mapfile[blueprint->filepos == '1'])
+		|| mapfile[blueprint->filepos == '1'])
 		parse_map(blueprint, mapfile);
 	else
 		ft_error(INCORRECT_CUB_FILE);
 	while (mapfile[blueprint->filepos] == '\n')
-			blueprint->filepos++;
-	
+		blueprint->filepos++;
 }
 
 int	cubfile_read_is_complete(t_maze *blueprint)
 {
-	if (blueprint->screenres_x && blueprint->screenres_y && blueprint->north_texture
-		&& blueprint->south_texture && blueprint->east_texture && blueprint->west_texture
-		&& blueprint->ceiling_color && blueprint->floor_color)
+	if (blueprint->screenres_x && blueprint->screenres_y
+		&& blueprint->north_texture && blueprint->south_texture
+		&& blueprint->east_texture && blueprint->west_texture
+		&& blueprint->ceiling_color != -1
+		&& blueprint->floor_color != -1)
 		return (1);
 	else
 		return (0);
@@ -72,12 +73,14 @@ void	parse(char *av, t_maze *blueprint)
 	mapfile = ft_read(av);
 	while (mapfile[blueprint->filepos] != '\0')
 	{
-		while (mapfile[blueprint->filepos] == '\n' || mapfile[blueprint->filepos] == ' ')
+		while (mapfile[blueprint->filepos] == '\n'
+			|| mapfile[blueprint->filepos] == ' ')
 			blueprint->filepos++;
 		parse_cubfile(blueprint, mapfile);
 		if (cubfile_read_is_complete(blueprint))
 			parse_cubfile_map(blueprint, mapfile);
-		if (mapfile[blueprint->filepos] != '\n' && mapfile[blueprint->filepos] != '\0')
+		if (mapfile[blueprint->filepos] != '\n'
+			&& mapfile[blueprint->filepos] != '\0')
 			ft_error(INCORRECT_CUB_FILE);
 	}
 	//system("leaks cub3D");
@@ -85,6 +88,5 @@ void	parse(char *av, t_maze *blueprint)
 	free(mapfile);
 	//mapfile = 0;
 	//system("leaks cub3D");
-	//mind to free blueprint->map_x!
 	write(1, "Blueprint is created successfully!\n", 35);
 }

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/25 15:11:33 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/13 13:36:09 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	init_maze(t_maze *blueprint)
 	blueprint->east_texture = 0;
 	blueprint->south_texture = 0;
 	blueprint->west_texture = 0;
-	blueprint->sprite = 0;
-	blueprint->floor_color = 0;
-	blueprint->ceiling_color = 0;
+	//blueprint->sprite = 0;
+	blueprint->floor_color = -1;
+	blueprint->ceiling_color = -1;
 	blueprint->r = 0;
 	blueprint->g = 0;
 	blueprint->b = 0;
