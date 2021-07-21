@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/21 15:18:56 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 15:21:12 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 16:50:52 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,51 @@ void	check_map(int **map, t_maze blueprint)
 		}
 		y++;
 	}
+}
+
+int	loop_through_map(t_maze *blueprint, char mapfile, int x, int y)
+{
+	if (mapfile >= '0' && mapfile <= '1')
+	{
+		blueprint->map[y][x] = (int)mapfile - '0';
+		x++;
+	}
+	else if (mapfile == 'N' || mapfile
+		== 'E' || mapfile == 'W' || mapfile == 'S')
+	{
+		if (blueprint->player_or)
+			ft_error(INCORRECT_CUB_FILE);
+		blueprint->player_or = mapfile;
+		blueprint->map[y][x] = 'p';
+		x++;
+	}
+	else if (mapfile == ' ')
+	{
+		blueprint->map[y][x] = ' ';
+		x++;
+	}
+	return (x);
+}
+
+void	write_map(t_maze *blueprint, char *mapfile)
+{
+	int	i;
+	int	y;
+	int	x;
+
+	i = blueprint->filepos;
+	y = 0;
+	while (y < blueprint->map_y)
+	{
+		x = 0;
+		while (x < blueprint->map_x[y])
+		{
+			x = loop_through_map(blueprint, mapfile[i], x, y);
+			i++;
+		}
+		if (mapfile[i] == '\n')
+			i++;
+		y++;
+	}
+	check_map(blueprint->map, *blueprint);
 }

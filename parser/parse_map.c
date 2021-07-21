@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 12:30:18 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 15:20:54 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 16:54:34 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +16,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	write_map(t_maze *blueprint, char *mapfile)
-{
-	int	i;
-	int	y;
-	int	x;
-
-	i = blueprint->filepos;
-	y = 0;
-	while (y < blueprint->map_y)
-	{
-		x = 0;
-		while (x < blueprint->map_x[y])
-		{
-			if (mapfile[i] >= '0' && mapfile[i] <= '1')
-			{
-				blueprint->map[y][x] = (int)mapfile[i] - '0';
-				x++;
-			}
-			else if (mapfile[i] == 'N' || mapfile[i]
-				== 'E' || mapfile[i] == 'W' || mapfile[i] == 'S')
-			{
-				if (blueprint->player_or)
-					ft_error(INCORRECT_CUB_FILE);
-				blueprint->player_or = mapfile[i];
-				blueprint->map[y][x] = 'p';
-				x++;
-			}
-			else if (mapfile[i] == ' ')
-			{
-				blueprint->map[y][x] = ' ';
-				x++;
-			}
-			i++;
-		}
-		if (mapfile[i] == '\n')
-			i++;
-		y++;
-	}
-	check_map(blueprint->map, *blueprint);
-}
-
 void	declare_map(t_maze *blueprint)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	blueprint->map = (int **)malloc(sizeof(int *) * blueprint->map_y);
@@ -76,9 +35,9 @@ void	declare_map(t_maze *blueprint)
 
 void	count_x(t_maze *blueprint, char *mapfile, int y)
 {
-	int i;
-	int y_count;
-	
+	int	i;
+	int	y_count;
+
 	y_count = 0;
 	i = blueprint->filepos;
 	blueprint->map_x = (int *)malloc(sizeof(int) * y);
@@ -126,7 +85,7 @@ int	count_map_yx(t_maze *blueprint, char *mapfile)
 
 void	parse_map(t_maze *blueprint, char *mapfile)
 {
-	int pos_offset;
+	int	pos_offset;
 
 	pos_offset = count_map_yx(blueprint, mapfile);
 	declare_map(blueprint);
