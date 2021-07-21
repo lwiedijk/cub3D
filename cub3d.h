@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/13 13:04:42 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 09:30:42 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # define D_KEY 2
 # define LEFT_ARROW 123
 # define RIGHT_ARROW 124
-
 
 typedef enum	e_error_code
 {
@@ -166,6 +165,7 @@ void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type);
 void	parse_color(t_maze *blueprint, char *mapfile, char type);
 void	parse_map(t_maze *blueprint, char *mapfile);
 void	check_max_screensize(t_maze *blueprint, t_mlx mlx);
+void	check_min_screensize(t_maze *blueprint);
 
 /* animate/key_button_hook */
 int		x_button_hook(t_mlx *mlx);
