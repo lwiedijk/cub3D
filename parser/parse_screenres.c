@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:34:09 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/07 15:17:28 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 09:11:12 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ void	parse_screenres(t_maze *blueprint, char *mapfile)
 	blueprint->filepos++;
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
-	if (mapfile[blueprint->filepos] < '1' || mapfile[blueprint->filepos] > '9')
+	if (mapfile[blueprint->filepos] < '0' || mapfile[blueprint->filepos] > '9')
 		ft_error(INCORRECT_CUB_FILE);
 	calc_screenres(blueprint, mapfile, 'x');
 	if (mapfile[blueprint->filepos] != ' ')
 		ft_error(INCORRECT_CUB_FILE);
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
-	if (mapfile[blueprint->filepos] < '1' || mapfile[blueprint->filepos] > '9')
+	if (mapfile[blueprint->filepos] < '0' || mapfile[blueprint->filepos] > '9')
 		ft_error(INCORRECT_CUB_FILE);
 	calc_screenres(blueprint, mapfile, 'y');
 	while (mapfile[blueprint->filepos] == ' '

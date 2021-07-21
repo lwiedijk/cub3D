@@ -6,13 +6,22 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/07 12:18:12 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 09:29:47 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 11:52:17 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "../mlx/mlx.h"
 #include <stdio.h>
+
+void	check_screenres(t_maze *blueprint)
+{
+	if (blueprint->screenres_x == -1)
+		blueprint->screenres_x = 800;
+	if (blueprint->screenres_y == -1)
+		blueprint->screenres_y = 500;
+	check_min_screensize(blueprint);
+}
 
 void	check_min_screensize(t_maze *blueprint)
 {

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/13 13:36:09 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 09:44:11 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 void	init_maze(t_maze *blueprint)
 {
 	blueprint->filepos = 0;
-	blueprint->screenres_y = 0;
-	blueprint->screenres_x = 0;
+	blueprint->screenres_y = -1;
+	blueprint->screenres_x = -1;
 	blueprint->north_texture = 0;
 	blueprint->east_texture = 0;
 	blueprint->south_texture = 0;
