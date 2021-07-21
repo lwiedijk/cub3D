@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/07 12:41:33 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 12:29:43 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ int	render_frame(t_port *port)
 	put_wall_ceiling(port, port->blueprint);
 	cast_all_rays(port, port->rays);
 	if (port->blueprint->screenres_x >= 500 && port->blueprint->screenres_y
-		>= 500)
+		>= 400 && (*port->blueprint->map_x * (SCALE * TILE_SIZE))
+		< port->blueprint->screenres_x && (port->blueprint->map_y
+			* (SCALE * TILE_SIZE)) < port->blueprint->screenres_y)
 	{
 		draw_mini_map(port);
 		draw_mini_player(port, (SCALE * port->player->pos_x),
@@ -83,7 +85,5 @@ int	render_frame(t_port *port)
 	}
 	mlx_put_image_to_window(port->mlx->mlx, port->mlx->win,
 		port->mlx->img_1, 0, 0);
-	//if (port->mlx->img_2)
-	//	mlx_destroy_image(port->mlx->mlx, port->mlx->img_2);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/16 11:29:35 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/02 13:30:25 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/09 13:56:29 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	draw_mini_map(t_port *port)
 				put_square(port, step, jump, 0x00FF00);
 				step += port->blueprint->step_size;
 			}
-			if (port->blueprint->map[y][x] == 0)
+			if (port->blueprint->map[y][x] == 0 
+				|| port->blueprint->map[y][x] == ' ')
 				step += port->blueprint->step_size;
 			x++;
 		}
