@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:29:17 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/13 13:35:37 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 12:06:34 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,16 @@ void	parse_cubfile_map(t_maze *blueprint, char *mapfile)
 		blueprint->filepos++;
 }
 
-int	cubfile_read_is_complete(t_maze *blueprint)
+int	cubfile_read_is_complete(t_maze *blueprint, char *mapfile)
 {
-	if (blueprint->screenres_x && blueprint->screenres_y
-		&& blueprint->north_texture && blueprint->south_texture
+	int	pos;
+
+	pos = blueprint->filepos;
+	while (mapfile[pos] == ' ' || mapfile[pos] == '\n')
+		pos++;
+	if (mapfile[pos] == 'R')
+		return (0);
+	else if (blueprint->north_texture && blueprint->south_texture
 		&& blueprint->east_texture && blueprint->west_texture
 		&& blueprint->ceiling_color != -1
 		&& blueprint->floor_color != -1)
@@ -77,7 +83,7 @@ void	parse(char *av, t_maze *blueprint)
 			|| mapfile[blueprint->filepos] == ' ')
 			blueprint->filepos++;
 		parse_cubfile(blueprint, mapfile);
-		if (cubfile_read_is_complete(blueprint))
+		if (cubfile_read_is_complete(blueprint, mapfile))
 			parse_cubfile_map(blueprint, mapfile);
 		if (mapfile[blueprint->filepos] != '\n'
 			&& mapfile[blueprint->filepos] != '\0')
