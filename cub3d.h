@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 09:30:42 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 15:04:20 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct	s_maze
 	int			map_y;
 	int			*map_x;
 	int			**map;
-	int			tile_size;
+	float		jump;
 	float		step_size;
 	char		player_or;
 }				t_maze;
@@ -164,6 +164,7 @@ void	parse_screenres(t_maze *blueprint, char *mapfile);
 void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type);
 void	parse_color(t_maze *blueprint, char *mapfile, char type);
 void	parse_map(t_maze *blueprint, char *mapfile);
+void	check_screenres(t_maze *blueprint);
 void	check_max_screensize(t_maze *blueprint, t_mlx mlx);
 void	check_min_screensize(t_maze *blueprint);
 
@@ -204,7 +205,7 @@ void	check_vertical_wallhit(t_port *port, t_rays *rays, t_maze *maze);
 
 /* animate/minimap */
 void	draw_mini_player(t_port *port, float x, float y, int color);
-void	draw_mini_map(t_port *port);
+void	draw_mini_map(t_port *port, t_maze *blueprint, float jump);
 void	put_square(t_port *port, float x, float y, int color);
 void	draw_line(t_mlx *mlx, t_player *player, float end_x, float end_y);
 

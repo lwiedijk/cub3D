@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/16 11:29:35 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/09 13:56:29 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 15:03:56 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,32 +59,30 @@ void	put_square(t_port *port, float x, float y, int color)
 	}
 }
 
-void	draw_mini_map(t_port *port)
+void	draw_mini_map(t_port *port, t_maze *blueprint, float jump)
 {
 	int		x;
 	int		y;
 	float	step;
-	float	jump;
 
 	y = 0;
-	jump = 0;
-	while (y < port->blueprint->map_y)
+	while (y < blueprint->map_y)
 	{
 		x = 0;
 		step = 0;
-		while (x < port->blueprint->map_x[y])
+		while (x < blueprint->map_x[y])
 		{
-			if (port->blueprint->map[y][x] == 1)
+			if (blueprint->map[y][x] == 1)
 			{
 				put_square(port, step, jump, 0x00FF00);
-				step += port->blueprint->step_size;
+				step += blueprint->step_size;
 			}
-			if (port->blueprint->map[y][x] == 0 
-				|| port->blueprint->map[y][x] == ' ')
-				step += port->blueprint->step_size;
+			if (blueprint->map[y][x] == 0
+				|| blueprint->map[y][x] == ' ')
+				step += blueprint->step_size;
 			x++;
 		}
-		jump += port->blueprint->step_size;
+		jump += blueprint->step_size;
 		y++;
 	}
 }

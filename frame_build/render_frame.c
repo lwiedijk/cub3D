@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 12:29:43 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 15:07:48 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	render_frame(t_port *port)
 		< port->blueprint->screenres_x && (port->blueprint->map_y
 			* (SCALE * TILE_SIZE)) < port->blueprint->screenres_y)
 	{
-		draw_mini_map(port);
+		draw_mini_map(port, port->blueprint, port->blueprint->jump);
 		draw_mini_player(port, (SCALE * port->player->pos_x),
 			(SCALE * port->player->pos_y), 0x0000FF);
 	}
