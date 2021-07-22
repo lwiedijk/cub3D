@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/02 11:14:05 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 16:12:21 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	set_player(t_port *port)
 	}
 }
 
-void	strafe_player(t_port *port)
+void	strafe_player(t_port *port, int direction)
 {
 	float		step;
 	float		newpos_x;
 	float		newpos_y;
 
-	step = (port->player->strafe * port->player->move_speed);
+	step = (direction * port->player->move_speed);
 	newpos_y = port->player->pos_y
 		+ (sin(port->player->rotation - M_PI_2)) * step;
 	newpos_x = port->player->pos_x
@@ -70,46 +70,36 @@ void	strafe_player(t_port *port)
 	}
 }
 
-void	walk_player(t_port *port)
+void	walk_player(t_port *port, int direction)
 {
 	float		step;
 	float		newpos_x;
 	float		newpos_y;
-
-	if (port->player->turndirection)
-		port->player->rotation += (port->player->turndirection
-				* port->player->rotation_speed);
-	if (port->player->walkdirection)
+	
+	step = (direction * port->player->move_speed);
+	newpos_y = port->player->pos_y + sin(port->player->rotation) * step;
+	newpos_x = port->player->pos_x + cos(port->player->rotation) * step;
+	if (!wall_hit(newpos_x, newpos_y, port))
 	{
-		step = (port->player->walkdirection * port->player->move_speed);
-		newpos_y = port->player->pos_y + sin(port->player->rotation) * step;
-		newpos_x = port->player->pos_x + cos(port->player->rotation) * step;
-		if (!wall_hit(newpos_x, newpos_y, port))
-		{
-			port->player->pos_y = newpos_y;
-			port->player->pos_x = newpos_x;
-		}
+		port->player->pos_y = newpos_y;
+		port->player->pos_x = newpos_x;
 	}
-	if (port->player->strafe)
-		strafe_player(port);
 }
 
-int	wall_hit(float x, float y, t_port *port)
+void	move_player(t_port *port)
 {
-	int	wall_pos_x;
-	int	wall_pos_y;
-
-	if (x <= 0 || x / TILE_SIZE >= port->blueprint->screenres_x)
-		return (1);
-	if (y <= 0 || y / TILE_SIZE >= port->blueprint->screenres_y)
-		return (1);
-	wall_pos_x = floor(x / TILE_SIZE);
-	wall_pos_y = floor(y / TILE_SIZE);
-	if (wall_pos_y > (port->blueprint->map_y - 1))
-		return (1);
-	if (wall_pos_x > (port->blueprint->map_x[wall_pos_y]))
-		return (1);
-	if (port->blueprint->map[wall_pos_y][wall_pos_x] > 0)
-		return (1);
-	return (0);
+	if (port->player->turndirection_r)
+		port->player->rotation += (port->player->turndirection_r
+				* port->player->rotation_speed);
+	if (port->player->turndirection_l)
+		port->player->rotation += (port->player->turndirection_l
+				* port->player->rotation_speed);
+	if (port->player->forward)
+		walk_player(port, port->player->forward);
+	if (port->player->backward)
+		walk_player(port, port->player->backward);
+	if (port->player->strafe_r)
+		strafe_player(port, port->player->strafe_r);
+	if (port->player->strafe_l)
+		strafe_player(port, port->player->strafe_l);
 }

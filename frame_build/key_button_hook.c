@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 14:00:59 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 09:39:23 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 16:06:37 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,33 +65,33 @@ int	key_press_hook(int keycode, t_port *port)
 		exit(0);
 	}
 	if (keycode == W_KEY)
-		port->player->walkdirection = 1;
+		port->player->forward = 1;
 	if (keycode == S_KEY)
-		port->player->walkdirection = -1;
+		port->player->backward = -1;
 	if (keycode == A_KEY)
-		port->player->strafe = 1;
+		port->player->strafe_r = 1;
 	if (keycode == D_KEY)
-		port->player->strafe = -1;
+		port->player->strafe_l = -1;
 	if (keycode == RIGHT_ARROW)
-		port->player->turndirection = 1;
+		port->player->turndirection_r = 1;
 	if (keycode == LEFT_ARROW)
-		port->player->turndirection = -1;
+		port->player->turndirection_l = -1;
 	return (0);
 }
 
 int	key_release_hook(int keycode, t_port *port)
 {
 	if (keycode == W_KEY)
-		port->player->walkdirection = 0;
+		port->player->forward = 0;
 	if (keycode == S_KEY)
-		port->player->walkdirection = 0;
+		port->player->backward = 0;
 	if (keycode == A_KEY)
-		port->player->strafe = 0;
+		port->player->strafe_r = 0;
 	if (keycode == D_KEY)
-		port->player->strafe = 0;
+		port->player->strafe_l = 0;
 	if (keycode == RIGHT_ARROW)
-		port->player->turndirection = 0;
+		port->player->turndirection_r = 0;
 	if (keycode == LEFT_ARROW)
-		port->player->turndirection = 0;
+		port->player->turndirection_l = 0;
 	return (0);
 }
