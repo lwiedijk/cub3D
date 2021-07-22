@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 12:30:18 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 16:54:34 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 13:56:06 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,13 @@ int	count_map_yx(t_maze *blueprint, char *mapfile)
 		|| mapfile[len] == 'N' || mapfile[len] == 'W' || mapfile[len] == 'E')
 	{
 		len++;
-		if (mapfile[len] == '\n')
+		if (mapfile[len] == '\n'
+			|| mapfile[len] == '\0')
 		{
 			count_y++;
 			len++;
 		}
 	}
-	if (mapfile[len] != '\n')
-		ft_error(INCORRECT_CUB_FILE);
 	if (!count_y)
 		ft_error(INCORRECT_CUB_FILE);
 	blueprint->map_y = count_y;
@@ -91,6 +90,7 @@ void	parse_map(t_maze *blueprint, char *mapfile)
 	declare_map(blueprint);
 	write_map(blueprint, mapfile);
 	blueprint->filepos += (pos_offset - blueprint->filepos);
-	while (mapfile[blueprint->filepos] == ' ')
+	while (mapfile[blueprint->filepos] == '\n'
+		|| mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
 }
