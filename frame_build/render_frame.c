@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 09:33:05 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 16:10:42 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	next_frame(t_mlx *mlx)
 
 int	render_frame(t_port *port)
 {
-	walk_player(port);
+	move_player(port);
 	if (port->mlx->img_1)
 		next_frame(port->mlx);
 	put_wall_ceiling(port, port->blueprint);
