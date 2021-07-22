@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 09:26:31 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 16:02:11 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,12 @@ void	init_player(t_player *player)
 {
 	player->pos_x = 0;
 	player->pos_y = 0;
-	player->walkdirection = 0;
-	player->turndirection = 0;
-	player->strafe = 0;
+	player->forward = 0;
+	player->backward = 0;
+	player->turndirection_r = 0;
+	player->turndirection_l = 0;
+	player->strafe_r = 0;
+	player->strafe_l = 0;
 	player->rotation = 0;
 	player->move_speed = 2.0;
 	player->rotation_speed = 2 * (M_PI / 180);

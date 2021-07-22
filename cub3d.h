@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 09:38:37 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 16:12:38 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,12 @@ typedef struct s_player
 {
 	float		pos_x;
 	float		pos_y;
-	int			walkdirection;
-	int			turndirection;
-	int			strafe;
+	int			forward;
+	int			backward;
+	int			turndirection_r;
+	int			turndirection_l;
+	int			strafe_r;
+	int			strafe_l;
 	float		rotation;
 	float		move_speed;
 	float		rotation_speed;
@@ -171,6 +174,8 @@ int		check_opening_in_map(t_maze blueprint, int **map, int y, int x);
 void	check_map(int **map, t_maze blueprint);
 int		loop_through_map(t_maze *blueprint, char mapfile, int x, int y);
 void	write_map(t_maze *blueprint, char *mapfile);
+void	ft_error(int error_code);
+char	*ft_read(char *filename);
 
 /* animate/key_button_hook */
 int		x_button_hook(t_port *port);
@@ -179,8 +184,7 @@ int		key_release_hook(int keycode, t_port *port);
 
 /* animate/player_movement */
 void	set_player(t_port *port);
-void	walk_player(t_port *port);
-int		wall_hit(float x, float y, t_port *port);
+void	move_player(t_port *port);
 
 /* animate/render_frame */
 int		render_frame(t_port *port);
@@ -202,6 +206,7 @@ void	put_cur_texture(t_port *port, t_tex_array tex_array, t_rays *rays,
 float	distance_between_points(float x1, float y1, float x2, float y2);
 void	normalize_ray_angle(float *ray_angle);
 void	ray_direction(t_rays *rays);
+int		wall_hit(float x, float y, t_port *port);
 
 /* frame_build/dda.c */
 void	horizontal_intercept(t_rays *rays, t_player *player);
