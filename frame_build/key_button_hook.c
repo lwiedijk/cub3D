@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 14:00:59 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/13 13:01:33 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 09:11:22 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,56 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int	x_button_hook(t_mlx *mlx)
+void	free_map(t_maze *blueprint)
 {
-	printf("%s\n", "x_button pressed, Terminating program...");
+	int	i;
+
+	i = 0;
+	free(blueprint->map_x);
+	while (i < blueprint->map_y)
+	{
+		free(blueprint->map[i]);
+		i++;
+	}
+	free(blueprint->map);
+}
+
+void	free_texture_array(t_port *port, t_tex *textures)
+{
+	int	i;
+
+	i = 0;
+	while (i < TEX_ARRAY_SIZE)
+	{
+		mlx_destroy_image(port->mlx->mlx, textures->tex_array[i].tex_pnt);
+		i++;
+	}
+	free(textures->tex_array);
+}
+
+int	x_button_hook(t_port *port)
+{
+	free_texture_array(port, port->tex);
+	free_map(port->blueprint);
+	mlx_destroy_image(port->mlx->mlx, port->mlx->img_1);
+	mlx_destroy_window(port->mlx->mlx, port->mlx->win);
+	printf("%s\n", "!x_button pressed, Program is terminated!");
+	system("leaks cub3D");
 	exit(0);
-	mlx->on_off = 1;
 	return (0);
 }
 
 int	key_press_hook(int keycode, t_port *port)
 {
-	if (keycode == 53)
+	if (keycode == ESC_KEY)
 	{
-		printf("%s\n", "esc is pressed, Terminating program...");
+		free_texture_array(port, port->tex);
+		free_map(port->blueprint);
+		mlx_destroy_image(port->mlx->mlx, port->mlx->img_1);
 		mlx_destroy_window(port->mlx->mlx, port->mlx->win);
-		//free(blueprint->map_x); which is a 2d array with the count for x on each y
-		//free(map[y][x]); which is a 2d array with the actual map
-
-		//free(texture_array); which is a array of t_tex_array * 5 (paths are freed in read_texture())
-
-
-		//mlx_destroy_image(port->mlx->mlx, port->mlx->img_1);
-		// or is it img_2? which one is active?
-
-
-
-		//system("leaks cub3D");
-		exit (0);
+		printf("%s\n", "!Esc is pressed, Program is terminated!");
+		system("leaks cub3D");
+		exit(0);
 	}
 	if (keycode == W_KEY)
 		port->player->walkdirection = 1;

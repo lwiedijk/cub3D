@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 15:04:20 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 09:04:54 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define CUB3D_H
 
 # define TILE_SIZE 64
+# define TEX_ARRAY_SIZE 4
 # define SCALE 0.15
+# define ESC_KEY 53
 # define W_KEY 13
 # define S_KEY 1
 # define A_KEY 0
@@ -167,9 +169,13 @@ void	parse_map(t_maze *blueprint, char *mapfile);
 void	check_screenres(t_maze *blueprint);
 void	check_max_screensize(t_maze *blueprint, t_mlx mlx);
 void	check_min_screensize(t_maze *blueprint);
+int		check_opening_in_map(t_maze blueprint, int **map, int y, int x);
+void	check_map(int **map, t_maze blueprint);
+int		loop_through_map(t_maze *blueprint, char mapfile, int x, int y);
+void	write_map(t_maze *blueprint, char *mapfile);
 
 /* animate/key_button_hook */
-int		x_button_hook(t_mlx *mlx);
+int		x_button_hook(t_port *port);
 int		key_press_hook(int keycode, t_port *port);
 int		key_release_hook(int keycode, t_port *port);
 

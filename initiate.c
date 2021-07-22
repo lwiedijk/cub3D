@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 09:44:11 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/21 17:01:45 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	init_maze(t_maze *blueprint)
 	blueprint->east_texture = 0;
 	blueprint->south_texture = 0;
 	blueprint->west_texture = 0;
-	//blueprint->sprite = 0;
 	blueprint->floor_color = -1;
 	blueprint->ceiling_color = -1;
 	blueprint->r = 0;
@@ -32,6 +31,7 @@ void	init_maze(t_maze *blueprint)
 	blueprint->map_y = 0;
 	blueprint->map_x = 0;
 	blueprint->map = 0;
+	blueprint->jump = 0;
 	blueprint->step_size = SCALE * TILE_SIZE;
 	blueprint->player_or = 0;
 }
