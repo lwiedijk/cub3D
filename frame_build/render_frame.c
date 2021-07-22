@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 15:07:48 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 09:33:05 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	put_color(int t, int r, int g, int b) // put in libft!
+int	put_color(int t, int r, int g, int b)
 {
 	int	color;
 

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 14:00:59 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 09:11:22 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 09:39:23 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	x_button_hook(t_port *port)
 	mlx_destroy_image(port->mlx->mlx, port->mlx->img_1);
 	mlx_destroy_window(port->mlx->mlx, port->mlx->win);
 	printf("%s\n", "!x_button pressed, Program is terminated!");
-	system("leaks cub3D");
 	exit(0);
 	return (0);
 }
@@ -63,7 +62,6 @@ int	key_press_hook(int keycode, t_port *port)
 		mlx_destroy_image(port->mlx->mlx, port->mlx->img_1);
 		mlx_destroy_window(port->mlx->mlx, port->mlx->win);
 		printf("%s\n", "!Esc is pressed, Program is terminated!");
-		system("leaks cub3D");
 		exit(0);
 	}
 	if (keycode == W_KEY)
@@ -78,7 +76,6 @@ int	key_press_hook(int keycode, t_port *port)
 		port->player->turndirection = 1;
 	if (keycode == LEFT_ARROW)
 		port->player->turndirection = -1;
-	port->mlx->on_off = 1;
 	return (0);
 }
 
@@ -96,6 +93,5 @@ int	key_release_hook(int keycode, t_port *port)
 		port->player->turndirection = 0;
 	if (keycode == LEFT_ARROW)
 		port->player->turndirection = 0;
-	port->mlx->on_off = 1;
 	return (0);
 }

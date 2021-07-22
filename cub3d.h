@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 09:04:54 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 09:38:37 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define LEFT_ARROW 123
 # define RIGHT_ARROW 124
 
-typedef enum	e_error_code
+typedef enum e_error_code
 {
 	OK,
 	INCORRECT_CUB_FILE,
@@ -35,7 +35,7 @@ typedef enum	e_error_code
 	INVALID_MAP,
 }				t_error_code;
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
 	void		*mlx;
 	void		*win;
@@ -46,10 +46,9 @@ typedef struct	s_mlx
 	int			line_length;
 	int			endian;
 	int			next_frame;
-	int			on_off;
 }				t_mlx;
 
-typedef struct	s_tex_array
+typedef struct s_tex_array
 {
 	void		*tex_pnt;
 	char		*tex_addr;
@@ -61,14 +60,14 @@ typedef struct	s_tex_array
 
 }				t_tex_array;
 
-typedef	struct	s_tex
+typedef struct s_tex
 {
 	t_tex_array	*tex_array;
 	int			tex_ofset_x;
 	int			tex_ofset_y;
 }				t_tex;
 
-typedef struct	s_maze
+typedef struct s_maze
 {
 	int			filepos;
 	int			screenres_y;
@@ -91,7 +90,7 @@ typedef struct	s_maze
 	char		player_or;
 }				t_maze;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	float		pos_x;
 	float		pos_y;
@@ -103,7 +102,7 @@ typedef struct	s_player
 	float		rotation_speed;
 }				t_player;
 
-typedef struct	s_rays
+typedef struct s_rays
 {
 	float		fov_angle;
 	int			strip_width;
@@ -134,7 +133,7 @@ typedef struct	s_rays
 	float		draw_end;
 }				t_rays;
 
-typedef	struct	s_wall
+typedef struct s_wall
 {
 	float		raydistance;
 	char		wall_or;
@@ -143,7 +142,7 @@ typedef	struct	s_wall
 	int			vertical_hit;
 }				t_wall;
 
-typedef	struct	s_port
+typedef struct s_port
 {
 	t_mlx		*mlx;
 	t_maze		*blueprint;
@@ -159,7 +158,6 @@ void	init_player(t_player *player);
 void	init_rays(t_rays *rays, t_maze *blueprint);
 void	init_tex(t_tex *tex);
 void	init_tex_2(t_tex *tex);
-//void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
 void	parse(char *av, t_maze *blueprint);
 void	parse_mapfile(t_maze *blueprint, char *mapfile);
 void	parse_screenres(t_maze *blueprint, char *mapfile);
@@ -194,9 +192,11 @@ void	new_ray(t_port *port, t_rays *rays, t_player *player, int colum_id);
 void	cast_all_rays(t_port *port, t_rays *rays);
 
 /* animate/draw_walls */
-void	draw_walls(t_port *port, t_rays *rays, t_wall *wall_array, int colum_id);
+void	draw_walls(t_port *port, t_rays *rays, t_wall *wall_array,
+			int colum_id);
 void	put_all_textures(t_port *port, t_wall *wall_array, int colum_id);
-void	put_cur_texture(t_port *port, t_tex_array tex_array, t_rays *rays, int colum_id);
+void	put_cur_texture(t_port *port, t_tex_array tex_array, t_rays *rays,
+			int colum_id);
 
 /* animate/ray_casting_utils */
 float	distance_between_points(float x1, float y1, float x2, float y2);
