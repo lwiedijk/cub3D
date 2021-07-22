@@ -5,7 +5,6 @@ NO ./textures/purplestone.xpm
 SO ./textures/south_texture.xpm
 WE ./textures/west_texture.xpm
 EA ./textures/brick.xpm
-S ./textures/object.xpm
 
 
 
