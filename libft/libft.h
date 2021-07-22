@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 13:29:27 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/13 11:32:54 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 13:14:28 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ char	*ft_strcpy(char *dest, char *src);
 int		ft_atoi(const char *str);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
-char	*ft_read(char *filename);
-void	ft_error(int error_code);
 char	*ft_strchr(const char *s, int c);
 int		ft_iswhitespace(int c);
 
