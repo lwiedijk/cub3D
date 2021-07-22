@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/07/21 15:19:57 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/07/22 13:14:14 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = cub3D
 SRC_FILES = main.c
 HEADER_FILES = cub3d.h mlx/mlx.h
 
-INIT_SRC_FILES = initiate.c read_textures.c
+INIT_SRC_FILES = initiate.c read_textures.c \
+ft_error.c ft_read.c
 
 PARSE_DIR = parser/
 PARSE_SRC_FILES = parse.c \
