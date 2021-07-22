@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/24 15:14:13 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/13 11:15:59 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 08:31:17 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	read_next_textures(t_port *port, t_maze *blueprint, t_tex *tex)
 
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex)
 {
-	tex->tex_array = (t_tex_array *)malloc(sizeof(t_tex_array) * 5);
+	tex->tex_array = (t_tex_array *)malloc(sizeof(t_tex_array) * 4);
 	if (!tex->tex_array)
 		ft_error(MALLOC_FAIL);
 	tex->tex_array[0].tex_pnt = mlx_xpm_file_to_image(port->mlx->mlx,
