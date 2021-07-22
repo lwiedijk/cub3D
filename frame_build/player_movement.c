@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 16:12:21 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 16:19:29 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	walk_player(t_port *port, int direction)
 	float		step;
 	float		newpos_x;
 	float		newpos_y;
-	
+
 	step = (direction * port->player->move_speed);
 	newpos_y = port->player->pos_y + sin(port->player->rotation) * step;
 	newpos_x = port->player->pos_x + cos(port->player->rotation) * step;

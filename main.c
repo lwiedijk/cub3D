@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:14:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 09:30:36 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/22 15:37:39 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	render_loop(t_maze *blueprint, t_port *port)
 	read_textures(port, blueprint, port->tex);
 	mlx.win = mlx_new_window(mlx.mlx, blueprint->screenres_x,
 			blueprint->screenres_y, "cub3D");
+	mlx_do_key_autorepeatoff(mlx.mlx);
 	mlx_hook(mlx.win, 17, 1L << 17, &x_button_hook, port);
 	mlx_hook(mlx.win, 2, 1L << 0, &key_press_hook, port);
 	mlx_hook(mlx.win, 3, 0, &key_release_hook, port);
