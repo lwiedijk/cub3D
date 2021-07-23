@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/30 15:55:36 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/23 09:05:56 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ void	cast_all_rays(t_port *port, t_rays *rays)
 	port->wall_array = wall_array;
 	i = 0;
 	colum_id = 0;
-	rays->ray_angle = port->player->rotation - (rays->fov_angle / 2);
 	while (i < rays->ray_num)
 	{
+		rays->ray_angle = port->player->rotation + atan((colum_id
+					- rays->ray_num / 2) / rays->dist_to_plane);
 		new_ray(port, rays, port->player, colum_id);
-		rays->ray_angle += rays->fov_angle / rays->ray_num;
 		colum_id++;
 		i++;
 	}
