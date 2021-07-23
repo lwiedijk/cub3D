@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/07 12:18:12 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 11:52:17 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/23 13:41:42 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	check_screenres(t_maze *blueprint)
 	if (blueprint->screenres_x == -1)
 		blueprint->screenres_x = 800;
 	if (blueprint->screenres_y == -1)
+	{
 		blueprint->screenres_y = 500;
+		printf("No Screen-resolution is entered, size is set to default\n");
+	}
 	check_min_screensize(blueprint);
 }
 

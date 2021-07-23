@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/23 08:51:03 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/23 14:37:10 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ typedef enum e_error_code
 	READ_FAIL,
 	WRONG_ARGC,
 	INVALID_MAP,
+	MISSING_MAP,
+	NOT_ALL_ELEMENTS,
+	TOO_MANY_ELEMENTS,
+	TOO_MANY_PLAYERS,
+	NO_NUMBER,
+	INVALID_SIZE,
+	ILLEGAL_CHAR,
 }				t_error_code;
 
 typedef struct s_mlx
@@ -162,19 +169,30 @@ void	init_player(t_player *player);
 void	init_rays(t_rays *rays, t_maze *blueprint);
 void	init_tex(t_tex *tex);
 void	init_tex_2(t_tex *tex);
+
+/* parser */
 void	parse(char *av, t_maze *blueprint);
 void	parse_mapfile(t_maze *blueprint, char *mapfile);
 void	parse_screenres(t_maze *blueprint, char *mapfile);
 void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type);
 void	parse_color(t_maze *blueprint, char *mapfile, char type);
 void	parse_map(t_maze *blueprint, char *mapfile);
+
+/* parser/parser_utils */
+int		cubfile_read_is_complete(t_maze *blueprint, char *mapfile);
+
+/* parser/check_screenres */
 void	check_screenres(t_maze *blueprint);
 void	check_max_screensize(t_maze *blueprint, t_mlx mlx);
 void	check_min_screensize(t_maze *blueprint);
+
+/* parser/check_map */
 int		check_opening_in_map(t_maze blueprint, int **map, int y, int x);
 void	check_map(int **map, t_maze blueprint);
 int		loop_through_map(t_maze *blueprint, char mapfile, int x, int y);
 void	write_map(t_maze *blueprint, char *mapfile);
+
+
 void	ft_error(int error_code);
 char	*ft_read(char *filename);
 

@@ -6,30 +6,44 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:30:28 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 13:21:33 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/23 14:37:22 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "cub3d.h"
 
 void	ft_error(int error_code)
 {
 	if (error_code == INCORRECT_CUB_FILE)
-		write(1, "Error\n!not a valid cub-file!\n", 29);
+	{
+		printf("Error\n!not a valid cub-file!\n");
+		printf("illegal, missing or wrong order of elements!\n");
+	}
 	if (error_code == MALLOC_FAIL)
-		write(1, "Error\n!malloc fail!\n", 20);
+		printf("Error\n!malloc fail!\n");
 	if (error_code == INVALID_FD)
-		write(1, "Error\n!invalid fd!\n", 19);
+		printf("Error\n!invalid fd!\n");
 	if (error_code == READ_FAIL)
-		write(1, "Error\n!read failed!\n", 20);
+		printf("Error\n!read failed!\n");
 	if (error_code == WRONG_ARGC)
-		write(1, "Error\n!wrong amound of arguments!\n", 34);
+		printf("Error\n!wrong amound of arguments!\n");
 	if (error_code == INVALID_MAP)
-		write(1, "Error\n!invalid map!\n", 20);
-	if (error_code == 8)
-		write(1, "FFFFFFFF\n", 9);
-	write(1, "Exiting program, please reboot...\n", 34);
+		printf("Error\n!invalid map!\n");
+	if (error_code == MISSING_MAP)
+		printf("Error\n!No map is provided!\n");
+	if (error_code == TOO_MANY_ELEMENTS)
+		printf("Error\n!Too many elements provided!\n");
+	if (error_code == TOO_MANY_PLAYERS)
+		printf("Error\n!Only one player is allowed in the map!\n");
+	if (error_code == NOT_ALL_ELEMENTS)
+		printf("Error\n!Not all necessary elements are provided!\n");
+	if (error_code == NO_NUMBER)
+		printf("Error\n!Two positive numbers must be entered for screensize!\n");
+	if (error_code == ILLEGAL_CHAR)
+		printf("Error\n!That character is not allowed at this spot!\n");
+	printf("Exiting program, please adjust input and reboot...\n");
 	exit(1);
 }
