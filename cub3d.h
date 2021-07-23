@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 16:12:38 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/23 08:51:03 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_rays
 {
 	float		fov_angle;
 	int			strip_width;
+	float		dist_to_plane;
 	float		ray_angle;
 	int			ray_num;
 	int			ray_up;
