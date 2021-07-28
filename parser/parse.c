@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:29:17 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/23 14:03:15 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 07:22:45 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_cubfile_nextpart_two(t_maze *blueprint, char *mapfile)
 		&& mapfile[blueprint->filepos + 1] == 'A')
 	{
 		if (blueprint->east_texture)
-			ft_error(TO_MANY_ELEMENTS);
+			ft_error(TOO_MANY_ELEMENTS);
 		parse_textures(blueprint, mapfile, 'E');
 		return (1);
 	}
@@ -31,7 +31,7 @@ int	parse_cubfile_nextpart_two(t_maze *blueprint, char *mapfile)
 		&& mapfile[blueprint->filepos + 1] == 'E')
 	{
 		if (blueprint->west_texture)
-			ft_error(TO_MANY_ELEMENTS);
+			ft_error(TOO_MANY_ELEMENTS);
 		parse_textures(blueprint, mapfile, 'W');
 		return (1);
 	}
@@ -43,14 +43,14 @@ int	parse_cubfile_nextpart(t_maze *blueprint, char *mapfile)
 	if (mapfile[blueprint->filepos] == 'F')
 	{
 		if (blueprint->floor_color != -1)
-			ft_error(TO_MANY_ELEMENTS);
+			ft_error(TOO_MANY_ELEMENTS);
 		parse_color(blueprint, mapfile, 'f');
 		return (1);
 	}
 	else if (mapfile[blueprint->filepos] == 'C')
 	{
 		if (blueprint->ceiling_color != -1)
-			ft_error(TO_MANY_ELEMENTS);
+			ft_error(TOO_MANY_ELEMENTS);
 		parse_color(blueprint, mapfile, 'c');
 		return (1);
 	}
@@ -70,14 +70,14 @@ void	parse_cubfile(t_maze *blueprint, char *mapfile)
 		&& mapfile[blueprint->filepos + 1] == 'O')
 	{
 		if (blueprint->north_texture)
-			ft_error(TO_MANY_ELEMENTS);
+			ft_error(TOO_MANY_ELEMENTS);
 		parse_textures(blueprint, mapfile, 'N');
 	}
 	else if (mapfile[blueprint->filepos] == 'S'
 		&& mapfile[blueprint->filepos + 1] == 'O')
 	{
 		if (blueprint->south_texture)
-			ft_error(TO_MANY_ELEMENTS);
+			ft_error(TOO_MANY_ELEMENTS);
 		parse_textures(blueprint, mapfile, 'S');
 	}
 	else if (parse_cubfile_nextpart(blueprint, mapfile))
@@ -94,7 +94,7 @@ void	parse_cubfile_map(t_maze *blueprint, char *mapfile)
 		|| mapfile[blueprint->filepos == '1'])
 		parse_map(blueprint, mapfile);
 	else
-		ft_error(TO_MANY_ELEMENTS);
+		ft_error(TOO_MANY_ELEMENTS);
 	while (mapfile[blueprint->filepos] == '\n')
 		blueprint->filepos++;
 }

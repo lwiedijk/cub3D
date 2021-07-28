@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/21 15:18:56 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/23 14:18:49 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 07:39:38 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	loop_through_map(t_maze *blueprint, char mapfile, int x, int y)
 		== 'E' || mapfile == 'W' || mapfile == 'S')
 	{
 		if (blueprint->player_or)
-			ft_error(TO_MANY_PLAYERS);
+			ft_error(TOO_MANY_PLAYERS);
 		blueprint->player_or = mapfile;
 		blueprint->map[y][x] = 'p';
 		x++;
