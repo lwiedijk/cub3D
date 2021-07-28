@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:47:23 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 11:49:46 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 13:33:01 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	check_texture(char *path)
+void	check_texture(char *path, int len)
 {
+	FILE	*path_file;
+
+	path_file = NULL;
 	if (path[0] != '.' || path[1] != '/')
+		ft_error(INVALID_PATH);
+	else if (path[len - 4] != '.' || path [len - 3] != 'x')
+		ft_error(INVALID_PATH);
+	path_file = fopen(path, "r");
+	if (path_file)
+		fclose(path_file);
+	else
 		ft_error(INVALID_PATH);
 }
 
@@ -61,7 +71,7 @@ void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type)
 		len++;
 	len -= blueprint->filepos;
 	path = copy_path_from_mapfile(blueprint, mapfile, len);
-	check_texture(path);
+	check_texture(path, len);
 	put_path_to_blueprint(blueprint, texture_type, path);
 	while (mapfile[blueprint->filepos] == ' '
 		&& mapfile[blueprint->filepos] != '\n')
