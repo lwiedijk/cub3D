@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 09:42:55 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 11:48:02 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef enum e_error_code
 	ILLEGAL_CHAR,
 	BAD_NUM_RANGE,
 	NO_COMMA,
+	INVALID_PATH,
 }				t_error_code;
 
 typedef struct s_mlx
