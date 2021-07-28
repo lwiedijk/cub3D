@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/07/22 13:14:14 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/07/28 13:45:00 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ PARSE_DIR = parser/
 PARSE_SRC_FILES = parse.c \
 parse_screenres.c parse_textures.c \
 parse_color.c parse_map.c \
-check_screenres.c check_map.c 
+check_screenres.c check_map.c \
+parser_utils.c
 
 FRAME_BUILD_DIR = frame_build/
 FRAME_BUILD_SRC_FILES = key_button_hook.c \
@@ -60,6 +61,8 @@ $(NAME): $(OBJ_FILES)
 $(OBJS_DIR)%.o: %.c $(HEADER_FILES)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+bonus: $(NAME)
 
 clean:
 	rm -f $(LIBFT) $(MLX) $(_OBJ_FILES) $(OBJ_FILES)
