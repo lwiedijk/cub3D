@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 14:00:59 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 16:06:37 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/23 13:38:41 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	x_button_hook(t_port *port)
 	free_map(port->blueprint);
 	mlx_destroy_image(port->mlx->mlx, port->mlx->img_1);
 	mlx_destroy_window(port->mlx->mlx, port->mlx->win);
-	printf("%s\n", "!x_button pressed, Program is terminated!");
+	printf("!x_button pressed, Program is terminated!\n");
 	exit(0);
 	return (0);
 }
@@ -61,7 +61,7 @@ int	key_press_hook(int keycode, t_port *port)
 		free_map(port->blueprint);
 		mlx_destroy_image(port->mlx->mlx, port->mlx->img_1);
 		mlx_destroy_window(port->mlx->mlx, port->mlx->win);
-		printf("%s\n", "!Esc is pressed, Program is terminated!");
+		printf("!Esc is pressed, Program is terminated!\n");
 		exit(0);
 	}
 	if (keycode == W_KEY)

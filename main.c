@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:14:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 15:37:39 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/23 09:21:33 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int ac, char **av)
 	parse(av[1], &blueprint);
 	check_screenres(&blueprint);
 	if (!blueprint.map_y)
-		ft_error(INCORRECT_CUB_FILE);
+		ft_error(MISSING_MAP);
 	set_player(&port);
 	init_rays(&rays, &blueprint);
 	port.rays = &rays;
