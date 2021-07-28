@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/21 15:18:56 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 07:39:38 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 17:54:25 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ int	check_opening_in_map(t_maze blueprint, int **map, int y, int x)
 		ft_error(INVALID_MAP);
 	else if (x + 1 > blueprint.map_x[y])
 		ft_error(INVALID_MAP);
-	else if (map[y][x + 1] == ' ')
+	else if ((x + 1) >= blueprint.map_x[y] || map[y][x + 1] == ' ')
 		ft_error(INVALID_MAP);
 	else if (map[y - 1][x] == ' ')
 		ft_error(INVALID_MAP);
 	else if (y + 1 > blueprint.map_y)
 		ft_error(INVALID_MAP);
-	else if (y + 1 < blueprint.map_y && map[y + 1][x] == ' ')
+	//else if ()
+	else if (!(y + 1 < blueprint.map_y && x < blueprint.map_x[y + 1] && map[y + 1][x] != ' '))
 		ft_error(INVALID_MAP);
 	return (0);
 }
@@ -43,7 +44,7 @@ void	check_map(int **map, t_maze blueprint)
 
 	y = 0;
 	if (!blueprint.player_or)
-		ft_error(INCORRECT_CUB_FILE);
+		ft_error(MISSING_PLAYER);
 	while (y < blueprint.map_y)
 	{
 		x = 0;

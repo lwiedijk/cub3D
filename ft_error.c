@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:30:28 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 16:06:42 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 16:48:02 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	ft_error(int error_code)
 		printf("Error\n!Too many elements provided!\n");
 	if (error_code == TOO_MANY_PLAYERS)
 		printf("Error\n!Only one player is allowed in the map!\n");
+	if (error_code == MISSING_PLAYER)
+		printf("Error\n!No valid player in the map!\n");
 	if (error_code == NOT_ALL_ELEMENTS)
 		printf("Error\n!Not all necessary elements are provided!\n");
 	if (error_code == NO_NUMBER)

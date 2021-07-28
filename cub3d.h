@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 16:01:40 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 16:45:17 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef enum e_error_code
 	MISSING_MAP,
 	NOT_ALL_ELEMENTS,
 	TOO_MANY_ELEMENTS,
+	MISSING_PLAYER,
 	TOO_MANY_PLAYERS,
 	NO_NUMBER,
 	INVALID_SIZE,
