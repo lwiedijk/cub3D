@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:30:28 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/23 14:37:22 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 09:44:51 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void	ft_error(int error_code)
 		printf("Error\n!Two positive numbers must be entered for screensize!\n");
 	if (error_code == ILLEGAL_CHAR)
 		printf("Error\n!That character is not allowed at this spot!\n");
+	if (error_code == BAD_NUM_RANGE)
+		printf("Error\n!A number between 0 and 255 must be entered here!\n");
+	if (error_code == NO_COMMA)
+		printf("Error\n!Color needs to be separated by comma and comma only!\n");
 	printf("Exiting program, please adjust input and reboot...\n");
 	exit(1);
 }
