@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:01:24 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 11:06:52 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 15:52:00 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	parse_color(t_maze *blueprint, char *mapfile, char type)
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
 	if (!ft_isdigit(mapfile[blueprint->filepos]))
-		ft_error(ILLEGAL_CHAR);
+		ft_error(BAD_NUM_RANGE);
 	check_color_input(blueprint, mapfile);
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
