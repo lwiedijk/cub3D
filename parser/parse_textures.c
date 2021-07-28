@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:47:23 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 13:33:01 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 14:17:03 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 void	check_texture(char *path, int len)
 {
-	FILE	*path_file;
+	int fd;
 
-	path_file = NULL;
+	fd = 0;
 	if (path[0] != '.' || path[1] != '/')
 		ft_error(INVALID_PATH);
 	else if (path[len - 4] != '.' || path [len - 3] != 'x')
 		ft_error(INVALID_PATH);
-	path_file = fopen(path, "r");
-	if (path_file)
-		fclose(path_file);
+	fd = open(path, O_RDONLY);
+	if (fd > 0)
+		close(fd);
 	else
 		ft_error(INVALID_PATH);
 }
