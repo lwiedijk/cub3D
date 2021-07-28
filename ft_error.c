@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:30:28 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 11:50:23 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/07/28 16:06:42 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@
 void	ft_error(int error_code)
 {
 	if (error_code == INCORRECT_CUB_FILE)
-	{
-		printf("Error\n!not a valid cub-file!\n");
-		printf("illegal, missing or wrong order of elements!\n");
-	}
+		printf("Illegal, missing or wrong order of elements!\n");
 	if (error_code == MALLOC_FAIL)
 		printf("Error\n!malloc fail!\n");
 	if (error_code == INVALID_FD)
@@ -45,11 +42,13 @@ void	ft_error(int error_code)
 	if (error_code == ILLEGAL_CHAR)
 		printf("Error\n!That character is not allowed at this spot!\n");
 	if (error_code == BAD_NUM_RANGE)
-		printf("Error\n!A number between 0 and 255 must be entered here!\n");
+		printf("Error\n!Plz enter A number between 0 and 255!\n");
 	if (error_code == NO_COMMA)
 		printf("Error\n!Color needs to be separated by comma and comma only!\n");
 	if (error_code == INVALID_PATH)
 		printf("Error\n!This Texture-path is not valid!\n");
+	if (error_code == NO_SPRITE)
+		printf("Error\n!Sprite is not implemented, plz remove from cub-file!\n");
 	printf("Exiting program, please adjust input and reboot...\n");
 	exit(1);
 }
