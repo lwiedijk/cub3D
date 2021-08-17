@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/21 15:18:56 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 17:54:25 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/17 09:59:32 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,16 @@ int	check_opening_in_map(t_maze blueprint, int **map, int y, int x)
 {
 	if ((y - 1) < 0)
 		ft_error(INVALID_MAP);
-	if ((x - 1) < 0)
+	else if ((x - 1) < 0)
 		ft_error(INVALID_MAP);
 	else if (map[y][x - 1] == ' ')
 		ft_error(INVALID_MAP);
-	else if (x + 1 > blueprint.map_x[y])
-		ft_error(INVALID_MAP);
 	else if ((x + 1) >= blueprint.map_x[y] || map[y][x + 1] == ' ')
 		ft_error(INVALID_MAP);
-	else if (map[y - 1][x] == ' ')
+	else if (x >= blueprint.map_x[y - 1] || map[y - 1][x] == ' ')
 		ft_error(INVALID_MAP);
-	else if (y + 1 > blueprint.map_y)
-		ft_error(INVALID_MAP);
-	//else if ()
-	else if (!(y + 1 < blueprint.map_y && x < blueprint.map_x[y + 1] && map[y + 1][x] != ' '))
+	else if ((y + 1) >= blueprint.map_y || x >= blueprint.map_x[y + 1]
+		|| map[y + 1][x] == ' ')
 		ft_error(INVALID_MAP);
 	return (0);
 }
