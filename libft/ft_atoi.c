@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/06 12:33:37 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2020/12/04 14:53:17 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 09:20:15 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	overflow(int plu_min, long long int result, const char *str, int i)
 	}
 }
 
-int			ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int					i;
 	int					plu_min;

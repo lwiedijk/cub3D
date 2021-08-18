@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:30:28 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 11:02:59 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 14:00:59 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include "cub3d.h"
 
-void	ft_error_continue(int error_code)
+void	ft_error_continue(int error_code, t_port *port)
 {
 	if (error_code == NO_NUMBER)
 		printf("Error\n!Two positive numbers must be entered for screensize!\n");
@@ -28,12 +28,13 @@ void	ft_error_continue(int error_code)
 	if (error_code == INVALID_PATH)
 		printf("Error\n!This Texture-path is not valid!\n");
 	if (error_code == NO_SPRITE)
-		printf("Error\n!Sprite is not implemented, plz remove from cub-file!\n");
+		printf("Error\n!Sprite-bonus is not implemented, plz remove from cub-file!\n");
 	printf("Exiting program, please adjust input and reboot...\n");
+	free_at_error(port);
 	exit(1);
 }
 
-void	ft_error(int error_code)
+void	ft_error(int error_code, t_port *port)
 {
 	if (error_code == INCORRECT_CUB_FILE)
 		printf("Illegal, missing or wrong order of elements!\n");
@@ -57,5 +58,5 @@ void	ft_error(int error_code)
 		printf("Error\n!No valid player in the map!\n");
 	if (error_code == NOT_ALL_ELEMENTS)
 		printf("Error\n!Not all necessary elements are provided!\n");
-	ft_error_continue(error_code);
+	ft_error_continue(error_code, port);
 }

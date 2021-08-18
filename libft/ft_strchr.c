@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/31 14:53:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2020/11/20 14:38:41 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 09:22:00 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ char	*ft_strchr(const char *s, int c)
 	{
 		if (s[i] == c)
 		{
-			return ((char*)s + i);
+			return ((char *)s + i);
 		}
 		if (c == '\0')
-			return ((char*)s + ft_strlen(s));
+			return ((char *)s + ft_strlen(s));
 		i++;
 	}
 	return (NULL);

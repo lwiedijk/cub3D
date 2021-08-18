@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:22:08 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 13:20:10 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 14:01:59 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <stdio.h>
+
+static void	read_error(int	error_code)
+{
+	if (error_code == MALLOC_FAIL)
+		printf("Error\n!malloc fail!\n");
+	if (error_code == INVALID_FD)
+		printf("Error\n!invalid fd!\n");
+	if (error_code == READ_FAIL)
+		printf("Error\n!read failed!\n");
+	printf("Exiting program, please adjust input and reboot...\n");
+	exit(1);
+}
 
 static void	get_buffer_size(char *filename, int *buffer_size)
 {
@@ -27,15 +40,15 @@ static void	get_buffer_size(char *filename, int *buffer_size)
 	*buffer_size = 100;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		ft_error(INVALID_FD);
+		read_error(INVALID_FD);
 	while (bytes_read)
 	{
 		countstring = (char *)malloc(sizeof(char) * *buffer_size);
 		if (!countstring)
-			ft_error(MALLOC_FAIL);
+			read_error(MALLOC_FAIL);
 		bytes_read = read(fd, countstring, *buffer_size);
 		if (bytes_read < 0)
-			ft_error(READ_FAIL);
+			read_error(READ_FAIL);
 		free(countstring);
 		count_filebytes = count_filebytes + bytes_read;
 	}
@@ -53,13 +66,13 @@ char	*ft_read(char *filename)
 	get_buffer_size(filename, &buffer_size);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		ft_error(INVALID_FD);
+		read_error(INVALID_FD);
 	mapfile = (char *)malloc(sizeof(char) * buffer_size);
 	if (!mapfile)
-		ft_error(MALLOC_FAIL);
+		read_error(MALLOC_FAIL);
 	bytes_read = read(fd, mapfile, buffer_size);
 	if (bytes_read < 0)
-		ft_error(READ_FAIL);
+		read_error(READ_FAIL);
 	mapfile[bytes_read] = '\0';
 	close(fd);
 	return (mapfile);

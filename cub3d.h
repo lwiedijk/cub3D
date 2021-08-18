@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 11:03:03 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 16:40:06 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_tex
 
 typedef struct s_maze
 {
+	char		*mapfile;
 	int			filepos;
 	int			screenres_y;
 	int			screenres_x;
@@ -176,12 +177,12 @@ void	init_tex(t_tex *tex);
 void	init_tex_2(t_tex *tex);
 
 /* parser */
-void	parse(char *av, t_maze *blueprint);
-void	parse_mapfile(t_maze *blueprint, char *mapfile);
-void	parse_screenres(t_maze *blueprint, char *mapfile);
-void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type);
-void	parse_color(t_maze *blueprint, char *mapfile, char type);
-void	parse_map(t_maze *blueprint, char *mapfile);
+void	parse(char *av, t_maze *blueprint, t_port *port);
+//void	parse_mapfile(t_maze *blueprint, char *mapfile);
+void	parse_screenres(t_maze *blueprint, char *mapfile, t_port *port);
+void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type, t_port *port);
+void	parse_color(t_maze *blueprint, char *mapfile, char type, t_port *port);
+void	parse_map(t_maze *blueprint, char *mapfile, t_port *port);
 
 /* parser/parser_utils */
 int		cubfile_read_is_complete(t_maze *blueprint, char *mapfile);
@@ -192,14 +193,14 @@ void	check_max_screensize(t_maze *blueprint, t_mlx mlx);
 void	check_min_screensize(t_maze *blueprint);
 
 /* parser/check_map */
-int		check_opening_in_map(t_maze blueprint, int **map, int y, int x);
-void	check_map(int **map, t_maze blueprint);
-void	check_map_existence(char *mapfile, int count_y, int len);
-int		loop_through_map(t_maze *blueprint, char mapfile, int x, int y);
-void	write_map(t_maze *blueprint, char *mapfile);
+int		check_opening_in_map(t_port *port, int **map, int y, int x);
+void	check_map(int **map, t_maze blueprint, t_port *port);
+void	check_map_existence(char *mapfile, int count_y, int len, t_port *port);
+int		loop_through_map(t_port *port, char mapfile, int x, int y);
+void	write_map(t_maze *blueprint, char *mapfile, t_port *port);
 
 
-void	ft_error(int error_code);
+void	ft_error(int error_code, t_port *port);
 char	*ft_read(char *filename);
 
 /* animate/key_button_hook */
@@ -253,6 +254,6 @@ void	calculate_textures(t_port *port, t_tex *tex, char map);
 void	free_map(t_maze *blueprint);
 void	free_texture_array(t_port *port, t_tex *textures);
 void	free_texture_path(t_maze *blueprint);
-//void	free_at_error(t_port *port);
+void	free_at_error(t_port *port);
 
 #endif
