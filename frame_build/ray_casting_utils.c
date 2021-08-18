@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/19 16:27:27 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 16:13:33 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 08:38:03 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	wall_hit(float x, float y, t_port *port)
 		return (1);
 	wall_pos_x = floor(x / TILE_SIZE);
 	wall_pos_y = floor(y / TILE_SIZE);
-	if (wall_pos_y > (port->blueprint->map_y - 1))
+	if (wall_pos_y >= (port->blueprint->map_y - 1))
 		return (1);
-	if (wall_pos_x > (port->blueprint->map_x[wall_pos_y]))
+	if (wall_pos_x >= (port->blueprint->map_x[wall_pos_y]))
 		return (1);
 	if (port->blueprint->map[wall_pos_y][wall_pos_x] > 0)
 		return (1);
