@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/08/18 09:46:33 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 11:03:14 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 13:32:28 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	free_texture_path(t_maze *blueprint)
 	free(blueprint->west_texture);
 }
 
-//void	free_at_error(t_port *port)
-//{
-//	return ;
-//}
+void	free_at_error(t_port *port)
+{
+	if (port->blueprint->mapfile)
+		free(port->blueprint->mapfile);
+	return ;
+}

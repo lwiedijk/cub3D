@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/23 09:05:56 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 16:40:49 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	cast_all_rays(t_port *port, t_rays *rays)
 
 	wall_array = (t_wall *)malloc(sizeof(t_wall) * rays->ray_num);
 	if (!wall_array)
-		ft_error(MALLOC_FAIL);
+		ft_error(MALLOC_FAIL, port);
 	port->wall_array = wall_array;
 	i = 0;
 	colum_id = 0;

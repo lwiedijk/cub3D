@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:34:09 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 07:22:05 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 16:36:18 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	put_screenres(t_maze *blueprint, char *screenres_char, char axis)
 	free(screenres_char);
 }
 
-void	calc_screenres(t_maze *blueprint, char *mapfile, char axis)
+void	calc_screenres(t_maze *blueprint, char *mapfile, char axis, t_port *port)
 {
 	int		len;
 	int		i;
@@ -45,30 +45,30 @@ void	calc_screenres(t_maze *blueprint, char *mapfile, char axis)
 	}
 	screenres_char = (char *)malloc(sizeof(char) * (len + 1));
 	if (!screenres_char)
-		ft_error(MALLOC_FAIL);
+		ft_error(MALLOC_FAIL, port);
 	temp = &mapfile[blueprint->filepos];
 	ft_strlcpy(screenres_char, temp, len + 1);
 	blueprint->filepos += len;
 	put_screenres(blueprint, screenres_char, axis);
 }
 
-void	parse_screenres(t_maze *blueprint, char *mapfile)
+void	parse_screenres(t_maze *blueprint, char *mapfile, t_port *port)
 {
 	if (blueprint->screenres_x != -1)
-		ft_error(TOO_MANY_ELEMENTS);
+		ft_error(TOO_MANY_ELEMENTS, port);
 	blueprint->filepos++;
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
 	if (mapfile[blueprint->filepos] < '0' || mapfile[blueprint->filepos] > '9')
-		ft_error(NO_NUMBER);
-	calc_screenres(blueprint, mapfile, 'x');
+		ft_error(NO_NUMBER, port);
+	calc_screenres(blueprint, mapfile, 'x', port);
 	if (mapfile[blueprint->filepos] != ' ')
-		ft_error(INCORRECT_CUB_FILE);
+		ft_error(INCORRECT_CUB_FILE, port);
 	while (mapfile[blueprint->filepos] == ' ')
 		blueprint->filepos++;
 	if (mapfile[blueprint->filepos] < '0' || mapfile[blueprint->filepos] > '9')
-		ft_error(NO_NUMBER);
-	calc_screenres(blueprint, mapfile, 'y');
+		ft_error(NO_NUMBER, port);
+	calc_screenres(blueprint, mapfile, 'y', port);
 	while (mapfile[blueprint->filepos] == ' '
 		&& mapfile[blueprint->filepos] != '\n')
 		blueprint->filepos++;
