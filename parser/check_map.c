@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/21 15:18:56 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/17 09:59:32 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 09:16:17 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ int	check_opening_in_map(t_maze blueprint, int **map, int y, int x)
 		|| map[y + 1][x] == ' ')
 		ft_error(INVALID_MAP);
 	return (0);
+}
+
+void	check_map_existence(char *mapfile, int count_y, int len)
+{
+	if (!count_y)
+	{
+		if (mapfile[len] != ' ' && mapfile[len] != '\n' && mapfile[len] != '\0')
+			ft_error(INCORRECT_CUB_FILE);
+		ft_error(MISSING_MAP);
+	}
 }
 
 void	check_map(int **map, t_maze blueprint)

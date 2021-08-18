@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/24 15:14:13 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 08:31:17 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 09:53:31 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 #include "mlx/mlx.h"
 #include "libft/libft.h"
 #include <stdlib.h>
-
-void	free_texture_path(t_maze *blueprint)
-{
-	free(blueprint->north_texture);
-	free(blueprint->east_texture);
-	free(blueprint->south_texture);
-	free(blueprint->west_texture);
-}
 
 void	read_next_textures(t_port *port, t_maze *blueprint, t_tex *tex)
 {

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:30:28 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 16:48:02 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 11:02:59 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cub3d.h"
+
+void	ft_error_continue(int error_code)
+{
+	if (error_code == NO_NUMBER)
+		printf("Error\n!Two positive numbers must be entered for screensize!\n");
+	if (error_code == ILLEGAL_CHAR)
+		printf("Error\n!That character is not allowed at this spot!\n");
+	if (error_code == BAD_NUM_RANGE)
+		printf("Error\n!Plz enter A number between 0 and 255!\n");
+	if (error_code == NO_COMMA)
+		printf("Error\n!Color needs to be separated by comma and comma only!\n");
+	if (error_code == INVALID_PATH)
+		printf("Error\n!This Texture-path is not valid!\n");
+	if (error_code == NO_SPRITE)
+		printf("Error\n!Sprite is not implemented, plz remove from cub-file!\n");
+	printf("Exiting program, please adjust input and reboot...\n");
+	exit(1);
+}
 
 void	ft_error(int error_code)
 {
@@ -39,18 +57,5 @@ void	ft_error(int error_code)
 		printf("Error\n!No valid player in the map!\n");
 	if (error_code == NOT_ALL_ELEMENTS)
 		printf("Error\n!Not all necessary elements are provided!\n");
-	if (error_code == NO_NUMBER)
-		printf("Error\n!Two positive numbers must be entered for screensize!\n");
-	if (error_code == ILLEGAL_CHAR)
-		printf("Error\n!That character is not allowed at this spot!\n");
-	if (error_code == BAD_NUM_RANGE)
-		printf("Error\n!Plz enter A number between 0 and 255!\n");
-	if (error_code == NO_COMMA)
-		printf("Error\n!Color needs to be separated by comma and comma only!\n");
-	if (error_code == INVALID_PATH)
-		printf("Error\n!This Texture-path is not valid!\n");
-	if (error_code == NO_SPRITE)
-		printf("Error\n!Sprite is not implemented, plz remove from cub-file!\n");
-	printf("Exiting program, please adjust input and reboot...\n");
-	exit(1);
+	ft_error_continue(error_code);
 }
