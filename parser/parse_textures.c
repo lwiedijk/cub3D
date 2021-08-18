@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:47:23 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 14:17:03 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 08:50:35 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	check_texture(char *path, int len)
 {
-	int fd;
+	int	fd;
 
 	fd = 0;
 	if (path[0] != '.' || path[1] != '/')

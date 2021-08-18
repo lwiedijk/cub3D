@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 14:00:59 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/23 13:38:41 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 09:47:48 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,6 @@
 #include "../mlx/mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-void	free_map(t_maze *blueprint)
-{
-	int	i;
-
-	i = 0;
-	free(blueprint->map_x);
-	while (i < blueprint->map_y)
-	{
-		free(blueprint->map[i]);
-		i++;
-	}
-	free(blueprint->map);
-}
-
-void	free_texture_array(t_port *port, t_tex *textures)
-{
-	int	i;
-
-	i = 0;
-	while (i < TEX_ARRAY_SIZE)
-	{
-		mlx_destroy_image(port->mlx->mlx, textures->tex_array[i].tex_pnt);
-		i++;
-	}
-	free(textures->tex_array);
-}
 
 int	x_button_hook(t_port *port)
 {

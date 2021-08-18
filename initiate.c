@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/23 08:53:04 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 09:35:00 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_maze(t_maze *blueprint)
 	blueprint->west_texture = 0;
 	blueprint->floor_color = -1;
 	blueprint->ceiling_color = -1;
+	blueprint->sprite = 0;
 	blueprint->r = 0;
 	blueprint->g = 0;
 	blueprint->b = 0;
@@ -68,7 +69,8 @@ void	init_rays(t_rays *rays, t_maze *blueprint)
 {
 	rays->fov_angle = 60 * (M_PI / 180);
 	rays->strip_width = 1;
-	rays->dist_to_plane = (blueprint->screenres_x / 2) / tan(rays->fov_angle / 2);
+	rays->dist_to_plane = (blueprint->screenres_x / 2)
+		/ tan(rays->fov_angle / 2);
 	rays->ray_num = blueprint->screenres_x / rays->strip_width;
 	rays->found_hor_wallhit = 0;
 	rays->fount_vert_wallhit = 0;

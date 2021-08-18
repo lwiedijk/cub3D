@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:29:17 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 16:01:12 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 09:57:44 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ void	parse(char *av, t_maze *blueprint)
 			ft_error(INCORRECT_CUB_FILE);
 	}
 	free(mapfile);
+	mapfile = NULL;
 	write(1, "Blueprint is created successfully!\n", 35);
 }

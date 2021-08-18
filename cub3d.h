@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/28 16:45:17 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/18 11:03:03 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ void	check_min_screensize(t_maze *blueprint);
 /* parser/check_map */
 int		check_opening_in_map(t_maze blueprint, int **map, int y, int x);
 void	check_map(int **map, t_maze blueprint);
+void	check_map_existence(char *mapfile, int count_y, int len);
 int		loop_through_map(t_maze *blueprint, char mapfile, int x, int y);
 void	write_map(t_maze *blueprint, char *mapfile);
 
@@ -247,5 +248,11 @@ void	draw_line(t_mlx *mlx, t_player *player, float end_x, float end_y);
 /* read_textures */
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
 void	calculate_textures(t_port *port, t_tex *tex, char map);
+
+/* free */
+void	free_map(t_maze *blueprint);
+void	free_texture_array(t_port *port, t_tex *textures);
+void	free_texture_path(t_maze *blueprint);
+//void	free_at_error(t_port *port);
 
 #endif
