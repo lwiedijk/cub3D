@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/08/18 09:46:33 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 13:32:28 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 07:25:18 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,9 @@ void	free_at_error(t_port *port)
 {
 	if (port->blueprint->mapfile)
 		free(port->blueprint->mapfile);
+	if (port->tex->tex_array)
+		free_texture_array(port, port->tex);
+	if (port->blueprint->map_x)
+		free_map(port->blueprint);
 	return ;
 }
