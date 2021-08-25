@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 16:40:06 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 16:27:06 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef enum e_error_code
 	NO_COMMA,
 	INVALID_PATH,
 	NO_SPRITE,
+	NO_CUB_EXT,
 }				t_error_code;
 
 typedef struct s_mlx
@@ -176,59 +177,62 @@ void	init_rays(t_rays *rays, t_maze *blueprint);
 void	init_tex(t_tex *tex);
 void	init_tex_2(t_tex *tex);
 
-/* parser */
+/* check_argument.c */
+void	check_argument(t_port *port, int ac, char *cub_file);
+
+/* parser.c */
 void	parse(char *av, t_maze *blueprint, t_port *port);
 //void	parse_mapfile(t_maze *blueprint, char *mapfile);
 void	parse_screenres(t_maze *blueprint, char *mapfile, t_port *port);
-void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type, t_port *port);
+void	parse_textures(t_maze *blueprint, char *mapfile,
+			char texture_type, t_port *port);
 void	parse_color(t_maze *blueprint, char *mapfile, char type, t_port *port);
 void	parse_map(t_maze *blueprint, char *mapfile, t_port *port);
 
-/* parser/parser_utils */
+/* parser/parser_utils.c */
 int		cubfile_read_is_complete(t_maze *blueprint, char *mapfile);
 
-/* parser/check_screenres */
+/* parser/check_screenres.c */
 void	check_screenres(t_maze *blueprint);
 void	check_max_screensize(t_maze *blueprint, t_mlx mlx);
 void	check_min_screensize(t_maze *blueprint);
 
-/* parser/check_map */
+/* parser/check_map.c */
 int		check_opening_in_map(t_port *port, int **map, int y, int x);
 void	check_map(int **map, t_maze blueprint, t_port *port);
 void	check_map_existence(char *mapfile, int count_y, int len, t_port *port);
 int		loop_through_map(t_port *port, char mapfile, int x, int y);
 void	write_map(t_maze *blueprint, char *mapfile, t_port *port);
 
-
 void	ft_error(int error_code, t_port *port);
 char	*ft_read(char *filename);
 
-/* animate/key_button_hook */
+/* animate/key_button_hook.c */
 int		x_button_hook(t_port *port);
 int		key_press_hook(int keycode, t_port *port);
 int		key_release_hook(int keycode, t_port *port);
 
-/* animate/player_movement */
+/* animate/player_movement.c */
 void	set_player(t_port *port);
 void	move_player(t_port *port);
 
-/* animate/render_frame */
+/* animate/render_frame.c */
 int		render_frame(t_port *port);
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 int		put_color(int t, int r, int g, int b);
 
-/* animate/ray_casting */
+/* animate/ray_casting.c */
 void	new_ray(t_port *port, t_rays *rays, t_player *player, int colum_id);
 void	cast_all_rays(t_port *port, t_rays *rays);
 
-/* animate/draw_walls */
+/* animate/draw_walls.c */
 void	draw_walls(t_port *port, t_rays *rays, t_wall *wall_array,
 			int colum_id);
 void	put_all_textures(t_port *port, t_wall *wall_array, int colum_id);
 void	put_cur_texture(t_port *port, t_tex_array tex_array, t_rays *rays,
 			int colum_id);
 
-/* animate/ray_casting_utils */
+/* animate/ray_casting_utils.c */
 float	distance_between_points(float x1, float y1, float x2, float y2);
 void	normalize_ray_angle(float *ray_angle);
 void	ray_direction(t_rays *rays);
@@ -240,17 +244,17 @@ void	check_horizontal_wallhit(t_port *port, t_rays *rays, t_maze *maze);
 void	vertical_intercept(t_rays *rays, t_player *player);
 void	check_vertical_wallhit(t_port *port, t_rays *rays, t_maze *maze);
 
-/* animate/minimap */
+/* animate/minimap.c */
 void	draw_mini_player(t_port *port, float x, float y, int color);
 void	draw_mini_map(t_port *port, t_maze *blueprint, float jump);
 void	put_square(t_port *port, float x, float y, int color);
 void	draw_line(t_mlx *mlx, t_player *player, float end_x, float end_y);
 
-/* read_textures */
+/* read_textures.c */
 void	read_textures(t_port *port, t_maze *blueprint, t_tex *tex);
 void	calculate_textures(t_port *port, t_tex *tex, char map);
 
-/* free */
+/* free.c */
 void	free_map(t_maze *blueprint);
 void	free_texture_array(t_port *port, t_tex *textures);
 void	free_texture_path(t_maze *blueprint);

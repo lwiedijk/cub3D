@@ -6,7 +6,7 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/21 15:18:56 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 16:32:22 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 15:45:51 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	check_opening_in_map(t_port *port, int **map, int y, int x)
 		ft_error(INVALID_MAP, port);
 	else if (x >= port->blueprint->map_x[y - 1] || map[y - 1][x] == ' ')
 		ft_error(INVALID_MAP, port);
-	else if ((y + 1) >= port->blueprint->map_y || x >= port->blueprint->map_x[y + 1]
-		|| map[y + 1][x] == ' ')
+	else if ((y + 1) >= port->blueprint->map_y
+		|| x >= port->blueprint->map_x[y + 1] || map[y + 1][x] == ' ')
 		ft_error(INVALID_MAP, port);
 	return (0);
 }

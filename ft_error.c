@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:30:28 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 14:00:59 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 13:59:27 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void	ft_error_continue(int error_code, t_port *port)
 	if (error_code == NO_COMMA)
 		printf("Error\n!Color needs to be separated by comma and comma only!\n");
 	if (error_code == INVALID_PATH)
-		printf("Error\n!This Texture-path is not valid!\n");
+		printf("Error\n!Texture-path is not valid!\n");
 	if (error_code == NO_SPRITE)
-		printf("Error\n!Sprite-bonus is not implemented, plz remove from cub-file!\n");
+		printf("Error\n!Sprite-bonus is not implemented!\n");
+	if (error_code == NO_CUB_EXT)
+		printf("Error\n!A file with a '.cub' extention is needed!\n");
 	printf("Exiting program, please adjust input and reboot...\n");
 	free_at_error(port);
 	exit(1);

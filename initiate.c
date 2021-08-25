@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 13:27:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 11:46:37 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 11:31:15 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,9 @@ void	init_rays(t_rays *rays, t_maze *blueprint)
 	rays->ray_num = blueprint->screenres_x / rays->strip_width;
 	rays->found_hor_wallhit = 0;
 	rays->fount_vert_wallhit = 0;
+}
+
+void	init_tex(t_tex *tex)
+{
+	tex->tex_array = NULL;
 }
