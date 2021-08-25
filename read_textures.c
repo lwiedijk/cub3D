@@ -6,13 +6,12 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/24 15:14:13 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 13:59:24 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 13:12:53 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx/mlx.h"
-#include "libft/libft.h"
 #include <stdlib.h>
 
 void	read_next_textures(t_port *port, t_maze *blueprint, t_tex *tex)

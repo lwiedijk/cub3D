@@ -6,13 +6,11 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/19 16:27:27 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 08:38:03 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:49:54 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include "../libft/libft.h"
-#include "../mlx/mlx.h"
 #include <math.h>
 
 float	distance_between_points(float x1, float y1, float x2, float y2)

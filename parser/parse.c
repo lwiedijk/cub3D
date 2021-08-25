@@ -6,16 +6,13 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:29:17 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/25 09:42:24 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:59:26 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include "../libft/libft.h"
 #include <stdlib.h>
 #include <unistd.h>
-
-#include <stdio.h>
 
 int	parse_cubfile_nextpart_two(t_maze *blueprint, char *mapfile, t_port *port)
 {

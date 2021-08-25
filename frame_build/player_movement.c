@@ -6,12 +6,11 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 09:43:25 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 08:34:10 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:49:15 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include "../mlx/mlx.h"
 #include <math.h>
 
 void	set_player_rotation(t_port *port, t_maze *p)

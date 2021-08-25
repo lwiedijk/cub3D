@@ -6,15 +6,12 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/12 10:14:49 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 16:40:49 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:51:22 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include "../libft/libft.h"
-#include "../mlx/mlx.h"
 #include <math.h>
-#include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
 

@@ -6,15 +6,12 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 12:30:18 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 16:27:56 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:55:51 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include "../libft/libft.h"
-#include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 void	declare_map(t_maze *blueprint, t_port *port)
 {

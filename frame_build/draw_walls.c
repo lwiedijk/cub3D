@@ -6,17 +6,12 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/19 16:22:35 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/17 13:55:05 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:46:46 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include "../libft/libft.h"
-#include "../mlx/mlx.h"
 #include <math.h>
-#include <stdio.h>
-#include <limits.h>
-#include <stdlib.h>
 
 void	put_cur_texture(t_port *port, t_tex_array tex_array,
 		t_rays *rays, int colum_id)

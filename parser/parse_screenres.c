@@ -6,16 +6,13 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:34:09 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/24 15:46:51 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:57:11 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "../libft/libft.h"
-#include <unistd.h>
 #include <stdlib.h>
-
-#include <stdio.h>
 
 void	put_screenres(t_maze *blueprint, char *screenres_char, char axis)
 {

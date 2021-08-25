@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:03:21 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/24 16:27:06 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:43:12 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ void	check_argument(t_port *port, int ac, char *cub_file);
 
 /* parser.c */
 void	parse(char *av, t_maze *blueprint, t_port *port);
-//void	parse_mapfile(t_maze *blueprint, char *mapfile);
 void	parse_screenres(t_maze *blueprint, char *mapfile, t_port *port);
 void	parse_textures(t_maze *blueprint, char *mapfile,
 			char texture_type, t_port *port);

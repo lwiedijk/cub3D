@@ -6,13 +6,12 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:01:24 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/24 16:00:03 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:54:46 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "../libft/libft.h"
-#include <unistd.h>
 
 void	put_color_blueprint(t_maze *blueprint, char type)
 {
