@@ -1,15 +1,9 @@
-F 255,120,70
-C 200,0,85
-R 500 500
-NO ./textures/purplestone.xpm  
-SO ./textures/south_texture.xpm
-WE ./textures/west_texture.xpm
-EA ./textures/brick.xpm
-
-
-
-
-
+F 100,100,100
+C 200,0,80
+EA ./textures/purplestone.xpm
+NO      ./textures/mossy.xpm
+SO ./textures/mossy_square.xpm
+WE    ./textures/door.xpm
 
         1111111111111111111111111
         1000000000110000000000001

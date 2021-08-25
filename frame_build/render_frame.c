@@ -6,14 +6,12 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 15:35:38 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/22 16:10:42 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:52:24 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include "../mlx/mlx.h"
-#include <stdio.h>
-#include <math.h>
 
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {

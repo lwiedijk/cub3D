@@ -6,13 +6,11 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/16 13:50:36 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/06/16 13:55:47 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:47:40 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include "../libft/libft.h"
-#include "../mlx/mlx.h"
 #include <math.h>
 
 void	horizontal_intercept(t_rays *rays, t_player *player)

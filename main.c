@@ -6,15 +6,12 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:14:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/24 13:15:32 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 13:11:30 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "libft/libft.h"
 #include "mlx/mlx.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 void	render_loop(t_maze *blueprint, t_port *port)
 {

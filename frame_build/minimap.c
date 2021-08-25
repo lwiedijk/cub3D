@@ -6,12 +6,11 @@
 /*   By: lwiedijk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/16 11:29:35 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/07/21 15:03:56 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 11:48:58 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-#include "../mlx/mlx.h"
 #include <math.h>
 
 void	draw_mini_player(t_port *port, float x, float y, int color)
