@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:29:17 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 14:44:33 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 09:42:24 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,10 @@ void	parse_cubfile_map(t_maze *blueprint, char *mapfile, t_port *port)
 	while (mapfile[blueprint->filepos] == '\n')
 		blueprint->filepos++;
 	if (mapfile[blueprint->filepos] == ' '
-		|| mapfile[blueprint->filepos == '1'])
+		|| mapfile[blueprint->filepos] == '1')
 		parse_map(blueprint, mapfile, port);
+	else if (mapfile[blueprint->filepos] == '\0')
+		ft_error(MISSING_MAP, port);
 	else
 		ft_error(TOO_MANY_ELEMENTS, port);
 	while (mapfile[blueprint->filepos] == '\n')
@@ -112,9 +114,9 @@ void	parse(char *av, t_maze *blueprint, t_port *port)
 		parse_cubfile(blueprint, blueprint->mapfile, port);
 		if (cubfile_read_is_complete(blueprint, blueprint->mapfile))
 			parse_cubfile_map(blueprint, blueprint->mapfile, port);
-		if (blueprint->mapfile[blueprint->filepos] != '\n'
-			&& blueprint->mapfile[blueprint->filepos] != '\0')
-			ft_error(INCORRECT_CUB_FILE, port);
+		if (blueprint->mapfile[blueprint->filepos] != '\0'
+			&& blueprint->mapfile[blueprint->filepos] != '\n')
+			ft_error(READ_FAIL, port);
 	}
 	free(blueprint->mapfile);
 	blueprint->mapfile = NULL;

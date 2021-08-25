@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/20 12:22:08 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 14:01:59 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/25 09:42:40 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,14 @@ char	*ft_read(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		read_error(INVALID_FD);
-	mapfile = (char *)malloc(sizeof(char) * buffer_size);
+	mapfile = (char *)malloc(sizeof(char) * (buffer_size + 1));
 	if (!mapfile)
 		read_error(MALLOC_FAIL);
 	bytes_read = read(fd, mapfile, buffer_size);
 	if (bytes_read < 0)
 		read_error(READ_FAIL);
 	mapfile[bytes_read] = '\0';
+	mapfile[bytes_read + 1] = '\0';
 	close(fd);
 	return (mapfile);
 }

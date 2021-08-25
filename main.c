@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 14:14:26 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 13:58:54 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 13:15:32 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int	main(int ac, char **av)
 
 	init_player(&player);
 	init_maze(&blueprint);
+	init_tex(&tex);
 	port.blueprint = &blueprint;
 	port.player = &player;
 	port.tex = &tex;
-	if (ac != 2)
-		ft_error(WRONG_ARGC, &port);
+	check_argument(&port, ac, av[1]);
 	parse(av[1], &blueprint, &port);
 	check_screenres(&blueprint);
 	if (!blueprint.map_y)

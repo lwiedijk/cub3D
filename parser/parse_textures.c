@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:47:23 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 14:55:41 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 16:28:01 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	check_texture(char *path, int len, t_port *port)
 	int	fd;
 
 	fd = 0;
-	if (path[0] != '.' || path[1] != '/')
-		ft_error(INVALID_PATH, port);
-	else if (path[len - 4] != '.' || path [len - 3] != 'x')
+	if (path[len - 4] != '.' || path [len - 3] != 'x')
 		ft_error(INVALID_PATH, port);
 	fd = open(path, O_RDONLY);
 	if (fd > 0)
@@ -33,7 +31,8 @@ void	check_texture(char *path, int len, t_port *port)
 		ft_error(INVALID_PATH, port);
 }
 
-char	*copy_path_from_mapfile(t_maze *blueprint, char *mapfile, int len, t_port *port)
+char	*copy_path_from_mapfile(t_maze *blueprint, char *mapfile,
+	int len, t_port *port)
 {
 	char	*path;
 	char	*temp;
@@ -59,7 +58,8 @@ void	put_path_to_blueprint(t_maze *blueprint, char texture_type, char *path)
 		blueprint->east_texture = path;
 }
 
-void	parse_textures(t_maze *blueprint, char *mapfile, char texture_type, t_port *port)
+void	parse_textures(t_maze *blueprint, char *mapfile,
+	char texture_type, t_port *port)
 {
 	int		len;
 	char	*path;

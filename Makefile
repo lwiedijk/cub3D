@@ -6,7 +6,7 @@
 #    By: lwiedijk <lwiedijk@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/14 15:20:32 by lwiedijk      #+#    #+#                  #
-#    Updated: 2021/08/18 09:51:00 by lwiedijk      ########   odam.nl          #
+#    Updated: 2021/08/24 12:58:26 by lwiedijk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ PARSE_SRC_FILES = parse.c \
 parse_screenres.c parse_textures.c \
 parse_color.c parse_map.c \
 check_screenres.c check_map.c \
-parser_utils.c
+check_argument.c parser_utils.c
 
 FRAME_BUILD_DIR = frame_build/
 FRAME_BUILD_SRC_FILES = key_button_hook.c \
@@ -52,10 +52,8 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES)
 	make -C $(LIBFT_DIR)
 	cp $(LIBFT_DIR)$(LIBFT) ./
-	@echo "\n...Making MLX...please hold...\n"
-	@make -C $(MLX_DIR)
-	@echo "\n Succes! making MLX done \n"
-	@cp $(MLX_DIR)$(MLX) ./
+	make -C $(MLX_DIR)
+	cp $(MLX_DIR)$(MLX) ./
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 $(OBJS_DIR)%.o: %.c $(HEADER_FILES)

@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 15:34:09 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 16:36:18 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 15:46:51 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	put_screenres(t_maze *blueprint, char *screenres_char, char axis)
 	free(screenres_char);
 }
 
-void	calc_screenres(t_maze *blueprint, char *mapfile, char axis, t_port *port)
+void	calc_screenres(t_maze *blueprint, char *mapfile,
+	char axis, t_port *port)
 {
 	int		len;
 	int		i;

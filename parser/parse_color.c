@@ -6,7 +6,7 @@
 /*   By: lwiedijk <lwiedijk@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/19 16:01:24 by lwiedijk      #+#    #+#                 */
-/*   Updated: 2021/08/18 15:01:04 by lwiedijk      ########   odam.nl         */
+/*   Updated: 2021/08/24 16:00:03 by lwiedijk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	check_color_input(t_maze *blueprint, char *mapfile, t_port *port)
 		if (len > 3 || rgb_count > 3)
 			ft_error(TOO_MANY_ELEMENTS, port);
 		if (rgb_count == 3)
-			continue ;
+			break ;
 		i++;
 	}
 }
